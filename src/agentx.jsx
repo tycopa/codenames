@@ -1291,7 +1291,7 @@ function HowToPlayModal({ lang, onClose }) {
       display:"flex", alignItems:"center", justifyContent:"center", padding:"16px" }}
       onClick={onClose}>
       <div onClick={e=>e.stopPropagation()} style={{ ...BASE,
-        background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)",
+        background:"var(--c-modal-bg)", border:"2px solid var(--c-border-accent)",
         borderRadius:"16px", padding:"24px 20px", maxWidth:"480px", width:"100%",
         maxHeight:"88vh", display:"flex", flexDirection:"column",
         boxShadow:"0 24px 80px rgba(0,0,0,0.9)" }}>
@@ -1301,15 +1301,15 @@ function HowToPlayModal({ lang, onClose }) {
           <div style={{ fontSize:"11px", letterSpacing:"4px", color:"var(--c-accent-strong)", fontWeight:"bold" }}>
             {htp.title}
           </div>
-          <button onClick={onClose} style={{ ...ghostBtn("var(--c-text-muted)","13px","4px 10px"), letterSpacing:0 }}>✕</button>
+          <button onClick={onClose} style={{ ...ghostBtn("var(--c-accent)","13px","4px 10px"), letterSpacing:0 }}>✕</button>
         </div>
 
         {/* Steps — scrollable */}
-        <div style={{ overflowY:"auto", display:"flex", flexDirection:"column", gap:"14px", flex:1 }}>
+        <div style={{ overflowY:"auto", display:"flex", flexDirection:"column", gap:"10px", flex:1 }}>
           {htp.steps.map((s, i) => (
             <div key={i} style={{ display:"flex", gap:"12px", alignItems:"flex-start",
               padding:"12px 14px", borderRadius:"10px",
-              background:"var(--c-bg)", border:"1px solid var(--c-border)" }}>
+              background:"var(--c-bg-panel)", border:"1px solid var(--c-border-accent)" }}>
               <div style={{ fontSize:"22px", flexShrink:0, lineHeight:"1" }}>{s.icon}</div>
               <div>
                 <div style={{ fontSize:"11px", letterSpacing:"2px", fontWeight:"bold",
@@ -1338,7 +1338,7 @@ function HowToPlayModal({ lang, onClose }) {
 // ══════════════════════════════════════════════════════════════════════════════
 // LOBBY
 // ══════════════════════════════════════════════════════════════════════════════
-function Lobby({ onStart, initialCode }) {
+function Lobby({ onStart, initialCode, darkMode, onToggleDark }) {
   const [inputCode, setInputCode]   = useState(initialCode || "");
   const [difficulty, setDifficulty] = useState("easy");
   const [lang, setLang]             = useState("en");
@@ -1454,6 +1454,15 @@ function Lobby({ onStart, initialCode }) {
       <div style={{ marginTop:"16px", fontSize:"10px", color:"var(--c-text-dim)", letterSpacing:"1px", textAlign:"center", padding:"0 16px" }}>
         {T.sameBoard}
       </div>
+
+      {/* ── Dark / Light toggle ── */}
+      <button onClick={onToggleDark} style={{ ...BASE, marginTop:"24px",
+        background:"transparent", border:"1px solid var(--c-border)", borderRadius:"20px",
+        color:"var(--c-text-muted)", padding:"7px 20px", fontSize:"10px",
+        letterSpacing:"2px", cursor:"pointer", textTransform:"uppercase",
+        WebkitTapHighlightColor:"transparent" }}>
+        {darkMode ? "☀️  Light Mode" : "🌙  Dark Mode"}
+      </button>
     </div>
   );
 }
@@ -1522,6 +1531,19 @@ export default function AgentX() {
   const [countInput, setCountInput] = useState("");
   const playerId = getPlayerId();
 
+  // ── Dark / light mode toggle ──
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("agentx_theme");
+    if (saved === "dark")  return true;
+    if (saved === "light") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+    localStorage.setItem("agentx_theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+  const toggleDark = () => setDarkMode(v => !v);
+
   // If URL had a code, jump straight into game
   useEffect(() => {
     if (screen === "joining" && urlCode) {
@@ -1575,7 +1597,7 @@ export default function AgentX() {
 
   // ── derived state ──
   if (screen === "lobby" || screen === "joining") {
-    return <Lobby onStart={startGame} initialCode={urlCode} />;
+    return <Lobby onStart={startGame} initialCode={urlCode} darkMode={darkMode} onToggleDark={toggleDark} />;
   }
   if (!game) {
     return (
