@@ -346,6 +346,30 @@ const WORDS = {
       "Torrent","Trace","Trefoil","Trident","Trout","Tuber","Tumble","Turbot","Twilight","Vetch",
       "Viper","Vole","Wagtail","Wake","Wallow","Walrus","Warbler","Wayfarer","Weasel","Wetland",
       "Whin","Whittle","Wigeon","Wildcat","Winkle","Wrasse","Wren","Yarrow","Yew","Zooplankton",
+      // ── additional easy words ──
+      "Joy","Fear","Hope","Love","Trust","Calm","Pride","Rage","Grief","Envy",
+      "Bliss","Dread","Awe","Woe","Glee","Angst","Zeal","Spite","Scorn","Mirth",
+      "Red","Blue","Green","Black","White","Gray","Pink","Teal","Cyan","Scarlet",
+      "Ivory","Ebony","Crimson","Violet","Indigo","Magenta","Coral","Lavender","Mauve","Olive",
+      "Knight","Monk","Thief","Rogue","Mage","Bard","Ranger","Archer","Cleric","Druid",
+      "Herald","Squire","Jester","Elder","Chief","Shaman","Nomad","Pilgrim","Scout","Rebel",
+      "Chase","Quest","Raid","Clash","Dash","Leap","March","Dive","Burst","Vault",
+      "Rush","Blast","Crawl","Drift","Glide","Surge","Lunge","Pivot","Spin","Bolt",
+      "Alley","Street","Square","Plaza","Market","Mall","Cafe","Hotel","Inn","Hut",
+      "Temple","Shrine","Chapel","Bazaar","Harbor","Wharf","Depot","Station","Arena","Stadium",
+      "Screen","Cable","Wire","Switch","Dial","Lever","Latch","Hinge","Clamp","Brace",
+      "Helm","Shield","Lance","Staff","Wand","Rune","Charm","Sigil","Crest","Brand",
+      "Ripple","Flicker","Shimmer","Glimmer","Gleam","Blaze","Glow","Haze","Blur","Flash",
+      "Echo","Signal","Pulse","Boom","Ping","Hum","Buzz","Drone","Tick","Chime",
+      "Wool","Silk","Linen","Hemp","Cotton","Leather","Velvet","Cloth","Tweed","Canvas",
+      "Crest","Badge","Seal","Stamp","Mark","Brand","Label","Tag","Patch","Ribbon",
+      "Plank","Beam","Rafter","Joist","Strut","Pillar","Column","Arch","Vault","Spire",
+      "Mop","Broom","Rake","Hoe","Spade","Shovel","Trowel","Chisel","Plane","Lathe",
+      "Cobble","Tile","Slate","Shingle","Thatch","Adobe","Mortar","Grout","Plaster","Stucco",
+      "Pond","Creek","Brook","Beck","Rill","Gully","Ravine","Gorge","Chasm","Abyss",
+      "Peak","Crag","Bluff","Cliff","Escarpment","Plateau","Mesa","Butte","Dune","Delta",
+      "Acorn","Pinecone","Walnut","Chestnut","Hazel","Beech","Elm","Ash","Birch","Alder",
+      "Pepper","Ginger","Nutmeg","Clove","Cinnamon","Cardamom","Saffron","Vanilla","Basil","Thyme",
     ],
     hard: [
       "Abyss","Acrimony","Adumbrate","Aegis","Affliction","Agitation","Alchemy","Alienation","Allegory","Ambiguity",
@@ -383,6 +407,26 @@ const WORDS = {
       "Squalor","Stagnant","Stolid","Strident","Subversive","Sullen","Sycophant","Tenuous","Timid","Torpor",
       "Truculent","Turpitude","Tyranny","Unctuous","Unscrupulous","Usurpation","Vacuous","Vagrant","Vanity","Vaporous",
       "Vehement","Venerate","Verbose","Vicarious","Vigilant","Vindictive","Virulent","Vitriolic","Vituperate","Volatile",
+      // ── additional hard words ──
+      "Acrimony","Ameliorate","Anachronism","Antithesis","Aporia","Ataraxia","Axiom","Bellicose","Bifurcate","Bombastic",
+      "Capitulate","Catharsis","Chicanery","Chiasmus","Clandestine","Corrosive","Credulity","Cupidity","Cupidity","Curmudgeon",
+      "Defenestrate","Demagogue","Demurral","Denigrate","Desiccate","Didactic","Disaffection","Discursive","Dissemblance","Dystopia",
+      "Ebullience","Efficacious","Effulgent","Egregious","Elision","Empiricism","Enervate","Ennui","Equivocal","Erudite",
+      "Etiolate","Euphony","Evanescence","Execrable","Exigency","Exonerate","Expurgate","Extirpate","Extraneous","Fallacious",
+      "Fatuous","Febrile","Feckless","Fetid","Filibuster","Flaccid","Fledgling","Fulminate","Gamut","Garrulous",
+      "Grandiloquent","Gratuitous","Gregarious","Halcyon","Histrionic","Iconoclasm","Ignominy","Impecunious","Imperious","Inchoate",
+      "Inimical","Iniquitous","Insouciant","Intractable","Invidious","Jejune","Juxtapose","Laconic","Lassitude","Loquacity",
+      "Machiavellian","Magnanimous","Maladroit","Malevolence","Mendacious","Mercenary","Meretricious","Misanthropic","Mitigate","Mollify",
+      "Myopic","Narcissism","Nefarious","Nihilism","Nonchalant","Obdurate","Obfuscate","Obloquy","Obstreperous","Occlude",
+      "Odious","Officious","Opprobrious","Ostentation","Overwrought","Palimpsest","Panacea","Parsimonious","Pathological","Peccadillo",
+      "Pedantic","Perfidious","Peripatetic","Pernicious","Perspicacious","Pertinacious","Philistine","Platitudinous","Pleonasm","Polemical",
+      "Precipitous","Predilection","Pretentious","Prevaricate","Prodigious","Profligate","Propitious","Proximate","Querulous","Quixotic",
+      "Recalcitrant","Recidivism","Redolent","Remonstrate","Reprobate","Rescind","Reticent","Rhetoric","Ruminative","Sanctimonious",
+      "Sardonic","Schism","Scurrilous","Seditious","Simulacrum","Sinecure","Soporific","Sophism","Solipsism","Sordid",
+      "Specious","Spurious","Squalid","Stagnant","Stentorian","Stolid","Strident","Subservient","Subversive","Sycophancy",
+      "Taciturn","Tautology","Tendentious","Tenuous","Timorous","Torpid","Truculent","Tumultuous","Turpitude","Tyrant",
+      "Unctuous","Unscrupulous","Usurpation","Vacuous","Vagrant","Vaporous","Vehemence","Venality","Vexation","Vindication",
+      "Visceral","Vitiation","Vociferous","Voluble","Voracious","Xenophobia","Zealotry","Abstruse","Acerbic","Acrimonious",
     ],
   },
 
@@ -1067,11 +1111,11 @@ function getPlayerId() {
 const COLORS = {
   red:      { bg:"#b83232", text:"#fff",    border:"#7a1f1f" },
   blue:     { bg:"#1f5fa6", text:"#fff",    border:"#133d6e" },
-  neutral:  { bg:"#7a6a2a", text:"#f5ead0", border:"#574b1d" },
+  neutral:  { bg:"var(--c-neutral-bg)", text:"var(--c-neutral-text)", border:"var(--c-neutral-border)" },
   assassin: { bg:"#111827", text:"#e0e0e0", border:"#000"    },
 };
-const CARD_IDLE    = { bg:"#f5ead0", text:"#1a0f07", border:"#c9a86b" };
-const CARD_PENDING = { bg:"#e8d090", text:"#1a0f07", border:"#b8902a" };
+const CARD_IDLE    = { bg:"var(--c-card-idle-bg)",    text:"var(--c-card-idle-text)",    border:"var(--c-card-idle-border)" };
+const CARD_PENDING = { bg:"var(--c-card-pending-bg)", text:"var(--c-card-pending-text)", border:"var(--c-card-pending-border)" };
 const BASE = { fontFamily:"Georgia, serif" };
 
 function ghostBtn(color, fontSize="11px", pad="8px 16px") {
@@ -1080,8 +1124,8 @@ function ghostBtn(color, fontSize="11px", pad="8px 16px") {
     textTransform:"uppercase", transition:"all 0.15s", WebkitTapHighlightColor:"transparent" };
 }
 const inputSt = {
-  ...BASE, background:"#130c05", border:"1px solid #6b5214", borderRadius:"6px",
-  color:"#f5ead0", padding:"10px 12px", fontSize:"15px", outline:"none",
+  ...BASE, background:"var(--c-input-bg)", border:"1px solid var(--c-border-input)", borderRadius:"6px",
+  color:"var(--c-text)", padding:"10px 12px", fontSize:"15px", outline:"none",
   letterSpacing:"1px", WebkitAppearance:"none",
 };
 
@@ -1092,7 +1136,7 @@ function Modal({ children }) {
   return (
     <div style={{ position:"fixed", inset:0, zIndex:200, background:"rgba(0,0,0,0.8)",
       display:"flex", alignItems:"center", justifyContent:"center", padding:"20px" }}>
-      <div style={{ ...BASE, background:"#1e1108", border:"2px solid #8b6914", borderRadius:"16px",
+      <div style={{ ...BASE, background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)", borderRadius:"16px",
         padding:"32px 28px", maxWidth:"380px", width:"100%",
         boxShadow:"0 20px 60px rgba(0,0,0,0.8)", textAlign:"center" }}>
         {children}
@@ -1132,33 +1176,33 @@ function Lobby({ onStart, initialCode }) {
   };
 
   return (
-    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"#130c05", ...BASE,
-      color:"#f5ead0", display:"flex", flexDirection:"column", alignItems:"center",
+    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"var(--c-bg)", ...BASE,
+      color:"var(--c-text)", display:"flex", flexDirection:"column", alignItems:"center",
       justifyContent:"center", padding:"32px 16px", boxSizing:"border-box" }}>
 
       <div style={{ textAlign:"center", marginBottom:"32px" }}>
         <div style={{ fontSize:"clamp(36px,10vw,56px)", letterSpacing:"clamp(6px,3vw,14px)",
-          color:"#c9a86b", fontStyle:"italic", fontWeight:"bold" }}>{T.title}</div>
+          color:"var(--c-accent-strong)", fontStyle:"italic", fontWeight:"bold" }}>{T.title}</div>
         <div style={{ fontSize:"clamp(9px,2.5vw,11px)", letterSpacing:"clamp(3px,1vw,5px)",
-          color:"#5a4830", marginTop:"6px" }}>{T.subtitle}</div>
+          color:"var(--c-text-muted)", marginTop:"6px" }}>{T.subtitle}</div>
       </div>
 
-      <div style={{ background:"#1e1108", border:"1px solid #3a2610", borderRadius:"16px",
+      <div style={{ background:"var(--c-bg-panel)", border:"1px solid var(--c-border)", borderRadius:"16px",
         padding:"clamp(20px,5vw,36px)", width:"100%", maxWidth:"520px",
         boxShadow:"0 12px 40px rgba(0,0,0,0.6)", display:"flex", flexDirection:"column",
         gap:"22px", boxSizing:"border-box" }}>
 
         {/* Language */}
         <div>
-          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"10px" }}>{T.language}</div>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"10px" }}>{T.language}</div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:"6px" }}>
             {LANGUAGES.map(l => (
               <button key={l.code} onClick={() => setLang(l.code)} style={{
                 padding:"8px 2px", fontSize:"10px", border:"1px solid",
-                borderColor: lang===l.code ? "#c9a86b" : "#3a2610",
+                borderColor: lang===l.code ? "var(--c-accent)" : "var(--c-border)",
                 borderRadius:"8px", cursor:"pointer", ...BASE,
-                background: lang===l.code ? "#2a1e08" : "#130c05",
-                color: lang===l.code ? "#c9a86b" : "#5a4830",
+                background: lang===l.code ? "var(--c-lang-active-bg)" : "var(--c-bg)",
+                color: lang===l.code ? "var(--c-accent)" : "var(--c-text-muted)",
                 fontWeight: lang===l.code ? "bold" : "normal",
                 WebkitTapHighlightColor:"transparent",
               }}>{l.label}</button>
@@ -1168,46 +1212,46 @@ function Lobby({ onStart, initialCode }) {
 
         {/* Difficulty */}
         <div>
-          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"10px" }}>{T.difficulty}</div>
-          <div style={{ display:"flex", border:"1px solid #3a2610", borderRadius:"8px", overflow:"hidden" }}>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"10px" }}>{T.difficulty}</div>
+          <div style={{ display:"flex", border:"1px solid var(--c-border)", borderRadius:"8px", overflow:"hidden" }}>
             {["easy","hard"].map(d => (
               <button key={d} onClick={() => setDifficulty(d)} style={{
                 flex:1, padding:"12px 8px", fontSize:"13px", letterSpacing:"2px",
                 textTransform:"uppercase", border:"none", cursor:"pointer", ...BASE,
-                background: difficulty===d ? (d==="easy" ? "#2e6b3e" : "#7a1f1f") : "#130c05",
-                color: difficulty===d ? "#fff" : "#5a4830",
+                background: difficulty===d ? (d==="easy" ? "#2e6b3e" : "#7a1f1f") : "var(--c-bg)",
+                color: difficulty===d ? "#fff" : "var(--c-text-muted)",
                 fontWeight: difficulty===d ? "bold" : "normal",
                 WebkitTapHighlightColor:"transparent",
               }}>{d==="easy" ? T.easy : T.hard}</button>
             ))}
           </div>
-          <div style={{ fontSize:"11px", color:"#3a2a18", marginTop:"6px" }}>{difficulty==="easy" ? T.easyDesc : T.hardDesc}</div>
+          <div style={{ fontSize:"11px", color:"var(--c-text-dim)", marginTop:"6px" }}>{difficulty==="easy" ? T.easyDesc : T.hardDesc}</div>
         </div>
 
         {/* Code */}
         <div>
-          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"4px" }}>{T.gameCode}</div>
-          <div style={{ fontSize:"11px", color:"#3a2a18", marginBottom:"10px", fontStyle:"italic" }}>{T.gameCodeDesc}</div>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"4px" }}>{T.gameCode}</div>
+          <div style={{ fontSize:"11px", color:"var(--c-text-dim)", marginBottom:"10px", fontStyle:"italic" }}>{T.gameCodeDesc}</div>
           <div style={{ display:"flex", gap:"8px" }}>
             <input value={inputCode} onChange={e=>setInputCode(e.target.value.toUpperCase())}
               onKeyDown={e=>e.key==="Enter"&&handleStart()} placeholder="e.g.  AMBER-RAVEN-247"
               style={{ ...inputSt, flex:1 }} />
             <button onClick={handleGenerate}
-              style={{ ...ghostBtn("#5a4830","20px","10px 14px"), letterSpacing:0, flexShrink:0 }}>🎲</button>
+              style={{ ...ghostBtn("var(--c-text-muted)","20px","10px 14px"), letterSpacing:0, flexShrink:0 }}>🎲</button>
           </div>
-          {lastGen && <div style={{ fontSize:"11px", color:"#5a4830", marginTop:"6px", fontStyle:"italic" }}>
-            {T.generated} <strong style={{ color:"#c9a86b", letterSpacing:"2px" }}>{lastGen}</strong></div>}
-          <div style={{ fontSize:"10px", color:"#2a1a0a", marginTop:"6px" }}>{T.leaveBlank}</div>
+          {lastGen && <div style={{ fontSize:"11px", color:"var(--c-text-muted)", marginTop:"6px", fontStyle:"italic" }}>
+            {T.generated} <strong style={{ color:"var(--c-accent)", letterSpacing:"2px" }}>{lastGen}</strong></div>}
+          <div style={{ fontSize:"10px", color:"var(--c-text-dim)", marginTop:"6px" }}>{T.leaveBlank}</div>
         </div>
 
         <button onClick={handleStart} disabled={loading} style={{
-          ...BASE, background: loading ? "#6a5030" : "#c9a86b", border:"none", borderRadius:"10px",
-          color:"#130c05", padding:"16px", fontSize:"14px", letterSpacing:"4px", cursor: loading ? "default" : "pointer",
+          ...BASE, background: loading ? "var(--c-deploy-loading)" : "var(--c-deploy-btn)", border:"none", borderRadius:"10px",
+          color:"var(--c-deploy-btn-text)", padding:"16px", fontSize:"14px", letterSpacing:"4px", cursor: loading ? "default" : "pointer",
           textTransform:"uppercase", fontWeight:"bold", WebkitTapHighlightColor:"transparent",
         }}>{loading ? "..." : T.deploy}</button>
       </div>
 
-      <div style={{ marginTop:"16px", fontSize:"10px", color:"#2a1a0a", letterSpacing:"1px", textAlign:"center", padding:"0 16px" }}>
+      <div style={{ marginTop:"16px", fontSize:"10px", color:"var(--c-text-dim)", letterSpacing:"1px", textAlign:"center", padding:"0 16px" }}>
         {T.sameBoard}
       </div>
     </div>
@@ -1221,11 +1265,11 @@ function ScoreBox({ team, left, active }) {
   return (
     <div style={{ textAlign:"center", padding:"5px 12px", borderRadius:"6px",
       background:active?(team==="RED"?"rgba(176,34,34,0.2)":"rgba(30,90,160,0.2)"):"transparent",
-      border:`1px solid ${active?(team==="RED"?"#b03030":"#1e5aa0"):"#3a2610"}`,
+      border:`1px solid ${active?(team==="RED"?"#b03030":"#1e5aa0"):"var(--c-border)"}`,
       transition:"all 0.3s", minWidth:"44px" }}>
       <div style={{ fontSize:"clamp(16px,5vw,22px)", fontWeight:"bold",
         color:team==="RED"?"#e05050":"#4a9edd" }}>{left}</div>
-      <div style={{ fontSize:"9px", letterSpacing:"2px", color:"#5a4a30" }}>{team}</div>
+      <div style={{ fontSize:"9px", letterSpacing:"2px", color:"var(--c-text-muted)" }}>{team}</div>
     </div>
   );
 }
@@ -1239,21 +1283,21 @@ function LogPopup({ log, onClose, T }) {
       display:"flex", alignItems:"flex-end", justifyContent:"flex-end", padding:"20px" }}
       onClick={onClose}>
       <div onClick={e=>e.stopPropagation()} style={{
-        ...BASE, background:"#180e06", border:"1px solid #3a2610", borderRadius:"12px",
+        ...BASE, background:"var(--c-bg-log)", border:"1px solid var(--c-border)", borderRadius:"12px",
         padding:"20px", width:"min(340px, 92vw)", maxHeight:"70vh",
         boxShadow:"0 8px 40px rgba(0,0,0,0.7)", display:"flex", flexDirection:"column", gap:"0",
       }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"14px" }}>
-          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4a30" }}>{T.gameLog}</div>
-          <button onClick={onClose} style={{ ...ghostBtn("#5a4830","14px","4px 10px"), letterSpacing:0 }}>✕</button>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"var(--c-text-muted)" }}>{T.gameLog}</div>
+          <button onClick={onClose} style={{ ...ghostBtn("var(--c-text-muted)","14px","4px 10px"), letterSpacing:0 }}>✕</button>
         </div>
         <div style={{ overflowY:"auto", display:"flex", flexDirection:"column", gap:"6px" }}>
-          {log.length===0 && <div style={{ fontSize:"11px", color:"#3a2a18", fontStyle:"italic" }}>{T.noMoves}</div>}
+          {log.length===0 && <div style={{ fontSize:"11px", color:"var(--c-text-dim)", fontStyle:"italic" }}>{T.noMoves}</div>}
           {log.map((entry,i)=>(
             <div key={i} style={{ fontSize:"11px", lineHeight:"1.5",
-              color:i===0?"#f5ead0":"#5a4a50", padding:"6px 10px", borderRadius:"6px",
-              background:i===0?"#2a1508":"#1a0e04",
-              borderLeft:i===0?"3px solid #c9a86b":"3px solid #2a1a08" }}>{entry}</div>
+              color:i===0?"var(--c-text)":"var(--c-text-muted)", padding:"6px 10px", borderRadius:"6px",
+              background:i===0?"var(--c-bg-entry)":"var(--c-bg-entry-alt)",
+              borderLeft:i===0?"3px solid var(--c-accent)":"3px solid var(--c-border-dim)" }}>{entry}</div>
           ))}
         </div>
       </div>
@@ -1335,7 +1379,7 @@ export default function AgentX() {
   }
   if (!game) {
     return (
-      <div style={{ minHeight:"100vh", background:"#130c05", ...BASE, color:"#c9a86b",
+      <div style={{ minHeight:"100vh", background:"var(--c-bg)", ...BASE, color:"var(--c-accent-strong)",
         display:"flex", alignItems:"center", justifyContent:"center", fontSize:"18px", letterSpacing:"4px" }}>
         LOADING...
       </div>
@@ -1441,19 +1485,19 @@ export default function AgentX() {
 
   // ── RENDER ──
   return (
-    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"#130c05", ...BASE,
-      color:"#f5ead0", display:"flex", flexDirection:"column", overflowX:"hidden" }}>
+    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"var(--c-bg)", ...BASE,
+      color:"var(--c-text)", display:"flex", flexDirection:"column", overflowX:"hidden" }}>
 
       {/* ── MODALS ── */}
       {confirm?.type==="card" && (
         <Modal>
-          <div style={{ fontSize:"11px", letterSpacing:"3px", color:"#5a4830", marginBottom:"16px" }}>{T.confirmGuess}</div>
-          <div style={{ fontSize:"clamp(20px,6vw,28px)", fontWeight:"bold", color:"#f5ead0", marginBottom:"8px" }}>
+          <div style={{ fontSize:"11px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"16px" }}>{T.confirmGuess}</div>
+          <div style={{ fontSize:"clamp(20px,6vw,28px)", fontWeight:"bold", color:"var(--c-text)", marginBottom:"8px" }}>
             {board[confirm.idx]?.word.toUpperCase()}
           </div>
-          <div style={{ fontSize:"13px", color:"#6a5840", marginBottom:"28px" }}>{T.revealQ}</div>
+          <div style={{ fontSize:"13px", color:"var(--c-text-amber)", marginBottom:"28px" }}>{T.revealQ}</div>
           <div style={{ display:"flex", gap:"12px", justifyContent:"center" }}>
-            <button onClick={()=>setConfirm(null)} style={ghostBtn("#5a4830","13px","12px 24px")}>{T.cancel}</button>
+            <button onClick={()=>setConfirm(null)} style={ghostBtn("var(--c-text-muted)","13px","12px 24px")}>{T.cancel}</button>
             <button onClick={confirmReveal} style={{ ...BASE,
               background:game.currentTeam===TEAM.RED?"#b83232":"#1f5fa6",
               border:"none", borderRadius:"6px", color:"#fff", padding:"12px 24px",
@@ -1466,15 +1510,15 @@ export default function AgentX() {
       {confirm?.type==="spymaster" && (
         <Modal>
           <div style={{ fontSize:"36px", marginBottom:"12px" }}>🕵️</div>
-          <div style={{ fontSize:"11px", letterSpacing:"3px", color:"#5a4830", marginBottom:"12px" }}>{T.spymasterMode}</div>
-          <div style={{ fontSize:"14px", color:"#f5ead0", marginBottom:"8px", lineHeight:"1.6" }}>{T.spymasterWarn}</div>
-          <div style={{ fontSize:"12px", color:"#8a6840", marginBottom:"4px", lineHeight:"1.6" }}>{T.spymasterWarn2}</div>
-          <div style={{ fontSize:"11px", color:"#c9a86b", marginBottom:"24px" }}>⚠️ {T.spymasterOnce}</div>
+          <div style={{ fontSize:"11px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"12px" }}>{T.spymasterMode}</div>
+          <div style={{ fontSize:"14px", color:"var(--c-text)", marginBottom:"8px", lineHeight:"1.6" }}>{T.spymasterWarn}</div>
+          <div style={{ fontSize:"12px", color:"var(--c-text-amber)", marginBottom:"4px", lineHeight:"1.6" }}>{T.spymasterWarn2}</div>
+          <div style={{ fontSize:"11px", color:"var(--c-accent)", marginBottom:"24px" }}>⚠️ {T.spymasterOnce}</div>
           <div style={{ display:"flex", gap:"12px", justifyContent:"center", flexWrap:"wrap" }}>
-            <button onClick={()=>setConfirm(null)} style={ghostBtn("#5a4830","13px","12px 20px")}>{T.cancel}</button>
+            <button onClick={()=>setConfirm(null)} style={ghostBtn("var(--c-text-muted)","13px","12px 20px")}>{T.cancel}</button>
             <button onClick={confirmSpymaster} style={{ ...BASE,
-              background:"#7a5a10", border:"1px solid #c9a86b", borderRadius:"6px",
-              color:"#f5ead0", padding:"12px 20px", fontSize:"12px", letterSpacing:"1px",
+              background:"var(--c-spy-btn-bg)", border:"1px solid var(--c-accent)", borderRadius:"6px",
+              color:"var(--c-text)", padding:"12px 20px", fontSize:"12px", letterSpacing:"1px",
               cursor:"pointer", textTransform:"uppercase", fontWeight:"bold" }}>{T.iAmSpy}</button>
           </div>
         </Modal>
@@ -1484,16 +1528,16 @@ export default function AgentX() {
       {showLog && <LogPopup log={log} onClose={()=>setShowLog(false)} T={T} />}
 
       {/* ── HEADER ── */}
-      <header style={{ background:"linear-gradient(135deg,#2a1508 0%,#130c05 100%)",
-        borderBottom:"2px solid #8b6914", padding:"10px 14px",
+      <header style={{ background:"var(--c-header-gradient)",
+        borderBottom:"2px solid var(--c-border-accent)", padding:"10px 14px",
         display:"flex", alignItems:"center", justifyContent:"space-between", gap:"10px", flexWrap:"wrap" }}>
 
         <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
-          <button onClick={backToLobby} style={ghostBtn("#3a2610","10px","6px 10px")}>←</button>
+          <button onClick={backToLobby} style={ghostBtn("var(--c-text-muted)","10px","6px 10px")}>←</button>
           <div>
             <div style={{ fontSize:"clamp(15px,5vw,22px)", letterSpacing:"clamp(4px,2vw,8px)",
-              color:"#c9a86b", fontStyle:"italic", fontWeight:"bold" }}>{T.title}</div>
-            <div style={{ fontSize:"9px", color:"#5a4830", letterSpacing:"1px" }}>
+              color:"var(--c-accent-strong)", fontStyle:"italic", fontWeight:"bold" }}>{T.title}</div>
+            <div style={{ fontSize:"9px", color:"var(--c-text-muted)", letterSpacing:"1px" }}>
               {LANGUAGES.find(l=>l.code===game.lang)?.flag} {game.difficulty==="easy"?T.easy:T.hard}
             </div>
           </div>
@@ -1501,10 +1545,10 @@ export default function AgentX() {
 
         <div style={{ display:"flex", alignItems:"center", gap:"8px", flexWrap:"wrap" }}>
           <ScoreBox team="RED"  left={redLeft}  active={game.currentTeam===TEAM.RED &&!game.winner} />
-          <div style={{ background:"#1e1108", border:"1px solid #3a2610", borderRadius:"6px",
+          <div style={{ background:"var(--c-bg-panel)", border:"1px solid var(--c-border)", borderRadius:"6px",
             padding:"4px 10px", textAlign:"center" }}>
-            <div style={{ fontSize:"8px", letterSpacing:"2px", color:"#5a4830" }}>{T.gameCode}</div>
-            <div style={{ fontSize:"clamp(10px,3vw,13px)", letterSpacing:"2px", color:"#c9a86b",
+            <div style={{ fontSize:"8px", letterSpacing:"2px", color:"var(--c-text-muted)" }}>{T.gameCode}</div>
+            <div style={{ fontSize:"clamp(10px,3vw,13px)", letterSpacing:"2px", color:"var(--c-accent)",
               fontWeight:"bold", marginTop:"1px" }}>{gameCode}</div>
           </div>
           <ScoreBox team="BLUE" left={blueLeft} active={game.currentTeam===TEAM.BLUE&&!game.winner} />
@@ -1514,7 +1558,7 @@ export default function AgentX() {
           {/* Share button */}
           <button onClick={()=>{ navigator.clipboard?.writeText(shareUrl); alert("Link copied! 📋"); }}
             style={ghostBtn("#5a8060","10px","6px 10px")} title="Copy share link">🔗 {T.share||"SHARE"}</button>
-          <button onClick={newGame} style={ghostBtn("#c9a86b","10px","6px 12px")}>{T.newGame}</button>
+          <button onClick={newGame} style={ghostBtn("var(--c-accent)","10px","6px 12px")}>{T.newGame}</button>
         </div>
       </header>
 
@@ -1534,19 +1578,19 @@ export default function AgentX() {
 
       {/* ── SPYMASTER PANELS ── */}
       {!game.winner && (
-        <div style={{ display:"flex", borderBottom:"1px solid #3a2610" }}>
+        <div style={{ display:"flex", borderBottom:"1px solid var(--c-border)" }}>
 
           {/* RED panel */}
           <div style={{ flex:1, padding:"10px 12px", boxSizing:"border-box",
             background:game.currentTeam===TEAM.RED?"rgba(184,50,50,0.08)":"transparent",
-            borderRight:"1px solid #3a2610" }}>
+            borderRight:"1px solid var(--c-border)" }}>
 
             <div style={{ fontSize:"10px", letterSpacing:"2px", marginBottom:"6px", fontWeight:"bold",
               color:game.currentTeam===TEAM.RED?"#e05050":"#5a3030" }}>{T.redTeam}</div>
 
             {/* Spymaster claim or badge */}
             {iAmRedSpy ? (
-              <div style={{ fontSize:"10px", color:"#c9a86b", marginBottom:"6px" }}>🕵️ {T.youAreSpy}</div>
+              <div style={{ fontSize:"10px", color:"var(--c-accent)", marginBottom:"6px" }}>🕵️ {T.youAreSpy}</div>
             ) : redSpyLocked ? (
               <div style={{ fontSize:"10px", color:"#5a3030", marginBottom:"6px" }}>🔒 {T.spyTaken}</div>
             ) : (
@@ -1578,21 +1622,21 @@ export default function AgentX() {
             {game.activeClue && game.currentTeam===TEAM.RED && (
               <div style={{ marginTop:"4px" }}>
                 <div style={{ fontSize:"clamp(12px,3vw,15px)", marginBottom:"4px" }}>
-                  {T.clueLabel} <strong style={{ color:"#c9a86b" }}>{game.activeClue.word}</strong>
-                  &ensp;—&ensp;<strong style={{ color:"#c9a86b" }}>{game.activeClue.count}</strong>
+                  {T.clueLabel} <strong style={{ color:"var(--c-accent)" }}>{game.activeClue.word}</strong>
+                  &ensp;—&ensp;<strong style={{ color:"var(--c-accent)" }}>{game.activeClue.count}</strong>
                 </div>
-                <div style={{ fontSize:"11px", color:"#6a5840", marginBottom:"4px" }}>
-                  {T.guessesLeft} <strong style={{ color:"#f5ead0" }}>{game.guessesLeft}</strong>
+                <div style={{ fontSize:"11px", color:"var(--c-text-amber)", marginBottom:"4px" }}>
+                  {T.guessesLeft} <strong style={{ color:"var(--c-text)" }}>{game.guessesLeft}</strong>
                 </div>
                 {iAmRedSpy && (
-                  <button onClick={endTurn} style={ghostBtn("#6a5840","10px","6px 12px")}>{T.endTurn}</button>
+                  <button onClick={endTurn} style={ghostBtn("var(--c-text-amber)","10px","6px 12px")}>{T.endTurn}</button>
                 )}
               </div>
             )}
 
             {/* Waiting message for inactive team */}
             {game.currentTeam===TEAM.BLUE && !game.activeClue && (
-              <div style={{ fontSize:"11px", color:"#4a3020", fontStyle:"italic" }}>{T.waiting}</div>
+              <div style={{ fontSize:"11px", color:"var(--c-text-dim)", fontStyle:"italic" }}>{T.waiting}</div>
             )}
           </div>
 
@@ -1604,7 +1648,7 @@ export default function AgentX() {
               color:game.currentTeam===TEAM.BLUE?"#4a9edd":"#1a3a5a" }}>{T.blueTeam}</div>
 
             {iAmBlueSpy ? (
-              <div style={{ fontSize:"10px", color:"#c9a86b", marginBottom:"6px" }}>🕵️ {T.youAreSpy}</div>
+              <div style={{ fontSize:"10px", color:"var(--c-accent)", marginBottom:"6px" }}>🕵️ {T.youAreSpy}</div>
             ) : blueSpyLocked ? (
               <div style={{ fontSize:"10px", color:"#1a3a5a", marginBottom:"6px" }}>🔒 {T.spyTaken}</div>
             ) : (
@@ -1634,20 +1678,20 @@ export default function AgentX() {
             {game.activeClue && game.currentTeam===TEAM.BLUE && (
               <div style={{ marginTop:"4px" }}>
                 <div style={{ fontSize:"clamp(12px,3vw,15px)", marginBottom:"4px" }}>
-                  {T.clueLabel} <strong style={{ color:"#c9a86b" }}>{game.activeClue.word}</strong>
-                  &ensp;—&ensp;<strong style={{ color:"#c9a86b" }}>{game.activeClue.count}</strong>
+                  {T.clueLabel} <strong style={{ color:"var(--c-accent)" }}>{game.activeClue.word}</strong>
+                  &ensp;—&ensp;<strong style={{ color:"var(--c-accent)" }}>{game.activeClue.count}</strong>
                 </div>
-                <div style={{ fontSize:"11px", color:"#6a5840", marginBottom:"4px" }}>
-                  {T.guessesLeft} <strong style={{ color:"#f5ead0" }}>{game.guessesLeft}</strong>
+                <div style={{ fontSize:"11px", color:"var(--c-text-amber)", marginBottom:"4px" }}>
+                  {T.guessesLeft} <strong style={{ color:"var(--c-text)" }}>{game.guessesLeft}</strong>
                 </div>
                 {iAmBlueSpy && (
-                  <button onClick={endTurn} style={ghostBtn("#6a5840","10px","6px 12px")}>{T.endTurn}</button>
+                  <button onClick={endTurn} style={ghostBtn("var(--c-text-amber)","10px","6px 12px")}>{T.endTurn}</button>
                 )}
               </div>
             )}
 
             {game.currentTeam===TEAM.RED && !game.activeClue && (
-              <div style={{ fontSize:"11px", color:"#1a3050", fontStyle:"italic" }}>{T.waiting}</div>
+              <div style={{ fontSize:"11px", color:"var(--c-text-dim)", fontStyle:"italic" }}>{T.waiting}</div>
             )}
           </div>
         </div>
@@ -1703,7 +1747,7 @@ export default function AgentX() {
             flexWrap:"wrap", maxWidth:"700px", margin:"10px auto 0" }}>
             {Object.entries(COLORS).map(([t,c])=>(
               <div key={t} style={{ display:"flex", alignItems:"center", gap:"5px",
-                fontSize:"10px", letterSpacing:"1px", color:"#5a4a30" }}>
+                fontSize:"10px", letterSpacing:"1px", color:"var(--c-text-muted)" }}>
                 <div style={{ width:"10px", height:"10px", borderRadius:"2px",
                   background:c.bg, border:`1px solid ${c.border}`, flexShrink:0 }}/>
                 {t==="assassin"?T.assassin.toUpperCase():t.toUpperCase()}
@@ -1713,18 +1757,18 @@ export default function AgentX() {
         </div>
 
         {/* DESKTOP LOG — hidden on mobile via media query simulation */}
-        <div className="desktop-log" style={{ width:"210px", background:"#180e06",
-          borderLeft:"1px solid #3a2610", padding:"14px", overflowY:"auto",
+        <div className="desktop-log" style={{ width:"210px", background:"var(--c-bg-log)",
+          borderLeft:"1px solid var(--c-border)", padding:"14px", overflowY:"auto",
           display:"flex", flexDirection:"column", gap:"6px",
           // hide on small screens via inline trick — we'll use the floating button instead
         }}>
-          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4a30", marginBottom:"6px" }}>{T.gameLog}</div>
-          {log.length===0 && <div style={{ fontSize:"11px", color:"#3a2a18", fontStyle:"italic" }}>{T.noMoves}</div>}
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"var(--c-text-muted)", marginBottom:"6px" }}>{T.gameLog}</div>
+          {log.length===0 && <div style={{ fontSize:"11px", color:"var(--c-text-dim)", fontStyle:"italic" }}>{T.noMoves}</div>}
           {log.map((entry,i)=>(
             <div key={i} style={{ fontSize:"10px", lineHeight:"1.5",
-              color:i===0?"#f5ead0":"#5a4a50", padding:"5px 8px", borderRadius:"4px",
-              background:i===0?"#2a1508":"transparent",
-              borderLeft:i===0?"2px solid #c9a86b":"2px solid transparent" }}>{entry}</div>
+              color:i===0?"var(--c-text)":"var(--c-text-muted)", padding:"5px 8px", borderRadius:"4px",
+              background:i===0?"var(--c-bg-entry)":"transparent",
+              borderLeft:i===0?"2px solid var(--c-accent)":"2px solid transparent" }}>{entry}</div>
           ))}
         </div>
       </div>
@@ -1732,7 +1776,7 @@ export default function AgentX() {
       {/* ── FLOATING LOG BUTTON (mobile) ── */}
       <button onClick={()=>setShowLog(true)}
         style={{ position:"fixed", bottom:"20px", right:"16px", zIndex:100,
-          background:"#1e1108", border:"2px solid #8b6914", borderRadius:"50%",
+          background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)", borderRadius:"50%",
           width:"52px", height:"52px", fontSize:"22px", cursor:"pointer",
           boxShadow:"0 4px 20px rgba(0,0,0,0.6)", display:"flex",
           alignItems:"center", justifyContent:"center",
@@ -1741,8 +1785,8 @@ export default function AgentX() {
         📜
         {log.length>0 && (
           <div style={{ position:"absolute", top:"0px", right:"0px",
-            background:"#c9a86b", borderRadius:"50%", width:"16px", height:"16px",
-            fontSize:"9px", color:"#130c05", fontWeight:"bold", ...BASE,
+            background:"var(--c-accent)", borderRadius:"50%", width:"16px", height:"16px",
+            fontSize:"9px", color:"var(--c-bg)", fontWeight:"bold", ...BASE,
             display:"flex", alignItems:"center", justifyContent:"center" }}>
             {log.length > 9 ? "9+" : log.length}
           </div>
@@ -1750,8 +1794,8 @@ export default function AgentX() {
       </button>
 
       {/* ── FOOTER ── */}
-      <div style={{ borderTop:"1px solid #2a1a08", padding:"8px 14px 28px", fontSize:"10px",
-        color:"#3a2a18", letterSpacing:"1px", display:"flex", gap:"12px",
+      <div style={{ borderTop:"1px solid var(--c-border-dim)", padding:"8px 14px 28px", fontSize:"10px",
+        color:"var(--c-text-dim)", letterSpacing:"1px", display:"flex", gap:"12px",
         flexWrap:"wrap", justifyContent:"center", textAlign:"center" }}>
         <span>{T.footerSpy}</span>
         <span>{T.footerOp}</span>
