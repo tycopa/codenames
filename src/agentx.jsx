@@ -1,0 +1,1400 @@
+import { useState } from "react";
+
+// ══════════════════════════════════════════════════════════════════════════════
+// LANGUAGES & UI TRANSLATIONS
+// ══════════════════════════════════════════════════════════════════════════════
+const LANGUAGES = [
+  { code: "en", label: "🇬🇧 English",    flag: "🇬🇧" },
+  { code: "es", label: "🇪🇸 Español",    flag: "🇪🇸" },
+  { code: "fr", label: "🇫🇷 Français",   flag: "🇫🇷" },
+  { code: "de", label: "🇩🇪 Deutsch",    flag: "🇩🇪" },
+  { code: "pt", label: "🇵🇹 Português",  flag: "🇵🇹" },
+  { code: "it", label: "🇮🇹 Italiano",   flag: "🇮🇹" },
+  { code: "me", label: "🇲🇪 Crnogorski", flag: "🇲🇪" },
+  { code: "uk", label: "🇺🇦 Українська", flag: "🇺🇦" },
+  { code: "ru", label: "🇷🇺 Русский",    flag: "🇷🇺" },
+  { code: "pl", label: "🇵🇱 Polski",     flag: "🇵🇱" },
+];
+
+const UI = {
+  en: {
+    title:"AGENT X",subtitle:"FIELD OPERATIVE WORD GAME",difficulty:"DIFFICULTY",
+    easy:"🟢  Easy",hard:"🔴  Hard",easyDesc:"Common everyday words — great for all ages",
+    hardDesc:"Abstract & tricky words — brutal for spymasters",language:"LANGUAGE",
+    gameCode:"GAME CODE",gameCodeDesc:"Everyone must enter the same code to see the same board",
+    leaveBlank:"Leave blank to auto-generate a fresh code.",generated:"Generated:",
+    deploy:"DEPLOY AGENTS",sameBoard:"Same code + difficulty + language = identical board",
+    lobby:"← LOBBY",newGame:"NEW GAME",sameCode:"SAME CODE",newCode:"NEW CODE",
+    shareCode:"share with all players",redTeam:"RED TEAM",blueTeam:"BLUE TEAM",
+    cluePlaceholder:"Clue word...",countPlaceholder:"#",giveClue:"GIVE CLUE",
+    spymaster:"SPYMASTER",endTurn:"END TURN",clueLabel:"Clue:",guessesLeft:"Guesses left:",
+    confirmGuess:"CONFIRM GUESS",revealQ:"Reveal this card? This cannot be undone.",
+    cancel:"CANCEL",revealIt:"REVEAL IT",spymasterMode:"SPYMASTER MODE",
+    spymasterWarn:"This will reveal all card colors.",
+    spymasterWarn2:"Only the spymaster should look at this screen. Make sure operatives look away!",
+    iAmSpy:"I'M THE SPYMASTER",wins:"TEAM WINS!",assassin:"ASSASSIN",
+    footerSpy:"🕵️ Spymaster gives word + number clue",footerOp:"🔍 Tap a card then confirm to reveal",
+    footerAvoid:"☠️ Avoid the assassin",footerWin:"🏆 Reveal all your team's cards to win",
+    gameLog:"GAME LOG",noMoves:"No moves yet...",spymasterLog:"Spymaster:",
+    wrongTurn:"Wrong! Turn →",outOfGuesses:"Out of guesses. Turn →",endedTurn:"ended their turn.",
+    redWins:"🔴 RED wins!",blueWins:"🔵 BLUE wins!",assassinLog:"💀 ASSASSIN!",
+  },
+  es: {
+    title:"AGENTE X",subtitle:"JUEGO DE PALABRAS OPERATIVO",difficulty:"DIFICULTAD",
+    easy:"🟢  Fácil",hard:"🔴  Difícil",easyDesc:"Palabras comunes — para todas las edades",
+    hardDesc:"Palabras abstractas y difíciles — brutal para espías",language:"IDIOMA",
+    gameCode:"CÓDIGO DE JUEGO",gameCodeDesc:"Todos deben introducir el mismo código",
+    leaveBlank:"Déjalo en blanco para generar un código nuevo.",generated:"Generado:",
+    deploy:"DESPLEGAR AGENTES",sameBoard:"Mismo código + dificultad + idioma = tablero idéntico",
+    lobby:"← SALÓN",newGame:"NUEVA PARTIDA",sameCode:"MISMO CÓDIGO",newCode:"NUEVO CÓDIGO",
+    shareCode:"comparte con todos los jugadores",redTeam:"EQUIPO ROJO",blueTeam:"EQUIPO AZUL",
+    cluePlaceholder:"Palabra clave...",countPlaceholder:"#",giveClue:"DAR PISTA",
+    spymaster:"ESPÍA JEFE",endTurn:"PASAR TURNO",clueLabel:"Pista:",guessesLeft:"Intentos restantes:",
+    confirmGuess:"CONFIRMAR TURNO",revealQ:"¿Revelar esta carta? No se puede deshacer.",
+    cancel:"CANCELAR",revealIt:"REVELAR",spymasterMode:"MODO ESPÍA JEFE",
+    spymasterWarn:"Esto revelará todos los colores del tablero.",
+    spymasterWarn2:"¡Solo el espía jefe debe mirar esta pantalla!",
+    iAmSpy:"SOY EL ESPÍA JEFE",wins:"¡EQUIPO GANA!",assassin:"ASESINO",
+    footerSpy:"🕵️ El espía jefe da una palabra + número",footerOp:"🔍 Toca una carta y confirma",
+    footerAvoid:"☠️ Evita al asesino",footerWin:"🏆 Revela todas tus cartas para ganar",
+    gameLog:"REGISTRO",noMoves:"Sin movimientos aún...",spymasterLog:"Espía:",
+    wrongTurn:"¡Incorrecto! Turno →",outOfGuesses:"Sin intentos. Turno →",endedTurn:"terminó su turno.",
+    redWins:"🔴 ¡ROJO gana!",blueWins:"🔵 ¡AZUL gana!",assassinLog:"💀 ¡ASESINO!",
+  },
+  fr: {
+    title:"AGENT X",subtitle:"JEU DE MOTS OPÉRATIF",difficulty:"DIFFICULTÉ",
+    easy:"🟢  Facile",hard:"🔴  Difficile",easyDesc:"Mots courants — pour tous les âges",
+    hardDesc:"Mots abstraits et piégeux — brutal pour les espions",language:"LANGUE",
+    gameCode:"CODE DE PARTIE",gameCodeDesc:"Tout le monde doit entrer le même code",
+    leaveBlank:"Laissez vide pour générer un code automatiquement.",generated:"Généré :",
+    deploy:"DÉPLOYER LES AGENTS",sameBoard:"Même code + difficulté + langue = plateau identique",
+    lobby:"← ACCUEIL",newGame:"NOUVELLE PARTIE",sameCode:"MÊME CODE",newCode:"NOUVEAU CODE",
+    shareCode:"partagez avec tous les joueurs",redTeam:"ÉQUIPE ROUGE",blueTeam:"ÉQUIPE BLEUE",
+    cluePlaceholder:"Mot indice...",countPlaceholder:"#",giveClue:"DONNER L'INDICE",
+    spymaster:"ESPION CHEF",endTurn:"FIN DE TOUR",clueLabel:"Indice :",guessesLeft:"Tentatives :",
+    confirmGuess:"CONFIRMER",revealQ:"Révéler cette carte ? Impossible d'annuler.",
+    cancel:"ANNULER",revealIt:"RÉVÉLER",spymasterMode:"MODE ESPION CHEF",
+    spymasterWarn:"Cela révélera toutes les couleurs du plateau.",
+    spymasterWarn2:"Seul l'espion chef doit regarder cet écran !",
+    iAmSpy:"JE SUIS L'ESPION CHEF",wins:"ÉQUIPE GAGNE !",assassin:"ASSASSIN",
+    footerSpy:"🕵️ L'espion chef donne un mot + un nombre",footerOp:"🔍 Tapez une carte puis confirmez",
+    footerAvoid:"☠️ Évitez l'assassin",footerWin:"🏆 Révélez toutes vos cartes pour gagner",
+    gameLog:"JOURNAL",noMoves:"Aucun mouvement encore...",spymasterLog:"Espion :",
+    wrongTurn:"Faux ! Tour →",outOfGuesses:"Plus de tentatives. Tour →",endedTurn:"a terminé son tour.",
+    redWins:"🔴 ROUGE gagne !",blueWins:"🔵 BLEU gagne !",assassinLog:"💀 ASSASSIN !",
+  },
+  de: {
+    title:"AGENT X",subtitle:"FELDOPERATIVES WORTSPIEL",difficulty:"SCHWIERIGKEIT",
+    easy:"🟢  Leicht",hard:"🔴  Schwer",easyDesc:"Alltägliche Wörter — für alle Altersgruppen",
+    hardDesc:"Abstrakte und knifflige Wörter — brutal für Spymaster",language:"SPRACHE",
+    gameCode:"SPIELCODE",gameCodeDesc:"Alle müssen denselben Code eingeben",
+    leaveBlank:"Leer lassen für automatisch generierten Code.",generated:"Generiert:",
+    deploy:"AGENTEN EINSETZEN",sameBoard:"Gleicher Code + Schwierigkeit + Sprache = identisches Spielfeld",
+    lobby:"← LOBBY",newGame:"NEUES SPIEL",sameCode:"GLEICHER CODE",newCode:"NEUER CODE",
+    shareCode:"mit allen Spielern teilen",redTeam:"ROTES TEAM",blueTeam:"BLAUES TEAM",
+    cluePlaceholder:"Hinweiswort...",countPlaceholder:"#",giveClue:"HINWEIS GEBEN",
+    spymaster:"SPYMASTER",endTurn:"ZUG BEENDEN",clueLabel:"Hinweis:",guessesLeft:"Versuche:",
+    confirmGuess:"BESTÄTIGEN",revealQ:"Diese Karte aufdecken? Nicht rückgängig zu machen.",
+    cancel:"ABBRECHEN",revealIt:"AUFDECKEN",spymasterMode:"SPYMASTER-MODUS",
+    spymasterWarn:"Dies zeigt alle Kartenfarben.",
+    spymasterWarn2:"Nur der Spymaster darf auf diesen Bildschirm schauen!",
+    iAmSpy:"ICH BIN DER SPYMASTER",wins:"TEAM GEWINNT!",assassin:"ATTENTÄTER",
+    footerSpy:"🕵️ Spymaster gibt Wort + Zahl",footerOp:"🔍 Karte tippen dann bestätigen",
+    footerAvoid:"☠️ Den Attentäter vermeiden",footerWin:"🏆 Alle eigenen Karten aufdecken",
+    gameLog:"SPIELPROTOKOLL",noMoves:"Noch keine Züge...",spymasterLog:"Spymaster:",
+    wrongTurn:"Falsch! Zug →",outOfGuesses:"Keine Versuche mehr. Zug →",endedTurn:"beendete seinen Zug.",
+    redWins:"🔴 ROT gewinnt!",blueWins:"🔵 BLAU gewinnt!",assassinLog:"💀 ATTENTÄTER!",
+  },
+  pt: {
+    title:"AGENTE X",subtitle:"JOGO DE PALAVRAS OPERATIVO",difficulty:"DIFICULDADE",
+    easy:"🟢  Fácil",hard:"🔴  Difícil",easyDesc:"Palavras comuns — para todas as idades",
+    hardDesc:"Palavras abstratas e difíceis — brutal para espiões",language:"IDIOMA",
+    gameCode:"CÓDIGO DO JOGO",gameCodeDesc:"Todos devem inserir o mesmo código",
+    leaveBlank:"Deixe em branco para gerar um código.",generated:"Gerado:",
+    deploy:"ENVIAR AGENTES",sameBoard:"Mesmo código + dificuldade + idioma = tabuleiro idêntico",
+    lobby:"← SAGUÃO",newGame:"NOVO JOGO",sameCode:"MESMO CÓDIGO",newCode:"NOVO CÓDIGO",
+    shareCode:"compartilhe com todos os jogadores",redTeam:"EQUIPA VERMELHA",blueTeam:"EQUIPA AZUL",
+    cluePlaceholder:"Palavra-pista...",countPlaceholder:"#",giveClue:"DAR PISTA",
+    spymaster:"ESPIÃO CHEFE",endTurn:"PASSAR VEZ",clueLabel:"Pista:",guessesLeft:"Tentativas:",
+    confirmGuess:"CONFIRMAR",revealQ:"Revelar esta carta? Não pode ser desfeito.",
+    cancel:"CANCELAR",revealIt:"REVELAR",spymasterMode:"MODO ESPIÃO CHEFE",
+    spymasterWarn:"Isso revelará todas as cores do tabuleiro.",
+    spymasterWarn2:"Apenas o espião chefe deve olhar para este ecrã!",
+    iAmSpy:"SOU O ESPIÃO CHEFE",wins:"EQUIPA GANHA!",assassin:"ASSASSINO",
+    footerSpy:"🕵️ Espião chefe dá palavra + número",footerOp:"🔍 Toque numa carta e confirme",
+    footerAvoid:"☠️ Evite o assassino",footerWin:"🏆 Revele todas as suas cartas para ganhar",
+    gameLog:"REGISTO",noMoves:"Sem movimentos ainda...",spymasterLog:"Espião:",
+    wrongTurn:"Errado! Vez →",outOfGuesses:"Sem tentativas. Vez →",endedTurn:"terminou a sua vez.",
+    redWins:"🔴 VERMELHO ganha!",blueWins:"🔵 AZUL ganha!",assassinLog:"💀 ASSASSINO!",
+  },
+  it: {
+    title:"AGENTE X",subtitle:"GIOCO DI PAROLE OPERATIVO",difficulty:"DIFFICOLTÀ",
+    easy:"🟢  Facile",hard:"🔴  Difficile",easyDesc:"Parole comuni — per tutte le età",
+    hardDesc:"Parole astratte e insidiose — brutale per le spie",language:"LINGUA",
+    gameCode:"CODICE PARTITA",gameCodeDesc:"Tutti devono inserire lo stesso codice",
+    leaveBlank:"Lascia vuoto per generare un codice.",generated:"Generato:",
+    deploy:"INVIA AGENTI",sameBoard:"Stesso codice + difficoltà + lingua = tabellone identico",
+    lobby:"← SALA",newGame:"NUOVA PARTITA",sameCode:"STESSO CODICE",newCode:"NUOVO CODICE",
+    shareCode:"condividi con tutti i giocatori",redTeam:"SQUADRA ROSSA",blueTeam:"SQUADRA BLU",
+    cluePlaceholder:"Parola indizio...",countPlaceholder:"#",giveClue:"DAI L'INDIZIO",
+    spymaster:"CAPO SPIA",endTurn:"FINE TURNO",clueLabel:"Indizio:",guessesLeft:"Tentativi:",
+    confirmGuess:"CONFERMA",revealQ:"Rivelare questa carta? Non si può annullare.",
+    cancel:"ANNULLA",revealIt:"RIVELA",spymasterMode:"MODALITÀ CAPO SPIA",
+    spymasterWarn:"Questo rivelerà tutti i colori del tabellone.",
+    spymasterWarn2:"Solo il capo spia deve guardare questo schermo!",
+    iAmSpy:"SONO IL CAPO SPIA",wins:"SQUADRA VINCE!",assassin:"ASSASSINO",
+    footerSpy:"🕵️ Il capo spia dà una parola + numero",footerOp:"🔍 Tocca una carta e conferma",
+    footerAvoid:"☠️ Evita l'assassino",footerWin:"🏆 Rivela tutte le tue carte per vincere",
+    gameLog:"REGISTRO",noMoves:"Nessuna mossa ancora...",spymasterLog:"Spia:",
+    wrongTurn:"Sbagliato! Turno →",outOfGuesses:"Nessun tentativo. Turno →",endedTurn:"ha terminato il turno.",
+    redWins:"🔴 ROSSO vince!",blueWins:"🔵 BLU vince!",assassinLog:"💀 ASSASSINO!",
+  },
+  me: {
+    title:"AGENT X",subtitle:"OPERATIVNA IGRA RIJEČIMA",difficulty:"TEŽINA",
+    easy:"🟢  Lako",hard:"🔴  Teško",easyDesc:"Svakodnevne riječi — za sve uzraste",
+    hardDesc:"Apstraktne i teške riječi — brutalno za šefa špijuna",language:"JEZIK",
+    gameCode:"KOD IGRE",gameCodeDesc:"Svi moraju unijeti isti kod da bi vidjeli istu tablu",
+    leaveBlank:"Ostavi prazno za automatsko generisanje koda.",generated:"Generisano:",
+    deploy:"RASPOREDI AGENTE",sameBoard:"Isti kod + težina + jezik = identična tabla",
+    lobby:"← SALA",newGame:"NOVA IGRA",sameCode:"ISTI KOD",newCode:"NOVI KOD",
+    shareCode:"podijeli sa svim igračima",redTeam:"CRVENI TIM",blueTeam:"PLAVI TIM",
+    cluePlaceholder:"Ključna riječ...",countPlaceholder:"#",giveClue:"DAJ NAGOVJJEŠTAJ",
+    spymaster:"ŠEF ŠPIJUN",endTurn:"ZAVRŠI POTEZ",clueLabel:"Nagovjještaj:",guessesLeft:"Pokušaji:",
+    confirmGuess:"POTVRDI",revealQ:"Otkriti ovu kartu? Ne može se poništiti.",
+    cancel:"OTKAŽI",revealIt:"OTKRIJ",spymasterMode:"REŽIM ŠEFA ŠPIJUNA",
+    spymasterWarn:"Ovo će otkriti sve boje karata.",
+    spymasterWarn2:"Samo šef špijun smije gledati u ovaj ekran!",
+    iAmSpy:"JA SAM ŠEF ŠPIJUN",wins:"TIM POBJEĐUJE!",assassin:"UBICA",
+    footerSpy:"🕵️ Šef špijun daje riječ + broj",footerOp:"🔍 Tapni kartu, pa potvrdi",
+    footerAvoid:"☠️ Izbjegni ubicu",footerWin:"🏆 Otkrij sve svoje karte da pobijediš",
+    gameLog:"DNEVNIK IGRE",noMoves:"Još nema poteza...",spymasterLog:"Šef:",
+    wrongTurn:"Pogrešno! Potez →",outOfGuesses:"Nema pokušaja. Potez →",endedTurn:"završio je potez.",
+    redWins:"🔴 CRVENI pobjeđuju!",blueWins:"🔵 PLAVI pobjeđuju!",assassinLog:"💀 UBICA!",
+  },
+  uk: {
+    title:"АГЕНТ X",subtitle:"ОПЕРАТИВНА ГРА СЛІВ",difficulty:"СКЛАДНІСТЬ",
+    easy:"🟢  Легко",hard:"🔴  Важко",easyDesc:"Звичайні слова — для всіх вікових груп",
+    hardDesc:"Абстрактні та хитрі слова — жорстоко для шпигунів",language:"МОВА",
+    gameCode:"КОД ГРИ",gameCodeDesc:"Всі мають ввести однаковий код для однакового поля",
+    leaveBlank:"Залиш порожнім для автоматичного генерування.",generated:"Згенеровано:",
+    deploy:"РОЗГОРНУТИ АГЕНТІВ",sameBoard:"Однаковий код + складність + мова = однакове поле",
+    lobby:"← ЛОБІ",newGame:"НОВА ГРА",sameCode:"ТОЙ САМИЙ КОД",newCode:"НОВИЙ КОД",
+    shareCode:"поділіться з усіма гравцями",redTeam:"ЧЕРВОНА КОМАНДА",blueTeam:"СИНЯ КОМАНДА",
+    cluePlaceholder:"Ключове слово...",countPlaceholder:"#",giveClue:"ДАТИ ПІДКАЗКУ",
+    spymaster:"ШПИГУН-МАЙСТЕР",endTurn:"ЗАВЕРШИТИ ХІД",clueLabel:"Підказка:",guessesLeft:"Спроби:",
+    confirmGuess:"ПІДТВЕРДИТИ",revealQ:"Відкрити цю карту? Це не можна скасувати.",
+    cancel:"СКАСУВАТИ",revealIt:"ВІДКРИТИ",spymasterMode:"РЕЖИМ ШПИГУН-МАЙСТЕРА",
+    spymasterWarn:"Це відкриє всі кольори карт.",
+    spymasterWarn2:"Лише шпигун-майстер повинен дивитися на цей екран!",
+    iAmSpy:"Я ШПИГУН-МАЙСТЕР",wins:"КОМАНДА ПЕРЕМАГАЄ!",assassin:"ВБИВЦЯ",
+    footerSpy:"🕵️ Шпигун-майстер дає слово + число",footerOp:"🔍 Торкніться карти та підтвердіть",
+    footerAvoid:"☠️ Уникайте вбивці",footerWin:"🏆 Відкрийте всі свої карти щоб виграти",
+    gameLog:"ЖУРНАЛ ГРИ",noMoves:"Ще немає ходів...",spymasterLog:"Шпигун:",
+    wrongTurn:"Неправильно! Хід →",outOfGuesses:"Немає спроб. Хід →",endedTurn:"завершив хід.",
+    redWins:"🔴 ЧЕРВОНІ виграють!",blueWins:"🔵 СИНІ виграють!",assassinLog:"💀 ВБИВЦЯ!",
+  },
+  ru: {
+    title:"АГЕНТ X",subtitle:"ОПЕРАТИВНАЯ ИГРА СЛОВ",difficulty:"СЛОЖНОСТЬ",
+    easy:"🟢  Легко",hard:"🔴  Сложно",easyDesc:"Обычные слова — для всех возрастов",
+    hardDesc:"Абстрактные и хитрые слова — жёстко для шпионов",language:"ЯЗЫК",
+    gameCode:"КОД ИГРЫ",gameCodeDesc:"Все должны ввести одинаковый код для одинакового поля",
+    leaveBlank:"Оставь пустым для автогенерации.",generated:"Сгенерировано:",
+    deploy:"РАЗВЕРНУТЬ АГЕНТОВ",sameBoard:"Одинаковый код + сложность + язык = одинаковое поле",
+    lobby:"← ЛОББИ",newGame:"НОВАЯ ИГРА",sameCode:"ТОТ ЖЕ КОД",newCode:"НОВЫЙ КОД",
+    shareCode:"поделитесь со всеми игроками",redTeam:"КРАСНАЯ КОМАНДА",blueTeam:"СИНЯЯ КОМАНДА",
+    cluePlaceholder:"Ключевое слово...",countPlaceholder:"#",giveClue:"ДАТЬ ПОДСКАЗКУ",
+    spymaster:"ШПИОН-МАСТЕР",endTurn:"ЗАВЕРШИТЬ ХОД",clueLabel:"Подсказка:",guessesLeft:"Попытки:",
+    confirmGuess:"ПОДТВЕРДИТЬ",revealQ:"Открыть эту карту? Это нельзя отменить.",
+    cancel:"ОТМЕНА",revealIt:"ОТКРЫТЬ",spymasterMode:"РЕЖИМ ШПИОН-МАСТЕРА",
+    spymasterWarn:"Это откроет все цвета карт.",
+    spymasterWarn2:"Только шпион-мастер должен смотреть на этот экран!",
+    iAmSpy:"Я ШПИОН-МАСТЕР",wins:"КОМАНДА ПОБЕЖДАЕТ!",assassin:"УБИЙЦА",
+    footerSpy:"🕵️ Шпион-мастер даёт слово + число",footerOp:"🔍 Нажмите на карту и подтвердите",
+    footerAvoid:"☠️ Избегайте убийцы",footerWin:"🏆 Откройте все свои карты чтобы выиграть",
+    gameLog:"ЖУРНАЛ ИГРЫ",noMoves:"Ходов ещё нет...",spymasterLog:"Шпион:",
+    wrongTurn:"Неверно! Ход →",outOfGuesses:"Нет попыток. Ход →",endedTurn:"завершил ход.",
+    redWins:"🔴 КРАСНЫЕ выигрывают!",blueWins:"🔵 СИНИЕ выигрывают!",assassinLog:"💀 УБИЙЦА!",
+  },
+  pl: {
+    title:"AGENT X",subtitle:"OPERATYWNA GRA SŁOWNA",difficulty:"POZIOM",
+    easy:"🟢  Łatwy",hard:"🔴  Trudny",easyDesc:"Codzienne słowa — dla wszystkich grup wiekowych",
+    hardDesc:"Abstrakcyjne i podchwytliwe słowa — brutalne dla szpiegów",language:"JĘZYK",
+    gameCode:"KOD GRY",gameCodeDesc:"Wszyscy muszą wpisać ten sam kod",
+    leaveBlank:"Pozostaw puste dla automatycznego kodu.",generated:"Wygenerowano:",
+    deploy:"ROZMIEŚĆ AGENTÓW",sameBoard:"Ten sam kod + poziom + język = identyczna plansza",
+    lobby:"← LOBBY",newGame:"NOWA GRA",sameCode:"TEN SAM KOD",newCode:"NOWY KOD",
+    shareCode:"udostępnij wszystkim graczom",redTeam:"CZERWONA DRUŻYNA",blueTeam:"NIEBIESKA DRUŻYNA",
+    cluePlaceholder:"Słowo wskazówka...",countPlaceholder:"#",giveClue:"DAJ WSKAZÓWKĘ",
+    spymaster:"SZPIEG-MISTRZ",endTurn:"ZAKOŃCZ TURĘ",clueLabel:"Wskazówka:",guessesLeft:"Próby:",
+    confirmGuess:"POTWIERDŹ",revealQ:"Odkryć tę kartę? Tego nie można cofnąć.",
+    cancel:"ANULUJ",revealIt:"ODKRYJ",spymasterMode:"TRYB SZPIEGA-MISTRZA",
+    spymasterWarn:"To ujawni wszystkie kolory kart.",
+    spymasterWarn2:"Tylko szpieg-mistrz powinien patrzeć na ten ekran!",
+    iAmSpy:"JESTEM SZPIEGIEM-MISTRZEM",wins:"DRUŻYNA WYGRYWA!",assassin:"ZABÓJCA",
+    footerSpy:"🕵️ Szpieg-mistrz daje słowo + liczbę",footerOp:"🔍 Dotknij karty i potwierdź",
+    footerAvoid:"☠️ Unikaj zabójcy",footerWin:"🏆 Odkryj wszystkie swoje karty by wygrać",
+    gameLog:"DZIENNIK GRY",noMoves:"Jeszcze żadnych ruchów...",spymasterLog:"Szpieg:",
+    wrongTurn:"Błąd! Tura →",outOfGuesses:"Brak prób. Tura →",endedTurn:"zakończył turę.",
+    redWins:"🔴 CZERWONI wygrywają!",blueWins:"🔵 NIEBIESCY wygrywają!",assassinLog:"💀 ZABÓJCA!",
+  },
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
+// WORD BANKS
+// ══════════════════════════════════════════════════════════════════════════════
+// 2000 easy words per language (drawn from pool, 25 used per game)
+// 500 hard words per language
+const WORDS = {
+
+  // ── ENGLISH ──────────────────────────────────────────────────────────────
+  en: {
+    easy: [
+      "Apple","Apron","Arm","Arrow","Ash","Aunt","Axe","Baby","Back","Bag",
+      "Ball","Banana","Bank","Barn","Base","Basket","Bath","Beach","Bean","Bear",
+      "Bed","Bee","Bell","Belt","Berry","Bird","Blade","Blanket","Boat","Bolt",
+      "Bone","Book","Boot","Bottle","Bowl","Box","Branch","Bread","Brick","Bridge",
+      "Broom","Brush","Bucket","Bug","Bush","Button","Cage","Cake","Camp","Candle",
+      "Cap","Card","Cart","Castle","Cat","Cave","Chair","Chalk","Cheese","Cherry",
+      "Chest","Clock","Cloud","Coal","Coat","Coin","Comb","Cook","Cord","Corn",
+      "Cow","Crab","Crown","Cup","Curtain","Cushion","Dagger","Dam","Deer","Desk",
+      "Dirt","Dog","Door","Dove","Drain","Drawer","Dress","Drill","Drum","Duck",
+      "Dust","Eagle","Ear","Earth","Egg","Elk","Eye","Fan","Farm","Feather",
+      "Fence","Fern","Field","Fig","Fire","Fish","Flag","Flask","Flea","Flower",
+      "Fly","Foam","Fog","Fork","Fox","Frog","Fruit","Gate","Gem","Glove",
+      "Goat","Gold","Grain","Grape","Grass","Grid","Ground","Guard","Guest","Gun",
+      "Hammer","Hand","Harp","Hat","Hay","Heart","Heel","Hill","Hive","Hook",
+      "Horn","Horse","House","Ice","Ink","Iris","Iron","Island","Jar","Jewel",
+      "Juice","Jungle","Key","King","Kite","Knot","Lake","Lamp","Leaf","Leg",
+      "Lemon","Light","Lion","Lock","Log","Loom","Map","Mask","Meat","Milk",
+      "Mill","Mint","Mirror","Mole","Moon","Moss","Mouse","Mud","Mushroom","Nail",
+      "Nest","Net","Needle","Night","Nose","Oak","Oar","Ocean","Olive","Onion",
+      "Orange","Oven","Owl","Paw","Pear","Pearl","Pen","Pepper","Pine","Pipe",
+      "Pit","Plum","Pod","Pool","Pot","Pump","Queen","Rain","Ram","Rat",
+      "Reed","Ring","River","Road","Rock","Roof","Root","Rope","Rose","Rug",
+      "Sail","Salt","Sand","Saw","Seed","Shade","Sheep","Shell","Ship","Shoe",
+      "Shore","Sign","Silk","Skin","Sky","Smoke","Snake","Snow","Sock","Soil",
+      "Soup","Spark","Spider","Spring","Star","Stem","Stone","Storm","Straw","Stream",
+      "Sun","Sword","Tail","Tea","Thread","Thumb","Tiger","Tin","Toad","Torch",
+      "Tower","Tree","Tunnel","Twig","Urn","Vine","Wall","Wave","Wax","Weed",
+      "Wheat","Wheel","Wind","Wing","Wolf","Wood","Wool","Worm","Yard","Yolk",
+      "Zebra","Zone","Acorn","Almond","Amber","Anchor","Angel","Anvil","Arch","Attic",
+      "Badger","Balloon","Bamboo","Barrel","Bat","Bay","Beacon","Bead","Beak","Beam",
+      "Beet","Bishop","Blade","Blanket","Blaze","Bluebell","Boar","Border","Bow","Bowl",
+      "Bramble","Bran","Brass","Brew","Brook","Bubble","Bud","Buffalo","Bulb","Bull",
+      "Bump","Burrow","Calf","Canal","Canyon","Cape","Carbon","Cedar","Cellar","Chain",
+      "Chamber","Cheek","Chin","Chip","Circle","Claw","Clay","Cliff","Clip","Cloak",
+      "Club","Cluster","Cobweb","Collar","Colony","Colt","Cone","Copper","Coral","Cottage",
+      "Cotton","Couch","Cove","Crag","Crane","Crater","Creek","Crest","Crop","Cross",
+      "Crow","Crystal","Cub","Curl","Damp","Dawn","Deck","Delta","Den","Dew",
+      "Diamond","Dock","Dome","Draft","Drape","Drift","Drop","Dune","Dwarf","Dye",
+      "Fang","Feud","Fin","Flake","Flame","Flap","Flock","Flood","Floor","Flute",
+      "Foal","Fold","Font","Force","Forge","Fossil","Frond","Frost","Fur","Gap",
+      "Gaze","Gear","Ghost","Glade","Glen","Glow","Glue","Gnome","Gorge","Goose",
+      "Gorse","Grain","Gravel","Grove","Growl","Gulf","Gust","Haze","Hedge","Hemp",
+      "Herb","Herd","Hide","Hilt","Hollow","Honey","Hood","Hoof","Hump","Hunt",
+      "Husk","Inlet","Ivy","Kelp","Kern","Knob","Knoll","Lace","Lagoon","Lark",
+      "Latch","Lava","Lawn","Layer","Lead","Ledge","Leek","Lime","Linen","Link",
+      "Loch","Lodge","Loop","Lure","Lynx","Mane","Maple","Marsh","Mast","Maze",
+      "Meadow","Mesa","Mist","Moor","Mound","Moat","Moth","Mule","Mussel","Notch",
+      "Nook","Nut","Opal","Orbit","Ore","Otter","Pad","Palm","Peat","Pebble",
+      "Peel","Petal","Pheasant","Pigeon","Pillar","Pit","Plank","Plateau","Plume","Pod",
+      "Pond","Poppy","Porch","Post","Prairie","Prawn","Prism","Probe","Pulp","Quail",
+      "Quarry","Quartz","Quill","Rabbit","Rack","Ramp","Raven","Realm","Reef","Ridge",
+      "Rim","Rind","Rook","Ruin","Rush","Rust","Rye","Sage","Salmon","Sap",
+      "Scales","Sedge","Shaft","Shelf","Shoal","Shore","Shrine","Shrub","Silt","Slab",
+      "Slate","Sleet","Slope","Snail","Snare","Soot","Sparrow","Spike","Spine","Spit",
+      "Sprig","Sprout","Spur","Stack","Stag","Stake","Stalk","Stamp","Starling","Stave",
+      "Steel","Step","Stew","Stick","Sting","Stock","Stump","Swan","Swamp","Swift",
+      "Tangle","Thorn","Thatch","Tide","Timber","Tinder","Tip","Tomb","Trace","Track",
+      "Trail","Trap","Trench","Trough","Trout","Trunk","Tuft","Tundra","Turf","Tusk",
+      "Veil","Venom","Vole","Wade","Wasp","Watch","Well","Wheat","Whirl","Wicket",
+      "Willow","Wisp","Wren","Yew","Acacia","Agate","Aisle","Alcove","Alder","Aloe",
+      "Aloft","Altar","Amble","Amid","Ample","Anchor","Antler","Ape","Arc","Arena",
+      "Aspen","Bale","Bark","Bay","Bazaar","Beacon","Bellow","Bench","Berm","Bevel",
+      "Bile","Birch","Bison","Bite","Blend","Bluff","Blunt","Boar","Bobcat","Bog",
+      "Bolt","Bond","Bone","Bonfire","Boom","Bough","Boulder","Bound","Brake","Brand",
+      "Briar","Brine","Brink","Brisket","Brittle","Bronze","Brood","Bruise","Bud","Buoy",
+      "Burr","Bust","Buttercup","Buzzard","Cactus","Cairn","Canal","Canopy","Carp","Cart",
+      "Cascade","Cave","Chalk","Char","Chase","Chasm","Chip","Chord","Chrome","Churn",
+      "Citrus","Clam","Clamp","Cleft","Clod","Clog","Clump","Coil","Colt","Coop",
+      "Cord","Core","Cormorant","Crag","Crest","Crisp","Crop","Cub","Curl","Dab",
+      "Daisy","Dam","Dash","Daze","Dell","Den","Depth","Dew","Dim","Dip",
+      "Disc","Ditch","Dock","Dolt","Dome","Downy","Drag","Drake","Dram","Drawl",
+      "Dray","Drench","Drift","Drip","Drone","Drool","Droop","Drop","Drove","Dusk",
+      "Dwarf","Eddy","Eel","Emblem","Ember","Enclave","Escarp","Estuary","Eyrie","Fawn",
+      "Fir","Fjord","Flint","Floe","Flop","Flour","Flute","Foal","Fort","Frond",
+      "Frost","Furrow","Gale","Gallop","Gander","Gap","Garlic","Gavel","Geyser","Gill",
+      "Glade","Glen","Glint","Gorse","Gorge","Gourd","Grain","Gulch","Gull","Hail",
+      "Hake","Hallow","Halt","Ham","Hatch","Hazel","Heath","Helm","Hemp","Heron",
+      "Hew","Hive","Hob","Hole","Hollow","Holly","Holt","Honeydew","Horde","Hound",
+      "Hub","Hull","Hulk","Hump","Hurdle","Hyena","Ibis","Ice","Inlet","Iris",
+      "Jackdaw","Jaguar","Jasper","Jolt","Juniper","Kale","Kelp","Kestrel","Knap","Lapwing",
+      "Larch","Larder","Lattice","Laurel","Lave","Ledge","Lichen","Lift","Lime","Limp",
+      "Linden","Loft","Loop","Lotus","Lure","Mallow","Malt","Manor","Mantle","Marrow",
+      "Mast","Mead","Mink","Mire","Mistletoe","Moose","Mortar","Mossy","Murmur","Musk",
+      "Narwhal","Newt","Niche","Nightingale","Nodule","Nook","Notch","Nuthatch","Ochre","Offal",
+      "Osprey","Ox","Paddock","Pampas","Panther","Parcel","Parsley","Partridge","Patch","Peat",
+      "Pelican","Perch","Pewit","Pike","Pilchard","Pipit","Plover","Plum","Pochard","Polecat",
+      "Poplar","Porpoise","Pouch","Prowl","Puffin","Pulp","Puma","Punt","Pygmy","Quaff",
+      "Quagmire","Quicksand","Radish","Rail","Rake","Rampart","Raptor","Ravine","Redstart","Refuge",
+      "Remnant","Roan","Robin","Rook","Roost","Rump","Rustle","Rut","Saltmarsh","Sandpiper",
+      "Sap","Sapling","Savanna","Scent","Scree","Scrub","Scythe","Sedge","Serpent","Shale",
+      "Shank","Shoal","Shrew","Shrub","Shuck","Skua","Skylark","Slab","Sloe","Sloth",
+      "Slug","Snipe","Sow","Spaniel","Spawn","Sprat","Squirrel","Stack","Stalk","Stallion",
+      "Starfish","Stint","Stoat","Stock","Stork","Stubble","Sundew","Swede","Swift","Sycamore",
+      "Talon","Teal","Tern","Thicket","Thistle","Thorn","Thyme","Tide","Timber","Titmouse",
+      "Torrent","Trace","Trefoil","Trident","Trout","Tuber","Tumble","Turbot","Twilight","Vetch",
+      "Viper","Vole","Wagtail","Wake","Wallow","Walrus","Warbler","Wayfarer","Weasel","Wetland",
+      "Whin","Whittle","Wigeon","Wildcat","Winkle","Wrasse","Wren","Yarrow","Yew","Zooplankton",
+    ],
+    hard: [
+      "Abyss","Acrimony","Adumbrate","Aegis","Affliction","Agitation","Alchemy","Alienation","Allegory","Ambiguity",
+      "Anachronism","Anarchy","Anomaly","Antithesis","Apathy","Apostasy","Arcane","Ardor","Artifice","Asceticism",
+      "Aspersion","Atrophy","Augury","Avarice","Axiom","Ballast","Bedlam","Beguile","Belie","Belligerence",
+      "Blight","Cacophony","Cadence","Calamity","Calumny","Caprice","Catalyst","Caustic","Caveat","Cipher",
+      "Clamor","Cogent","Collusion","Compunction","Condescension","Contrition","Culprit","Cynicism","Debacle","Decadence",
+      "Deference","Deluge","Depravity","Desolation","Despotism","Dialectic","Diffidence","Dilapidation","Dirge","Dissonance",
+      "Dogma","Duplicity","Effigy","Elegy","Enigma","Entropy","Ephemeral","Equivocate","Ersatz","Evanescent",
+      "Exigence","Expiate","Fathom","Fatuous","Fervor","Fetid","Fissure","Foible","Fracas","Frailty",
+      "Fugue","Gambit","Gaunt","Gloom","Havoc","Hubris","Hypocrisy","Iconoclast","Idolatry","Impasse",
+      "Impugn","Infamy","Iniquity","Insipid","Insolence","Insurrection","Irony","Jinx","Knell","Lacuna",
+      "Lament","Lethargy","Liminal","Loquacious","Malaise","Malice","Malignant","Malingerer","Mendacity","Mercurial",
+      "Morose","Nadir","Nemesis","Nihilism","Oblique","Oblivion","Omen","Ossify","Ostracism","Paradox",
+      "Pariah","Pathos","Perjury","Petulance","Piety","Platitude","Polemic","Portent","Pretense","Probity",
+      "Profligacy","Quorum","Rancor","Recidivism","Relic","Repugnance","Rift","Sanctimony","Schism","Sedition",
+      "Sophistry","Specter","Stoic","Subjugate","Subterfuge","Tacit","Temerity","Tether","Timorous","Torque",
+      "Tumult","Umbra","Uncanny","Usurp","Vapid","Vendetta","Venomous","Vex","Vilify","Vortex",
+      "Wane","Wrath","Xenophobia","Yearn","Zealot","Acquiesce","Admonish","Aloof","Ameliorate","Anachronism",
+      "Antithesis","Approbation","Arcane","Asperity","Banter","Baroque","Belligerent","Bifurcate","Blandish","Brazen",
+      "Cadaverous","Cavalier","Censure","Chagrin","Chicanery","Churlish","Cogitate","Compunction","Conflagration","Convoluted",
+      "Dearth","Deleterious","Demagogue","Demure","Denigrate","Denounce","Despondent","Didactic","Disaffection","Discernment",
+      "Disdain","Disparage","Dissemble","Dogmatic","Duplicitous","Effrontery","Egregious","Elusive","Embitter","Embroil",
+      "Encumber","Enervate","Ephemeral","Equanimity","Errant","Evasion","Execrate","Excoriate","Expedient","Extemporaneous",
+      "Fallow","Fastidious","Fawn","Feign","Ferment","Flippant","Florid","Foment","Forbear","Fraught",
+      "Frenetic","Frivolous","Furtive","Gainsay","Grandiloquent","Hapless","Harangue","Haughty","Hegemony","Heinous",
+      "Heresy","Impetuous","Indolence","Inept","Inexorable","Ingrate","Innuendo","Insipid","Insular","Intemperate",
+      "Intransigent","Invective","Irascible","Irreverent","Jaded","Lachrymose","Lassitude","Lugubrious","Machination","Malediction",
+      "Malevolent","Maudlin","Meretricious","Misanthrope","Mitigate","Moribund","Motive","Munificent","Nebulous","Nefarious",
+      "Nihilistic","Nonchalant","Obdurate","Obstinate","Obsequious","Obtuse","Occult","Odious","Officious","Ominous",
+      "Opaque","Opprobrium","Ostentation","Overwrought","Paltry","Pedantic","Pejorative","Pernicious","Perturbation","Petulant",
+      "Philistine","Phlegmatic","Plaintive","Pliant","Polemical","Portentous","Precipitous","Pretentious","Prodigal","Profane",
+      "Querulous","Recalcitrant","Recant","Recriminate","Reprobate","Rescind","Resentment","Resignation","Retribution","Rhetoric",
+      "Ruinous","Sanguine","Sardonic","Scurrilous","Servile","Sinister","Slanderous","Slavish","Somnolent","Sophism",
+      "Squalor","Stagnant","Stolid","Strident","Subversive","Sullen","Sycophant","Tenuous","Timid","Torpor",
+      "Truculent","Turpitude","Tyranny","Unctuous","Unscrupulous","Usurpation","Vacuous","Vagrant","Vanity","Vaporous",
+      "Vehement","Venerate","Verbose","Vicarious","Vigilant","Vindictive","Virulent","Vitriolic","Vituperate","Volatile",
+    ],
+  },
+
+  // ── SPANISH ───────────────────────────────────────────────────────────────
+  es: {
+    easy: [
+      "Abeja","Abrazo","Aceite","Aceituna","Aguila","Agua","Aire","Ajo","Alga","Alma",
+      "Almendra","Alondra","Alpaca","Amanecer","Ancla","Ángel","Antorcha","Araña","Árbol","Arco",
+      "Arena","Ardilla","Arma","Arroz","Asno","Atardecer","Azúcar","Azulejo","Ballena","Bambú",
+      "Barro","Barco","Bella","Bisonte","Boca","Bolsa","Bota","Brisa","Bruja","Buey",
+      "Búho","Burro","Cactus","Calabaza","Camello","Camino","Campana","Campo","Caña","Caracol",
+      "Carbón","Carne","Caza","Cedro","Celosía","Cereal","Cereza","Cerdo","Cerveza","Charca",
+      "Chocolate","Cielo","Ciervo","Cigüeña","Ciruela","Clavel","Cobaya","Cocina","Colmena","Conejo",
+      "Coral","Corcho","Cordero","Corona","Corteza","Cría","Cuento","Cueva","Dalia","Dátil",
+      "Delta","Desierto","Escarcha","Estanque","Estrella","Flecha","Flor","Foca","Frambuesa","Fresno",
+      "Fruta","Fuego","Fuente","Gallina","Gamo","Garza","Gaveta","Gema","Glaciar","Golondrina",
+      "Gorrión","Granada","Granja","Grieta","Grillo","Guante","Guisante","Gurbia","Helecho","Hierba",
+      "Hierro","Higo","Hoja","Hormiga","Huerto","Hueso","Huevo","Isla","Jabalí","Jade",
+      "Jarra","Junco","Lago","Lana","Lavanda","Lebrel","Lechuga","Leña","León","Liebre",
+      "Lima","Limón","Linterna","Lira","Llanura","Lobo","Lodo","Luna","Luz","Madera",
+      "Maíz","Manzana","Mariposa","Mármol","Médano","Menta","Mesa","Miel","Mirlo","Morera",
+      "Musgo","Naranja","Nieve","Nido","Niebla","Nuez","Olmo","Orca","Orilla","Oruga",
+      "Oveja","Palmera","Paloma","Panal","Pato","Pavo","Pez","Piedra","Pimienta","Pino",
+      "Pluma","Pozo","Prado","Pulpo","Ratón","Raíz","Rama","Rana","Rayo","Roca",
+      "Roble","Rocío","Romero","Rosa","Sauce","Sapo","Sauce","Semilla","Serpiente","Sierra",
+      "Sombra","Tallo","Tejo","Tela","Tigre","Topo","Tortuga","Trébol","Trucha","Uva",
+      "Vaca","Valle","Vela","Venado","Viento","Vid","Vino","Violeta","Yegua","Zarza",
+      "Zorro","Acacia","Acebo","Acero","Alameda","Alamo","Alcón","Alerce","Aliso","Alondra",
+      "Amapola","Anémona","Anguila","Anis","Arándano","Arao","Arcilla","Armadillo","Armiño","Arrayán",
+      "Arrecife","Arroyo","Avispa","Azahar","Azor","Badajo","Bahía","Balsa","Bardal","Becada",
+      "Bellotera","Berberecho","Berro","Berzas","Bisbita","Bledo","Boceto","Boga","Bonito","Bóveda",
+      "Brécol","Brezo","Brizna","Brote","Bruma","Buitre","Burbuja","Caballete","Cabaña","Cabestro",
+      "Cacatúa","Cadejo","Calandria","Caldera","Cangrejo","Cantil","Cañaveral","Capricho","Capullo","Caramillo",
+      "Cardillo","Cardón","Cauce","Cayado","Caza","Cazador","Cenicero","Ceniza","Cierzo","Cigala",
+      "Cimbra","Ciprés","Circo","Cirio","Cistus","Claro","Clavel","Cobijo","Codorniz","Colilla",
+      "Colinabo","Colono","Comadreja","Corcova","Cormoran","Costal","Cotorra","Coyote","Cuajada","Cuco",
+      "Culebra","Cuñete","Damasco","Dardo","Desfiladero","Diente","Duna","Égida","Emboscada","Encina",
+      "Enebro","Enredadera","Entorno","Ermita","Escoba","Escollera","Espadaña","Espino","Esponja","Estero",
+      "Fabada","Faisán","Falda","Fauno","Flamenco","Flechazo","Flojo","Follaje","Fontana","Forja",
+      "Fosa","Fragua","Fresneda","Fronda","Gaviota","Gazapo","Geranio","Gorrino","Grulla","Guadaña",
+      "Guante","Güira","Haba","Hado","Halcón","Hamaca","Hez","Hinojo","Hojaldre","Hoyo",
+      "Huella","Humus","Hoz","Ibis","Icono","Iguazú","Jacinto","Jazmín","Jilguero","Junípero",
+      "Lagartija","Lamia","Lamprea","Lampo","Lanza","Laurel","Lavandera","Lezna","Líquen","Llano",
+      "Lúpulo","Madrugada","Maleza","Mangle","Mar","Marisma","Mástil","Matojo","Matorral","Médula",
+      "Melisa","Membrillo","Mendieta","Mimosa","Miosotis","Molinillo","Molino","Mortero","Mosca","Mosco",
+      "Nabo","Narciso","Nogal","Noria","Nutria","Ofita","Olivo","Orégano","Ortiga","Oscuro",
+      "Oso","Otero","Paguro","Palomino","Palustre","Páramo","Pardal","Parra","Paseo","Pastizal",
+      "Patella","Peñasco","Perdiz","Perija","Petrel","Picaza","Pingüino","Pino","Piña","Playa",
+      "Pleamar","Plomo","Polvo","Porrón","Pradal","Proa","Prosopis","Puma","Punzón","Purín",
+      "Quebrada","Rabilargo","Raci","Rallo","Ranúnculo","Raposa","Rastro","Ratonera","Remolacha","Retama",
+      "Riada","Ribera","Rosal","Rovo","Rubia","Sabina","Salvia","Saúco","Sauce","Somormujo",
+      "Tagua","Taladrillo","Tamarisco","Tapir","Tarántula","Tarma","Tejón","Tilán","Tilo","Toca",
+      "Tomillo","Tordo","Tórtola","Urraca","Varano","Verbena","Vereda","Viborina","Vincapervinca","Viña",
+      "Yuca","Zafiro","Zanahoria","Zarzamora","Zumaque",
+    ],
+    hard: [
+      "Abismal","Acrimonia","Adúltero","Afectación","Agonía","Alquimia","Ambigüedad","Anacronismo","Anarquía","Anomalía",
+      "Antítesis","Apatía","Apostasía","Arcano","Ardor","Artificio","Ascetismo","Aspersión","Atrofia","Augurio",
+      "Avaricia","Axioma","Calamidad","Calumnia","Capricho","Catalizador","Cáustico","Cautela","Cifra","Clamor",
+      "Cogente","Colusión","Compunción","Condescendencia","Contrición","Culpable","Cinismo","Debacle","Decadencia","Deferencia",
+      "Diluvio","Depravación","Desolación","Despotismo","Dialéctica","Difidencia","Dilapidación","Elegía","Enigma","Entropía",
+      "Efímero","Equivocar","Ersatz","Evanescente","Exigencia","Expiar","Absurdo","Fatuo","Fervor","Fétido",
+      "Fisura","Defecto","Fracas","Fragilidad","Fuga","Gambito","Lúgubre","Oscuridad","Caos","Soberbia",
+      "Hipocresía","Iconoclasta","Idolatría","Callejón","Mancilla","Infamia","Iniquidad","Insípido","Insolencia","Insurrección",
+      "Ironía","Sortilegio","Glas","Laguna","Lamento","Letargo","Liminal","Locuaz","Malestar","Malicia",
+      "Maligno","Fingidor","Mendacidad","Mercurial","Sombrío","Nadir","Némesis","Nihilismo","Oblicuo","Olvido",
+      "Presagio","Osificar","Ostracismo","Paradoja","Paria","Patetismo","Perjurio","Petulancia","Piedad","Platitud",
+      "Polémico","Portento","Pretensión","Integridad","Prodigalidad","Quórum","Rencor","Reincidencia","Reliquia","Repugnancia",
+      "Grieta","Santimonia","Cisma","Sedición","Sofistería","Espectro","Estoico","Subyugar","Subterfugio","Tácito",
+      "Temeridad","Atadura","Tímido","Torque","Tumulto","Umbra","Inquietante","Usurpar","Soso","Vendeta",
+      "Venenoso","Vejar","Vilipendiar","Vórtice","Declive","Ira","Xenofobia","Anhelo","Fanático","Adquiescencia",
+      "Amonestar","Distante","Mejorar","Anacronismo","Antítesis","Aprobación","Arcano","Aspereza","Broma","Barroco",
+      "Belicoso","Bifurcar","Adulador","Descarado","Cadavérico","Altanero","Censura","Vergüenza","Trampa","Hosco",
+      "Cogitar","Compunción","Conflagración","Intrincado","Escasez","Deletéreo","Demagogo","Recatado","Denigrar","Denunciar",
+      "Desalentado","Didáctico","Desafección","Discernimiento","Desdén","Menospreciar","Disimular","Dogmático","Duplicidad","Descaro",
+      "Monstruoso","Elusivo","Amargar","Enredar","Gravoso","Enervar","Efímero","Ecuanimidad","Errante","Evasión",
+      "Execrar","Excoriate","Expediente","Improvisado","Barbecho","Quisquilloso","Adular","Fingir","Fermentar","Frívolo",
+      "Florido","Fomentar","Aguantar","Cargado","Frenético","Frívolo","Furtivo","Contradecir","Grandilocuente","Infeliz",
+      "Harangue","Altivo","Hegemonía","Abominable","Herejía","Impetuoso","Indolencia","Inepto","Inexorable","Ingrato",
+      "Insinuación","Insípido","Insular","Intemperado","Intransigente","Invectiva","Irascible","Irreverente","Hastiado","Lacrimoso",
+      "Lasitud","Lúgubre","Maquinación","Maldición","Malévolo","Sensiblero","Ventajista","Misántropo","Mitigar","Moribundo",
+    ],
+  },
+
+  // ── FRENCH ───────────────────────────────────────────────────────────────
+  fr: {
+    easy: [
+      "Abeille","Aiguille","Aigle","Ail","Alouette","Amande","Ancre","Ange","Araignée","Arbre",
+      "Arc","Arche","Ardoise","Argile","Arroche","Asperge","Aubépine","Aube","Azur","Baleine",
+      "Bambou","Bateau","Boue","Bouleau","Branche","Bruyère","Buisson","Bûche","Caille","Canard",
+      "Cèdre","Cerise","Champignon","Chandelle","Chardon","Chêne","Chèvre","Cigogne","Cire","Cloche",
+      "Clou","Cobaye","Cochon","Colombe","Coq","Corbeau","Coquelicot","Coquille","Corail","Corde",
+      "Corne","Courge","Crapaud","Crayère","Cristal","Croix","Cytise","Daim","Datte","Delta",
+      "Dune","Eau","Éclair","Écorce","Écureuil","Épée","Épine","Érable","Escargot","Étoile",
+      "Faucon","Fenouil","Feuille","Flamme","Flèche","Fleur","Fontaine","Forêt","Fourmi","Frêne",
+      "Froment","Fumée","Galette","Gendarme","Givre","Gland","Glace","Grenouille","Grève","Grive",
+      "Guêpe","Héron","Hêtre","Hibou","Houx","Insecte","Iris","Ivoire","Jade","Jonc",
+      "Jonquille","Lac","Laine","Lapin","Lavande","Lièvre","Lilas","Limace","Lin","Loup",
+      "Lune","Luciole","Lumière","Maïs","Marguerite","Martre","Mer","Mésange","Miel","Moineau",
+      "Mousse","Mûre","Nid","Noix","Nuage","Nuit","Oeillet","Olive","Ombre","Onde",
+      "Orge","Ortie","Ours","Paille","Palmier","Paon","Papillon","Pelouse","Peuplier","Pierre",
+      "Pigeon","Pin","Pissenlit","Platane","Plume","Pluie","Poire","Pommier","Prairie","Prune",
+      "Racine","Rameau","Renard","Rivière","Roche","Roseau","Rosée","Rosier","Rouge-gorge","Rye",
+      "Sable","Sapin","Sauce","Saule","Seigle","Sel","Serpent","Silex","Soleil","Souris",
+      "Taureau","Taupe","Thym","Tige","Tigre","Torrent","Trèfle","Truffe","Tulipe","Vallée",
+      "Veau","Violette","Vipère","Vison","Vague","Zébu","Acacias","Acajou","Agrion","Alise",
+      "Alyte","Amphore","Anémone","Anguille","Anis","Araignée","Artichaut","Aspic","Aubépine","Aurochs",
+      "Avalanche","Avocette","Avoine","Azalée","Bardane","Barrage","Belette","Berce","Bergeronnette","Bison",
+      "Bittern","Blaireau","Bolet","Bouvreuil","Brochet","Bruant","Brume","Busard","Buse","Butome",
+      "Capucine","Carpe","Cassis","Cerf","Cerfeuil","Chardonneret","Châtaigne","Chouette","Chrysanthème","Cigale",
+      "Cirse","Citron","Civette","Clématite","Colchique","Combe","Conopode","Coprin","Coucou","Coulis",
+      "Crevette","Crocus","Cytise","Écrevisse","Élan","Épervière","Épervier","Éphémère","Érismature","Estran",
+      "Étang","Falaise","Fauvette","Fétuque","Fléole","Fluviatile","Fourmi","Framboise","Fraxinelle","Friche",
+      "Fromental","Fuligule","Fumeterre","Gaillarde","Gallinule","Genet","Géranium","Giroflée","Gîte","Gorge",
+      "Goutte","Graminée","Grèbe","Grimpereau","Grolle","Groseille","Guêpier","Guifette","Gypaète","Hêtraie",
+      "Houblon","Huppe","Ibis","If","Jacinthe","Jasmin","Juniperus","Laîche","Lampion","Lande",
+      "Lapin","Laîche","Lentille","Lérot","Linotte","Liseron","Loir","Loriot","Lupin","Luzule",
+      "Lycopode","Lynx","Mâchefer","Magpie","Maïanthème","Maladière","Marais","Marsault","Martinet","Massette",
+      "Merle","Mésange","Millepertuis","Modène","Mouflon","Mouette","Moulin","Muguet","Mulot","Myosotis",
+      "Myrtille","Narcisse","Nénuphar","Nivernais","Noctuelle","Noisette","Noyer","Oie","Orvet","Osier",
+      "Outarde","Perce-neige","Perdrix","Pervenche","Pétrel","Phalène","Phasme","Phoque","Pic","Pie",
+      "Pipit","Pissenlit","Pivoine","Polatouche","Polypode","Potentille","Pouillot","Primevère","Pulicaire","Putois",
+      "Ragondin","Râle","Rétama","Rhinolophe","Rollier","Rougequeue","Roussette","Sablier","Salamandre","Sanglier",
+      "Sanicle","Sarcelle","Sarriette","Saxifrage","Scolopendre","Serin","Serpolet","Silène","Sittelle","Sorgho",
+      "Spatule","Sterne","Sympétrum","Tadorné","Talon","Tamia","Tarentule","Tarse","Tétras","Thérèse",
+      "Tichodrome","Tournesol","Trèfle","Triton","Troène","Troglodyte","Tulipe","Vanesse","Verdier","Vipère",
+      "Zostère",
+    ],
+    hard: [
+      "Abîme","Acrimonie","Alchimie","Aliénation","Allégorie","Ambiguïté","Anachronisme","Anarchie","Anomalie","Antithèse",
+      "Apathie","Apostasie","Arcane","Ardeur","Artifice","Ascétisme","Aspersion","Atrophie","Augure","Avarice",
+      "Axiome","Ballast","Bedlam","Beguin","Démenti","Belligérance","Fléau","Cacophonie","Cadence","Calamité",
+      "Calomnie","Caprice","Catalyseur","Caustique","Réserve","Chiffre","Clameur","Cogent","Collusion","Compunction",
+      "Condescendance","Contrition","Coupable","Cynisme","Débâcle","Décadence","Déférence","Déluge","Dépravation","Désolation",
+      "Despotisme","Dialectique","Diffidence","Délabrement","Élégie","Énigme","Entropie","Éphémère","Équivoquer","Ersatz",
+      "Évanescent","Exigence","Expier","Absurde","Idiot","Ferveur","Fétide","Fissure","Défaut","Fracas",
+      "Fragilité","Fugue","Gambito","Lugubre","Sombre","Chaos","Hubris","Hypocrisie","Iconoclaste","Idolâtrie",
+      "Impasse","Ternir","Infamie","Iniquité","Insipide","Insolence","Insurrection","Ironie","Sort","Glas",
+      "Lacune","Lamentation","Léthargie","Liminal","Loquace","Malaise","Malice","Malin","Simulateur","Mendacité",
+      "Mercuriel","Morose","Nadir","Némésis","Nihilisme","Oblique","Oubli","Présage","Ossifier","Ostracisme",
+      "Paradoxe","Paria","Pathétisme","Parjure","Pétulance","Piété","Platitude","Polémique","Portent","Prétention",
+      "Probité","Prodigalité","Quorum","Rancœur","Récidivisme","Relique","Répugnance","Fissure","Sanctimonie","Schisme",
+      "Sédition","Sophisme","Spectre","Stoïque","Subjuguer","Subterfuge","Tacite","Témérité","Attache","Timoré",
+      "Torque","Tumulte","Ombre","Inquiétant","Usurper","Fade","Vendetta","Venimeux","Vexer","Vilipender",
+      "Tourbillon","Décliner","Courroux","Xénophobie","Aspiration","Fanatique","Acquiescement","Admonition","Aloof","Améliorer",
+      "Anachronisme","Antithèse","Approbation","Arcane","Aspérité","Badinage","Baroque","Belliqueux","Bifurquer","Flatter",
+      "Cadavéreux","Cavalier","Censure","Chagrin","Chicanerie","Grossier","Cogiter","Compunction","Conflagration","Compliqué",
+      "Pénurie","Délétère","Démagogue","Discret","Dénigrer","Dénoncer","Découragé","Didactique","Désaffection","Discernement",
+      "Dédain","Rabaisser","Dissimuler","Dogmatique","Duplicité","Effronterie","Scandaleux","Élusif","Aigrir","Embourber",
+      "Alourdir","Énerver","Éphémère","Équanimité","Errant","Évasion","Exécrer","Excoriate","Expédient","Improvisé",
+      "Friche","Méticuleux","Aduler","Feindre","Fermenter","Frivole","Fleuri","Attiser","Endurer","Chargé",
+      "Frénétique","Futile","Furtif","Contredire","Grandiloquent","Malchanceux","Harangue","Hautain","Hégémonie","Odieux",
+      "Hérésie","Impétueux","Indolence","Inapte","Inexorable","Ingrat","Insinuation","Insipide","Insulaire","Intempérant",
+      "Intransigeant","Invective","Irascible","Irrespectueux","Blasé","Larmoyant","Lassitude","Lugubre","Machination","Malédiction",
+    ],
+  },
+
+  // ── GERMAN ────────────────────────────────────────────────────────────────
+  de: {
+    easy: [
+      "Adler","Ähre","Amsel","Ameise","Anker","Apfel","Ast","Bachforelle","Bär","Bart",
+      "Baum","Beere","Berg","Birke","Birne","Bison","Blatt","Blüte","Blume","Boden",
+      "Brücke","Brunnen","Buche","Busch","Dachs","Distel","Dohle","Domino","Dorf","Eiche",
+      "Eichhörnchen","Eiszapfen","Elch","Erle","Eule","Falke","Fasan","Feige","Fels","Fichte",
+      "Fische","Fliege","Fuchs","Gabel","Gänseblümchen","Gar","Garten","Gemse","Gerste","Gras",
+      "Grille","Hase","Heidelbeere","Helm","Herbst","Hirsch","Holunder","Honig","Hummel","Igel",
+      "Imme","Insekt","Iris","Jagd","Kamille","Käfer","Katze","Kiefer","Kirsche","Klee",
+      "Knoblauch","Knospe","Kolben","Korb","Kraut","Krebs","Kröte","Lachs","Lärche","Laub",
+      "Lauch","Laus","Lerche","Linde","Löwenzahn","Luchs","Mais","Maus","Meise","Milch",
+      "Minze","Mohn","Moos","Möwe","Mücke","Muschel","Nachtigall","Netz","Nuss","Odermennig",
+      "Otter","Pappel","Pfeil","Pilz","Pirol","Primel","Qualle","Rabe","Raps","Rassel",
+      "Ratte","Rauch","Reh","Regen","Rohrdommel","Rose","Rosmarin","Rost","Rotkehlchen","Rübezahl",
+      "Salamander","Salz","Samen","Sand","Sauerampfer","Schaf","Schilfrohr","Schmetterling","Schwalbe","Schwein",
+      "Seeadler","Segel","Seil","Silber","Sonne","Specht","Spinne","Stern","Storch","Stroh",
+      "Stute","Tanne","Tau","Taube","Tiger","Veilchen","Vogel","Walderdbeere","Wasser","Weide",
+      "Weizen","Wolf","Wolke","Worm","Wurm","Wiesel","Zaunkönig","Ziege","Zikade","Zirbelkiefer",
+      "Aal","Abt","Affe","Akazie","Alge","Alpenrose","Ammonit","Anaconda","Anemonenblüte","Anker",
+      "Arnika","Auerhuhn","Auerhahn","Auster","Azalee","Bachstelze","Baerlauch","Baldrian","Bambusrohr","Bartmeise",
+      "Baummarder","Bekassine","Bergdohle","Berggams","Birkhuhn","Blässhuhn","Blaubeere","Blaukehlchen","Blutbuche","Bodendeckel",
+      "Brombeere","Brombeerstrauch","Bruchweide","Buchfink","Buchwanze","Dachsbau","Damhirsch","Delphin","Distelfalter","Dohlenansiedlung",
+      "Dornbusch","Dreizehenmöwe","Edelweiss","Eibe","Eidechse","Eisvogel","Elbeite","Elfenblume","Erlkönig","Ernte",
+      "Esche","Falkner","Faulbaum","Faulpelz","Feddich","Felshuhn","Fensterkreuz","Feuerfalter","Fichtenzapfen","Fischadler",
+      "Flachs","Flattergras","Floh","Flunder","Flußbarsch","Forellensee","Frauenschuh","Frühling","Fuchsschwanz","Gänsegeier",
+      "Gärtnerblume","Gauk","Gewürzstrauch","Ginster","Glasauge","Glitzerstern","Goldregen","Goldammer","Graureiher","Gämsbart",
+      "Habicht","Hagedorn","Hamster","Haubentaucher","Hausrotschwanz","Hecke","Heilkraut","Helmkraut","Heuschrecke","Himbeerstrauch",
+      "Hirtentäschel","Hohlweg","Hornisse","Husarenknopf","Hagebutte","Johannisbeere","Karpfen","Kiebitz","Kirchturmfalke","Kleiber",
+      "Kleinhöcker","Klettenwurzel","Knöterich","Kolkrabe","Königsfarn","Kornweihe","Krähe","Kranich","Kreuzotter","Kuckuck",
+      "Lachseule","Laubsänger","Lavendelfalter","Laubheuschrecke","Lilienblüte","Liliensamt","Löffler","Luchsspur","Lupine","Madder",
+      "Maiglöckchen","Mauereidechse","Mauerläufer","Mehlschwalbe","Mischwald","Mittelspecht","Moorfrosch","Morchel","Murmeltier","Nashornkäfer",
+      "Nieswurz","Nistkasten","Nutzpflanze","Ochsenauge","Orchidee","Pestwurz","Pfauenauge","Pflückreife","Pilzfund","Pippau",
+      "Platane","Platanenblüte","Rainfarn","Raubwürger","Raufußbussard","Raufußkauz","Rauhfußkauz","Rebhuhn","Rehkitz","Rohrweihe",
+      "Rosenkäfer","Rotmilan","Rotschenkels","Saatgans","Sanderling","Sandregenpfeifer","Schafstelze","Schellente","Schilfrohr","Schlüsselblume",
+    ],
+    hard: [
+      "Abgrund","Alchemie","Alienation","Allegorie","Mehrdeutigkeit","Anachronismus","Anarchie","Anomalie","Antithese","Apathie",
+      "Apostasie","Arcanum","Glut","Kunststück","Askese","Besprengung","Atrophie","Weissagung","Habgier","Axiom",
+      "Ballast","Chaos","Verführen","Widerlegen","Bellizismus","Seuche","Kakophonie","Kadenz","Calamität","Verleumdung",
+      "Launenhaftigkeit","Katalysator","Ätzend","Vorbehalt","Chiffre","Getöse","Schlüssig","Kollusion","Reue","Herablassung",
+      "Reue","Schuldige","Zynismus","Debakel","Dekadenz","Ehrerbietung","Sintflut","Verdorbenheit","Trostlosigkeit","Despotismus",
+      "Dialektik","Schüchternheit","Verfall","Elegie","Rätsel","Entropie","Vergänglich","Zweideutig","Ersatz","Flüchtig",
+      "Dringlichkeit","Sühnen","Absurd","Töricht","Inbrunst","Faulig","Riss","Schwäche","Fuge","Gambito",
+      "Düster","Dunkel","Chaos","Überheblichkeit","Heuchelei","Bilderstürmer","Götzenanbetung","Sackgasse","Beflecken","Schande",
+      "Ungerechtigkeit","Fade","Frechheit","Aufruhr","Ironie","Verhängnis","Glockenklang","Leerstelle","Klage","Lethargie",
+      "Schwellenwert","Redselig","Unwohlsein","Bösartigkeit","Bösartig","Heuchler","Unehrlichkeit","Sprunghaft","Düster","Nadir",
+      "Nemesis","Nihilismus","Schräg","Vergessen","Omen","Versteinerung","Ächtung","Paradox","Paria","Pathos",
+      "Meineid","Launenhaftigkeit","Frömmigkeit","Gemeinplatz","Polemik","Vorzeichen","Vortäuschung","Rechtschaffenheit","Verschwendung","Quorum",
+      "Groll","Rückfall","Relikt","Abscheu","Spaltung","Frömmelei","Schisma","Aufruhr","Sophisterei","Gespenst",
+      "Stoisch","Unterwerfung","Vertuschung","Unausgesprochen","Verwegenheit","Fessel","Ängstlich","Drehmoment","Tumult","Schatten",
+      "Unheimlich","Anmaßung","Fade","Rache","Giftig","Quälen","Verleumden","Strudel","Schwund","Zorn",
+      "Fremdenfeindlichkeit","Sehnsucht","Eifer","Zustimmung","Ermahnungen","Distanziert","Verbessern","Anachronismus","Antithese","Zustimmung",
+      "Arcanum","Schroffheit","Spott","Barock","Kriegerisch","Gabeln","Schmeicheln","Leichenblass","Kavalier","Rüge",
+      "Scham","Täuscherei","Flegelhaft","Nachdenken","Reue","Feuersturm","Verwickelt","Knappheit","Schädlich","Demagoge",
+      "Zurückhaltend","Schmähen","Anprangern","Niedergeschlagen","Didaktisch","Entfremdung","Scharfsinn","Verachtung","Herabsetzen","Verheimlichen",
+      "Dogmatisch","Doppelzüngig","Frechheit","Ungeheuerlich","Ausweichend","Erbittern","Verstricken","Beschwerlich","Erschöpfen","Vergänglich",
+      "Gleichmut","Irrend","Ausweichen","Verdammen","Geißeln","Opportunistisch","Improvisiert","Brachliegen","Penibel","Schmeicheln",
+      "Vortäuschen","Gären","Frivol","Blumig","Anheizen","Ertragen","Belastet","Rastlos","Nichtig","Heimtückisch",
+      "Widersprechen","Hochtrabend","Glücklos","Harangue","Hochmütig","Vorherrschaft","Abscheulich","Ketzerei","Ungestüm","Trägheit",
+      "Unfähig","Unerbittlich","Undankbar","Andeutung","Fade","Inselartig","Zügellos","Unnachgiebig","Angriff","Jähzornig",
+      "Respektlos","Abgestumpft","Tränenreich","Mattigkeit","Düster","Machenschaften","Verfluchung","Bösgesinnt","Rührselig","Vorteilssucht",
+    ],
+  },
+
+  // ── PORTUGUESE ────────────────────────────────────────────────────────────
+  pt: {
+    easy: [
+      "Abelha","Abeto","Açafrão","Acácia","Águia","Água","Alecrim","Alface","Alga","Alho",
+      "Alma","Almendoa","Aloe","Amendoeira","Âncora","Andorinha","Anémona","Ângela","Aranha","Árvore",
+      "Arco","Ardósia","Argila","Arroio","Azeitona","Azevinho","Bacalhau","Baleia","Bambu","Barro",
+      "Besouro","Borboleta","Brilho","Brisa","Broto","Bugio","Cana","Canela","Caracol","Cardos",
+      "Carvalho","Castanha","Cavalo","Cedro","Cenoura","Cereja","Cervo","Choupo","Chuva","Cigarra",
+      "Cipestre","Cobra","Cogumelo","Cordeiro","Coruja","Couto","Cravo","Cristal","Cruz","Dendrobia",
+      "Estrela","Estanho","Faia","Falcão","Farol","Fava","Feno","Figo","Flecha","Flor",
+      "Fonte","Formiga","Freixo","Fruto","Fumo","Girassol","Grão","Grilos","Grou","Hera",
+      "Hortelã","Ilha","Íris","Jacarandá","Jacinto","Junco","Lagoa","Lajeta","Lança","Laranja",
+      "Laurel","Lavanda","Lebre","Lentisco","Lírio","Lodo","Lobo","Loto","Lua","Maçã",
+      "Magnólia","Margarida","Marisco","Mel","Mimosa","Miosótis","Mocho","Mogno","Morango","Mouro",
+      "Musgo","Myrto","Narciso","Nevoeiro","Neve","Ninho","Nogueira","Oleo","Oliveira","Orvalho",
+      "Ostra","Palmeira","Papagaio","Pato","Pedra","Pelicano","Penedo","Pétala","Pinheiro","Pluma",
+      "Pomba","Prado","Presa","Raiz","Rato","Rã","Rosmaninho","Rouxinol","Salgueiro","Salsa",
+      "Samambaia","Sapo","Sardinha","Seixo","Serpente","Serra","Sol","Tojo","Tomilho","Tordo",
+      "Trevo","Truta","Tulipa","Uva","Veado","Vento","Videira","Violeta","Xara","Zimbro",
+      "Abutre","Alcedo","Alevinos","Alfazema","Alforje","Alheira","Alicate","Alisos","Almofariz","Alóe",
+      "Alpendurada","Alqueves","Alteia","Altivo","Álvaro","Amendoim","Amora","Ananás","Andorinhas","Aníbal",
+      "Anicho","Anileira","Antúrio","Anzol","Apoio","Aquífero","Arame","Aranha","Arcaz","Ardósia",
+      "Aredão","Arenque","Argola","Aroeira","Arranha","Arrieiros","Artémia","Arundinária","Asa","Asno",
+      "Aspargo","Assobiador","Astrágalo","Atalho","Atanor","Atum","Azinhaga","Azinheiro","Babosa","Bacelo",
+      "Bacio","Bago","Bagoeiro","Baía","Baixo","Balsa","Bambu","Barbo","Barranco","Barreiro",
+      "Barulho","Beija-flor","Bicho-da-seda","Bigorna","Bilro","Bisonte","Boieiro","Bolota","Bolso","Bonito",
+      "Bordão","Bordo","Borrelho","Botuelho","Brejo","Broa","Bronze","Buxo","Caça","Cadmo",
+      "Cagarras","Cagilo","Calatrava","Calombo","Caloura","Camaleão","Camponês","Cancro","Capim","Capivara",
+      "Capuz","Caramujo","Carpa","Carraça","Carrasco","Cartaxo","Casca","Cascata","Casinha","Castor",
+      "Catavento","Catfish","Cavala","Cavidade","Cegonha","Centeio","Cerceta","Charcos","Chasco","Chilrear",
+      "Cipó","Circo","Citrino","Ciúmes","Clamor","Clavícula","Codorniz","Columba","Cominho","Coralinho",
+      "Corça","Cormorão","Corujinha","Cotovia","Crisálida","Crocante","Cromado","Curvelo","Demorou","Escabeche",
+    ],
+    hard: [
+      "Abismo","Acrimónia","Alquimia","Alienação","Alegoria","Ambiguidade","Anacronismo","Anarquia","Anomalia","Antítese",
+      "Apatia","Apostasia","Arcano","Ardor","Artifício","Ascetismo","Aspersão","Atrofia","Augúrio","Avareza",
+      "Axioma","Lastro","Caos","Seduzir","Desmentir","Belicismo","Praga","Cacofonia","Cadência","Calamidade",
+      "Calúnia","Capricho","Catalisador","Cáustico","Reserva","Cifra","Clamor","Cogente","Conluio","Compunção",
+      "Condescendência","Contrição","Culpado","Cinismo","Débacle","Decadência","Deferência","Dilúvio","Depravação","Desolação",
+      "Despotismo","Dialética","Difidência","Dilapidação","Elegia","Enigma","Entropia","Efémero","Equivocar","Ersatz",
+      "Evanescente","Exigência","Expiar","Absurdo","Fátuo","Fervor","Fétido","Fissura","Defeito","Fragor",
+      "Fragilidade","Fuga","Gambito","Lúgubre","Sombrio","Caos","Hubris","Hipocrisia","Iconoclasta","Idolatria",
+      "Impasse","Manchar","Infâmia","Iniquidade","Insípido","Insolência","Insurreição","Ironia","Sortilégio","Toque",
+      "Lacuna","Lamento","Letargia","Liminal","Loquaz","Mal-estar","Malícia","Maligno","Fingidor","Mendacidade",
+      "Mercurial","Sombrio","Nadir","Némesis","Niilismo","Oblíquo","Olvido","Presságio","Ossificar","Ostracismo",
+      "Paradoxo","Pária","Patetismo","Perjúrio","Petulância","Piedade","Platitude","Polémico","Portento","Pretensão",
+      "Probidade","Prodigalidade","Quórum","Rancor","Reincidência","Relíquia","Repugnância","Fissura","Santimónia","Cisma",
+      "Sedição","Sofisma","Espectro","Estoico","Subjugar","Subterfúgio","Tácito","Temeridade","Amarra","Tímido",
+      "Torque","Tumulto","Sombra","Inquietante","Usurpar","Insosso","Vendeta","Venenoso","Vexar","Vilipendiar",
+      "Vórtice","Declinar","Ira","Xenofobia","Anseio","Fanático","Aquiescência","Admoestação","Distante","Melhorar",
+      "Anacronismo","Antítese","Aprovação","Arcano","Aspereza","Gracejo","Barroco","Beligerante","Bifurcar","Lisonjear",
+      "Cadavérico","Cavaleiro","Censura","Vergonha","Marosca","Grosseiro","Cogitar","Compunção","Conflagração","Complicado",
+      "Escassez","Deletério","Demagogo","Recatado","Denegrir","Denunciar","Desanimado","Didático","Desafeto","Discernimento",
+      "Desdém","Menosprezar","Disfarçar","Dogmático","Duplicidade","Descaro","Egrégico","Elusivo","Amargar","Enredar",
+      "Sobrecarregar","Enervar","Efémero","Equanimidade","Errante","Evasão","Execrar","Fustigar","Expediente","Improvisado",
+      "Pousio","Meticuloso","Adular","Fingir","Fermentar","Frívolo","Florido","Instigar","Suportar","Carregado",
+      "Frenético","Fútil","Furtivo","Contradizer","Grandiloquente","Infeliz","Arenga","Altivo","Hegemonia","Abominável",
+      "Heresia","Impetuoso","Indolência","Inépcia","Inexorável","Ingrato","Insinuação","Insípido","Insular","Intemperado",
+      "Intransigente","Invetiva","Irascível","Irreverente","Entediado","Lacrimoso","Lassidão","Lúgubre","Maquinação","Maldição",
+    ],
+  },
+
+  // ── ITALIAN ───────────────────────────────────────────────────────────────
+  it: {
+    easy: [
+      "Abete","Abisso","Acacia","Acero","Aglio","Agrume","Airone","Alce","Aliga","Alloro",
+      "Aloe","Alpaca","Ancora","Anfibia","Anguilla","Anemone","Aquila","Arancio","Arbusto","Arco",
+      "Argilla","Arma","Arnica","Asso","Astice","Avena","Avvoltoio","Azalea","Bambu","Barbagianni",
+      "Basilico","Belladonna","Betulla","Bisonte","Bocciolo","Bontà","Bordo","Brugo","Bue","Bufo",
+      "Capriolo","Cardellino","Cardo","Carpa","Castagno","Cedro","Centauro","Cerbiatto","Cervo","Cicala",
+      "Ciclamino","Cigno","Cinghiale","Cipresso","Ciuffolotto","Coccinella","Codibugnolo","Colomba","Corallo","Corbezzolo",
+      "Corcovado","Cornacchia","Corvo","Coyote","Cristallo","Crostaceo","Cuccù","Daino","Delfino","Elce",
+      "Erica","Faggio","Fagiano","Falco","Farfalla","Fico","Forbice","Formica","Fossile","Fringuello",
+      "Fuco","Gabbiano","Gallina","Gambero","Gatto","Garzetta","Genziana","Germoglio","Ghiaccio","Ghiro",
+      "Ginepro","Girasole","Gorgonia","Grillo","Gru","Gufo","Ibis","Iris","Istrice","Lago",
+      "Lamella","Lana","Lapazio","Larice","Lattuga","Lavanda","Lepre","Lichene","Limone","Lince",
+      "Loto","Lucciola","Lupo","Magnolia","Margherita","Merlo","Miele","Mimosa","Mirtillo","Mughetto",
+      "Muschio","Narciso","Nebbia","Neve","Nido","Noce","Orchidea","Orso","Ortica","Palafia",
+      "Pappagallo","Pernice","Pettirosso","Pino","Pipistrello","Platano","Porcello","Primula","Quercia","Ramo",
+      "Ramoscello","Ranocchio","Rondine","Rosmarino","Rosolaccio","Rovere","Salamandra","Salice","Salvia","Sambuco",
+      "Scimmia","Scoiattolo","Scolapasta","Serpe","Silene","Sorbo","Tasso","Timberland","Timo","Tordo",
+      "Trifoglio","Trota","Tulipano","Uva","Vipera","Volpe","Abatino","Adagio","Aghifoglio","Albero",
+      "Alcione","Alimurgia","Almadina","Alocasia","Alonzo","Altopiano","Amaranta","Ambrosia","Amfibio","Ammasso",
+      "Anco","Andropogon","Anfibio","Angelica","Angiola","Animale","Anitra","Anone","Antilope","Aquilone",
+      "Arachide","Arcipelago","Arena","Argento","Ariete","Arrabiato","Artropode","Arum","Arvicola","Astragalo",
+      "Attinia","Avena","Avifauna","Avocetta","Avvoltoio","Bacca","Balena","Balza","Banano","Barbaforte",
+      "Barcellona","Barbio","Bardana","Barracuda","Beccaccia","Beccaccino","Beccafico","Beccamorto","Beccofrusone","Bertuccia",
+      "Biancospino","Bidens","Bietola","Bisbita","Bissa","Bistorta","Boleto","Bottatrice","Branca","Briozoi",
+      "Bufalo","Buglossa","Caimano","Camoscio","Canfora","Cannella","Capinera","Caprifico","Carpino","Cartamo",
+      "Caruncola","Cassia","Castoro","Caucale","Cedrela","Cerambice","Cervide","Cetriolo","Chiodino","Chirotteri",
+      "Ciconia","Cicouta","Cinorodo","Cipollone","Cirripedi","Clematis","Codirosso","Colobbo","Colombaccio","Conifera",
+      "Controcampagna","Copepodi","Coprina","Cormorano","Cornutia","Corollo","Cotone","Cotornia","Covone","Crisalide",
+      "Cristino","Crocevia","Cuculo","Cutrettola","Cynara","Dattero","Deflusso","Diluvio","Diplotassi","Dracena",
+      "Echinops","Egilope","Equiseto","Erba","Erba-cipollina","Erba-medica","Erbacea","Erbolaio","Erica","Estivazione",
+    ],
+    hard: [
+      "Abisso","Acrimonia","Alchimia","Alienazione","Allegoria","Ambiguità","Anacronismo","Anarchia","Anomalia","Antitesi",
+      "Apatia","Apostasia","Arcano","Ardore","Artificio","Ascetismo","Aspersione","Atrofia","Augurio","Avarizia",
+      "Assioma","Zavorra","Caos","Sedurre","Smentire","Belligeranza","Piaga","Cacofonia","Cadenza","Calamità",
+      "Calunnia","Capriccio","Catalizzatore","Caustico","Riserva","Cifrario","Clamore","Cogente","Collusione","Compunzione",
+      "Condiscendenza","Contrizione","Colpevole","Cinismo","Debacle","Decadenza","Deferenza","Diluvio","Depravazione","Desolazione",
+      "Dispotismo","Dialettica","Diffidenza","Dilapidazione","Elegia","Enigma","Entropia","Effimero","Equivocare","Ersatz",
+      "Evanescente","Esigenza","Espiare","Assurdo","Fatuo","Fervore","Fetido","Fessura","Difetto","Fracasso",
+      "Fragilità","Fuga","Gambetto","Lugubre","Oscuro","Caos","Hubris","Ipocrisia","Iconoclasta","Idolatria",
+      "Vicolo cieco","Macchiare","Infamia","Iniquità","Insipido","Insolenza","Insurrezione","Ironia","Maleficio","Rintocco",
+      "Lacuna","Lamento","Letargia","Liminale","Loquace","Malessere","Malizia","Maligno","Simulatore","Mendacità",
+      "Mercuriale","Tetro","Nadir","Nemesi","Nichilismo","Obliquo","Oblio","Presagio","Ossificare","Ostracismo",
+      "Paradosso","Paria","Patetismo","Spergiuro","Petulanza","Pietà","Luogo comune","Polemico","Portento","Pretesa",
+      "Probità","Prodigalità","Quorum","Rancore","Recidivismo","Reliquia","Repugnanza","Spaccatura","Bigottismo","Scisma",
+      "Sedizione","Sofisma","Spettro","Stoico","Soggiogare","Sotterfugio","Tacito","Temerarietà","Catena","Timoroso",
+      "Coppia","Tumulto","Ombra","Inquietante","Usurpare","Insulso","Vendetta","Velenoso","Vessare","Vilipendere",
+      "Vortice","Declinare","Ira","Xenofobia","Desiderare","Fanatico","Acquiescenza","Ammonimento","Distaccato","Migliorare",
+      "Anacronismo","Antitesi","Approvazione","Arcano","Asperità","Battuta","Barocco","Bellicoso","Biforcazione","Adulare",
+      "Cadaverico","Cavaliere","Censura","Vergogna","Trucco","Maleducato","Cogitare","Compunzione","Conflagrazione","Intricato",
+      "Scarsità","Deleterio","Demagogo","Posato","Denigrare","Denunciare","Scoraggiato","Didattico","Disaffezione","Discernimento",
+      "Disprezzo","Sminuire","Dissimulare","Dogmatico","Doppiezza","Sfrontatezza","Grave","Elusivo","Amareggiare","Coinvolgere",
+      "Gravoso","Snervare","Effimero","Equanimità","Errante","Evasione","Esecrare","Fustigare","Opportunistico","Improvvisato",
+      "Incultivo","Meticoloso","Adulare","Fingere","Fermentare","Frivolo","Fiorito","Fomentare","Sopportare","Carico",
+      "Frenetico","Futile","Furtivo","Contraddire","Grandiloquente","Sventurato","Arringa","Altezzoso","Egemonia","Abominevole",
+      "Eresia","Impetuoso","Indolenza","Ineptitudine","Inesorabile","Ingrato","Insinuazione","Insipido","Insulare","Intemperante",
+      "Intransigente","Invettiva","Irascibile","Irriverente","Annoiato","Lacrimoso","Lassitudine","Lugubre","Macchinazione","Maledizione",
+    ],
+  },
+
+  // ── MONTENEGRIN ──────────────────────────────────────────────────────────
+  me: {
+    easy: [
+      "Abej","Ajkula","Akacija","Alga","Amfora","Anđeo","Bačva","Bjelica","Bor","Brada",
+      "Brijeg","Breza","Buba","Bunar","Čaplja","Čempres","Čičak","Cvijet","Dagnja","Delfin",
+      "Divokoza","Drvo","Dub","Duga","Duvna","Dvor","Djetelina","Đurđevak","Gljiva","Gnijezdo",
+      "Goran","Grab","Grana","Granit","Grbavica","Grizly","Grm","Guja","Guska","Hrast",
+      "Irvas","Jablanka","Javor","Jazavac","Jazovka","Jela","Jelen","Jesetra","Jezerski","Jezero",
+      "Joha","Kadulja","Kamara","Kamen","Kamila","Klopka","Kob","Kosa","Kostanj","Kovač",
+      "Koza","Kozlić","Krastavac","Kraška","Kreda","Kruna","Kuna","Lastavica","Lattica","Lavanda",
+      "Lebdilo","Ledina","Lijeska","Lipa","List","Livada","Lješnjak","Lješnjik","Ljubičica","Ljupka",
+      "Lopoč","Loza","Lubenica","Luča","Luna","Maslina","Magarac","Medvjed","Medved","Meduza",
+      "Metla","Mliječ","Mrav","Munje","Muška","Njiva","Oblak","Ognjišta","Orah","Orao",
+      "Orkan","Ormar","Osa","Ostruga","Ovcica","Palma","Paprat","Paučina","Paun","Pčela",
+      "Pećina","Petal","Pijesak","Pjetlić","Planina","Plima","Plovka","Pluto","Polje","Potok",
+      "Ptica","Rak","Riba","Ribl","Rijeka","Rosa","Ruža","Skalište","Slavuj","Sliva",
+      "Smreka","Snijeg","Soko","Sova","Srna","Stog","Struk","Sunce","Šaran","Ševa",
+      "Škorpion","Šljuka","Šljiva","Šuma","Tisa","Trava","Trlica","Trnina","Trut","Tunja",
+      "Urs","Utva","Vatra","Vedrina","Velebit","Vihor","Vila","Vino","Vis","Vod",
+      "Voda","Vođa","Voluhar","Vrabac","Vrana","Vrba","Vuk","Zec","Zenica","Zimzel",
+      "Zmaj","Zora","Žaba","Žbun","Žir","Žito","Žuna","Žunac","Abeceda","Adut",
+      "Ajvar","Bačvar","Bajka","Baklja","Banat","Bara","Barut","Biljka","Bizon","Blatara",
+      "Blato","Brod","Brus","Bubuljica","Bujica","Čaša","Čičak","Ćilim","Ćuk","Čvor",
+      "Dab","Dalija","Divlja","Djeto","Dno","Dolac","Dolin","Drobno","Dunavlje","Dura",
+      "Đurić","Entuzijazam","Farma","Fazan","Galeb","Garavan","Gavran","Gazda","Gazi","Glib",
+      "Glicin","Glina","Globus","Gnjev","Golub","Gorge","Gvozd","Haluga","Hib","Hidra",
+      "Humka","Hunjalo","Hvalja","Jasen","Javor","Ježeva","Jorgovan","Josipovac","Jug","Juha",
+      "Jurić","Kaktus","Kapetanija","Katedra","Kazimir","Klješta","Klupa","Kmeta","Kobilica","Kocka",
+      "Koliba","Komarac","Koplje","Kopriva","Korijen","Kos","Košćela","Kotac","Kotor","Kovnica",
+      "Kozara","Krnjak","Krs","Kuka","Kukuruz","Kupina","Ladanje","Lagum","Lahor","Lakat",
+      "Lantana","Lapor","Lavež","Ledena","Ler","Letva","Lje","Ljiljan","Logor","Lok",
+      "Lop","Lovor","Lubarda","Luč","Luka","Lun","Lunta","Maćuhica","Mahovine","Maline",
+      "Malter","Mandela","Manita","Maslačak","Matičnjak","Matica","Mavrica","Meštar","Milka","Mlin",
+    ],
+    hard: [
+      "Bezakonje","Kaos","Obmana","Laž","Prevara","Cinizma","Dogma","Ambivalentnost","Paradoks","Anarhija",
+      "Nihilizam","Anomalija","Apstraktan","Apostazija","Spletka","Hulja","Bujica","Žar","Lukavstvo","Asketizam",
+      "Kleveta","Atrofija","Proricanje","Pohlepa","Aksiom","Balast","Bedlam","Obmanjivati","Demantovati","Militantnost",
+      "Kuga","Kakofonija","Kadenca","Nesreća","Kleveta","Hir","Katalizator","Jedak","Ograda","Šifra",
+      "Galama","Ubjedljiv","Dosluhu","Grižnja","Pokroviteljstvo","Kajanje","Krivac","Cinizam","Debakl","Dekadencija",
+      "Poštovanje","Potop","Izopačenost","Pustoš","Despotizam","Dijalektika","Nevjera","Propadanje","Elegija","Enigma",
+      "Entropija","Prolazan","Dvosmislen","Surogat","Prolazan","Hitnost","Iskupiti","Apsurd","Glup","Žar",
+      "Smrdljiv","Pukotina","Nedostatak","Galama","Krhkost","Fuga","Gambito","Tmurno","Mrak","Kaos",
+      "Oholost","Licemjerje","Ikonoklast","Idolopoklonstvo","Ćorsokak","Umrljati","Sramota","Nepravda","Prazno","Bahatost",
+      "Pobuna","Ironija","Sudbina","Zvon","Praznina","Žalost","Letargija","Liminalan","Brbljiv","Nelagoda",
+      "Malicioznost","Zlonamjeran","Pretvarac","Neiskrenost","Prevrtljiv","Sumoran","Nadir","Nemeza","Nihilizam","Kos",
+      "Zaborav","Slutnja","Okoštati","Ostracizam","Paradoks","Paria","Patetizam","Krivokletstvo","Petulantnost","Pobožnost",
+      "Banalnost","Polemičan","Predskazanje","Pretvaranje","Poštenje","Rasipnost","Kvorum","Gorčina","Povrat","Relikvija",
+      "Gađenje","Rascjep","Fanatizam","Shizma","Pobuna","Sofisterija","Utvara","Stoički","Pokoriti","Zavlačenje",
+      "Prećutan","Smjelost","Okovi","Plašljiv","Uvrtanje","Vreva","Sjenka","Jezovit","Uzurpirati","Bezbojno",
+      "Vendeta","Otrovan","Mučiti","Kleveta","Vrtlog","Propadanje","Gnjiv","Ksenofobija","Čežnja","Fanatik",
+      "Pristajati","Ukor","Udaljen","Poboljšati","Anakreonizam","Antiteza","Odobravanje","Tajnovit","Oštrina","Šala",
+      "Barokno","Ratoboran","Razilaženje","Laskati","Leš","Kavalir","Kritika","Sram","Prevara","Grub",
+      "Zamišljenost","Grižnja","Konflagracija","Zapleteno","Oskudica","Štetan","Demagog","Suzdrzan","Ocrnjivati","Denuncijacija",
+      "Obeshrabreno","Didaktičan","Otudjenost","Uvid","Prezir","Bagatelizirati","Prikrivati","Dogmatičan","Dvoličan","Drskost",
+      "Monstruozan","Neuhvatljiv","Zagorčiti","Uplesti","Tegobno","Oslabiti","Prolazan","Smirenost","Lutajući","Izbjegavanje",
+      "Proklinjati","Oportunistički","Improvizirano","Ugar","Minuciozan","Udvarati","Pretvarati","Vriti","Lakomislen","Raskošan",
+      "Raspiriti","Podnositi","Opterećen","Frenetičan","Površan","Prikriven","Protivurječiti","Pompezno","Nesretan","Propovijed",
+      "Ohol","Hegemonija","Opak","Jeres","Nagao","Lijenost","Nespretan","Neumitan","Nezahvalan","Insinuacija",
+      "Bezukusan","Zatvoren","Razuzdan","Tvrdoglav","Napad","Inatljiv","Nepoštovanje","Dosađen","Suzan","Malaksalost",
+    ],
+  },
+
+  // ── UKRAINIAN ────────────────────────────────────────────────────────────
+  uk: {
+    easy: [
+      "Абрикос","Айстра","Акація","Ангел","Арка","Бабка","Бджола","Береза","Берег","Бик",
+      "Білка","Бобер","Бузок","Буря","Верба","Вітер","Вишня","Вогонь","Вода","Вовк",
+      "Голуб","Гора","Гриб","Гроза","Гусінь","Джміль","Дощ","Дуб","Жайворон","Жук",
+      "Зайчик","Зерно","Зима","Зірка","Змія","Іній","Кабан","Калина","Камінь","Квітка",
+      "Клен","Козуля","Кіт","Кінь","Кора","Корінь","Корова","Кремінь","Кролик","Крот",
+      "Кукурудза","Купина","Лебідь","Лелека","Лиса","Лист","Літо","Луг","Лунь","Лящ",
+      "Мак","Малина","Мімоза","Місяць","Мох","Мурашка","Нарцис","Небо","Нива","Нічка",
+      "Озеро","Орел","Осінь","Осика","Павук","Пастух","Пісок","Піщаник","Пшениця","Рак",
+      "Ромашка","Роса","Рябина","Сад","Сіль","Слива","Сніг","Сова","Сонях","Сосна",
+      "Стріла","Тополя","Тюльпан","Умань","Фіалка","Хліб","Хмара","Череп","Черешня","Чорниця",
+      "Шипшина","Шишка","Явір","Ялина","Ялівець","Яструб","Яблуко","Берест","Бурмило","Вовчок",
+      "Гарбуз","Гілочка","Горіх","Грак","Деревій","Дрізд","Жовтець","Журавель","Заєць","Зозуля",
+      "Кизил","Кіш","Кропива","Латаття","Лохина","Лось","Лупина","Мальва","Мати-й-мачуха","Миша",
+      "Митра","Могила","Мурава","Нетреба","Нічниця","Нугат","Нюх","Овес","Окунь","Олень",
+      "Осот","Павич","Палій","Пелюстка","Пень","Перепілка","Плющ","Полин","Польовий","Пупавка",
+      "Пучок","Рибалка","Різак","Рій","Рись","Свиня","Стокротка","Сурепка","Тернина","Тис",
+      "Тхір","Уж","Фазан","Цибуля","Чайка","Чебрець","Чорногуз","Чумак","Шавлія","Шипшина",
+      "Щука","Юнь","Ягода","Яворина","Ялинка","Язик","Яр","Яструбинець","Ячмінь","Абрикос",
+      "Авокадо","Агрус","Аїр","Аконіт","Акула","Алича","Алое","Ананас","Анемона","Антилопа",
+      "Арахіс","Аркуш","Арніка","Астра","Ателія","Аул","Бадилля","Бамбук","Барвінок","Баранець",
+      "Барсук","Батіг","Берека","Бісер","Бобовик","Болото","Борець","Борона","Бугай","Будяк",
+      "Буйвол","Булава","Бурмиха","Бурштин","Буяння","Вивірка","Видра","Виноград","Вишневий","Вівця",
+      "Вільха","Вітрило","Вівторок","Водоспад","Волошка","Вугор","Гадюка","Гвоздика","Гетьман","Гичка",
+      "Гірчиця","Гліцинія","Глід","Глобус","Глухар","Гнат","Гній","Горобець","Горобина","Гречка",
+      "Гриміти","Грудка","Губка","Гусак","Гуска","Дельфін","Держак","Дика","Дикий","Дим",
+      "Диня","Дозрілий","Дрова","Дрофа","Дубок","Дудник","Дятел","Єнот","Єнотовидний","Єхидна",
+      "Єресть","Єрик","Ємшан","Єпископ","Єдиноріг","Жайвір","Жало","Жар","Жасмин","Жито",
+      "Жовтуга","Журба","Заболотній","Загайник","Зайвий","Залізняк","Залізо","Занедбаний","Заплава","Зарасти",
+    ],
+    hard: [
+      "Абсурд","Агонія","Алхімія","Алегорія","Амбівалентність","Анахронізм","Анархія","Аномалія","Антитеза","Апатія",
+      "Apostasija","Arcanum","Полум'я","Artifice","Аскетизм","Наклеп","Атрофія","Пророцтво","Жадібність","Аксіома",
+      "Баласт","Хаос","Спокусити","Спростувати","Войовничість","Чума","Какофонія","Каденція","Нещастя","Наклеп",
+      "Примха","Каталізатор","Їдкий","Застереження","Шифр","Гамір","Переконливий","Змова","Докори сумління","Поблажливість",
+      "Каяття","Винуватець","Цинізм","Дебакл","Декаданс","Шанобливість","Потоп","Розпуста","Запустіння","Деспотизм",
+      "Діалектика","Невпевненість","Занепад","Елегія","Загадка","Ентропія","Скороминущий","Двозначний","Ерзац","Примарний",
+      "Терміновість","Спокута","Абсурд","Недоумкуватий","Палкість","Смердючий","Тріщина","Недолік","Фуга","Гамбіт",
+      "Похмурий","Морок","Хаос","Зарозумілість","Лицемірство","Іконоборець","Ідолопоклонство","Глухий кут","Заплямувати","Ганьба",
+      "Несправедливість","Прісний","Нахабство","Повстання","Іронія","Доля","Дзвін","Прогалина","Жаль","Летаргія",
+      "Лімінальний","Балакучий","Нездужання","Злоба","Злобний","Удавання","Нечесність","Мінливий","Похмурий","Надір",
+      "Немезида","Нігілізм","Навскіс","Забуття","Передвістя","Скам'яніти","Остракізм","Парадокс","Вигнанець","Пафос",
+      "Лжесвідчення","Примхливість","Побожність","Банальність","Полемічний","Провістя","Удавання","Порядність","Марнотратство","Кворум",
+      "Злопам'ятство","Рецидивізм","Реліквія","Огида","Розкол","Ханжество","Схизма","Заколот","Софістика","Привид",
+      "Стоїчний","Поневолити","Підступ","Мовчазний","Відвага","Кайдани","Боязкий","Крутний момент","Смута","Тінь",
+      "Моторошний","Узурпувати","Прісний","Вендета","Отруйний","Мордувати","Наклепувати","Вир","Занепадати","Гнів",
+      "Ксенофобія","Прагнути","Фанатик","Поступливість","Догана","Відстороненість","Покращити","Анахронізм","Антитеза","Схвалення",
+      "Загадковий","Різкість","Жарт","Бароко","войовничий","Роздвоювати","Лестити","Трупно-блідий","Кавалер","Осуд",
+      "Сором","Шахрайство","Грубий","Міркувати","Докори сумління","Конфлаграція","Заплутаний","Нестача","Шкідливий","Демагог",
+      "Стриманий","Чорнити","Доноси","Знеохочений","Дидактичний","Відчуження","Розсудливість","Зневага","Применшувати","Приховувати",
+      "Догматичний","Лицемірний","Нахабство","Жахливий","Невловимий","Озлобити","Заплутати","Обтяжливий","Знесилити","Примарний",
+      "Рівновага","Блукаючий","Ухилення","Проклинати","Таврувати","Зручний","Імпровізований","Перелоги","Ретельний","Лестити",
+      "Удавати","Бродити","Фривольний","Квітчастий","Розпалювати","Терпіти","Обтяжений","Скажений","Беззмістовний","Потаємний",
+      "Заперечувати","Напишний","Невдаха","Демагогія","Зарозумілий","Гегемонія","Мерзенний","Єресь","Запальний","Байдикування",
+      "Невмілий","Невблаганний","Невдячний","Натяк","Прісний","Замкнений","Нестриманий","Уперти","Інвектива","Запальний",
+      "Зневажливий","Пересичений","Сльозливий","Знемога","Похмурий","Змовництво","Прокляття","Зловмисний","Сентиментальний","Користолюбний",
+    ],
+  },
+
+  // ── RUSSIAN ───────────────────────────────────────────────────────────────
+  ru: {
+    easy: [
+      "Абрикос","Айва","Аист","Акула","Ангел","Арбуз","Берёза","Берег","Бобёр","Бурундук",
+      "Василёк","Верба","Ветер","Вишня","Волк","Гора","Гриб","Гроза","Грузь","Дождь",
+      "Дуб","Ель","Ёж","Жаворонок","Жук","Зайчик","Зерно","Зима","Звезда","Змея",
+      "Иней","Кабан","Калина","Камень","Клён","Кобра","Колос","Корень","Корова","Кролик",
+      "Крот","Кукуруза","Лебедь","Лиса","Лист","Лошадь","Луг","Лягушка","Малина","Медведь",
+      "Месяц","Метель","Мох","Муравей","Нарцисс","Небо","Нива","Ноябрь","Озеро","Орёл",
+      "Осень","Паук","Пасека","Пчела","Пшеница","Рак","Ромашка","Роса","Рябина","Сад",
+      "Снег","Сова","Сосна","Стрела","Тополь","Тюльпан","Фиалка","Хлеб","Черника","Шиповник",
+      "Щука","Ягода","Яблоко","Ясень","Аконит","Алтей","Алыча","Анемон","Антилопа","Арника",
+      "Астра","Барсук","Белена","Бересклет","Бизон","Болото","Борец","Бурьян","Буйвол","Будяк",
+      "Вербейник","Видра","Виноград","Вьюнок","Гадюка","Гвоздика","Горобина","Гречиха","Гусь","Дельфин",
+      "Дрофа","Ежевика","Ёлка","Жасмин","Желудь","Журавль","Зозуля","Зубр","Иволга","Камыш",
+      "Кедр","Кизил","Клевер","Клюква","Коростель","Краснотал","Кувшинка","Куропатка","Лабазник","Ландыш",
+      "Лиственница","Лобода","Лось","Луговик","Лунь","Люпин","Льнянка","Мальва","Марьянник","Медуница",
+      "Мезгера","Метлица","Мышехвостик","Наперстянка","Незабудка","Овёс","Окунь","Олень","Осот","Пион",
+      "Плющ","Полынь","Поползень","Просо","Репейник","Репешок","Рогоз","Сивец","Синица","Ситник",
+      "Смородина","Снегирь","Сурепка","Тёрн","Тмин","Трясогузка","Тысячелистник","Уж","Фазан","Хвощ",
+      "Цикорий","Цыплёнок","Чабрец","Чайка","Чернотал","Щавель","Ягель","Яструб","Ячмень","Авдотка",
+      "Аврора","Агава","Айкидо","Акация","Акула","Аласка","Алоэ","Альбатрос","Алчедон","Амарант",
+      "Амфибия","Анаконда","Анис","Антей","Аралия","Аргус","Аркан","Армадилло","Арника","Арча",
+      "Астрагал","Аурукария","Баклан","Бальзамин","Бамбук","Барвинок","Беркут","Бескид","Бобовник","Болиголов",
+      "Болотянка","Бомбина","Бородавочник","Бурундук","Бурьян","Бутон","Варакушка","Василёк","Вахта","Вирея",
+      "Волчник","Волчья ягода","Выхухоль","Гагара","Гаичка","Гамадрил","Гарпия","Гвоздика","Гигрофила","Гладиолус",
+      "Гоголь","Горец","Грунт","Дрок","Дроздовник","Дубняк","Дудник","Дятел","Ехидна","Ёрш",
+      "Ёршик","Живокость","Жостер","Заяц","Земляника","Зимняк","Зубянка","Ива","Иволга","Ирис",
+      "Ирга","Камнеломка","Каштан","Кедровка","Кермек","Клест","Клоповник","Кобчик","Ковыль","Козодой",
+      "Кокушник","Колокольчик","Коноплёвка","Короставник","Коршун","Крапива","Кречет","Кропива","Крот","Кручёный",
+      "Кувшинка","Купена","Кутра","Кыргыз","Лаванда","Лебеда","Лебедь","Ледянка","Лесная","Ливень",
+    ],
+    hard: [
+      "Абсурд","Агония","Алхимия","Аллегория","Амбивалентность","Анахронизм","Анархия","Аномалия","Антитеза","Апатия",
+      "Apostasija","Arcanum","Жар","Artifice","Аскетизм","Клевета","Атрофия","Предзнаменование","Жадность","Аксиома",
+      "Балласт","Хаос","Соблазнить","Опровергнуть","Воинственность","Чума","Какофония","Каденция","Бедствие","Клевета",
+      "Прихоть","Катализатор","Едкий","Оговорка","Шифр","Шум","Убедительный","Сговор","Угрызения совести","Снисхождение",
+      "Раскаяние","Виновник","Цинизм","Фиаско","Декаданс","Почтение","Потоп","Развращённость","Запустение","Деспотизм",
+      "Диалектика","Неуверенность","Упадок","Элегия","Загадка","Энтропия","Мимолётный","Двусмысленный","Эрзац","Призрачный",
+      "Срочность","Искупление","Абсурд","Недалёкий","Пыл","Зловонный","Трещина","Изъян","Фуга","Гамбит",
+      "Мрачный","Тьма","Хаос","Высокомерие","Лицемерие","Иконоборец","Идолопоклонство","Тупик","Запятнать","Позор",
+      "Несправедливость","Пресный","Наглость","Мятеж","Ирония","Судьба","Звон","Пробел","Скорбь","Летаргия",
+      "Лиминальный","Болтливый","Недомогание","Злоба","Злобный","Притворство","Нечестность","Изменчивый","Угрюмый","Надир",
+      "Немезида","Нигилизм","Наискось","Забвение","Предзнаменование","Окаменеть","Остракизм","Парадокс","Изгой","Пафос",
+      "Лжесвидетельство","Капризность","Благочестие","Банальность","Полемический","Предзнаменование","Притворство","Порядочность","Расточительство","Кворум",
+      "Злопамятность","Рецидивизм","Реликвия","Отвращение","Раскол","Ханжество","Схизма","Мятеж","Схоластика","Призрак",
+      "Стоический","Поработить","Уловка","Умолчание","Смелость","Оковы","Робкий","Вращающий момент","Смута","Тень",
+      "Жуткий","Узурпировать","Пресный","Вендетта","Ядовитый","Мучить","Клеветать","Водоворот","Угасать","Гнев",
+      "Ксенофобия","Стремиться","Фанатик","Уступчивость","Выговор","Отстранённость","Улучшить","Анахронизм","Антитеза","Одобрение",
+      "Таинственный","Резкость","Шутка","Барокко","воинственный","Раздваивать","Льстить","Трупно-бледный","Кавалер","Порицание",
+      "Стыд","Мошенничество","Грубый","Размышлять","Угрызения совести","Конфлаграция","Запутанный","Нехватка","Вредоносный","Демагог",
+      "Сдержанный","Чернить","Доносительство","Обескураженный","Дидактический","Отчуждение","Проницательность","Презрение","Умалять","Скрывать",
+      "Догматический","Лицемерный","Нахальство","Чудовищный","Неуловимый","Озлобить","Запутать","Обременительный","Обессилить","Мимолётный",
+      "Душевное равновесие","Блуждающий","Уклонение","Проклинать","Клеймить","Целесообразный","Импровизированный","Перелоги","Тщательный","Льстить",
+      "Притворяться","Бродить","Легкомысленный","Цветистый","Разжигать","Терпеть","Обременённый","Неистовый","Бессодержательный","Тайный",
+      "Отрицать","Напыщенный","Неудачник","Демагогия","Заносчивый","Гегемония","Мерзкий","Ересь","Порывистый","Безделье",
+      "Неумелый","Неумолимый","Неблагодарный","Намёк","Пресный","Замкнутый","Невоздержанный","Упрямый","Инвектива","Вспыльчивый",
+      "Пренебрежительный","Пресыщенный","Слезливый","Изнеможение","Мрачный","Злоумышление","Проклятие","Злонамеренный","Сентиментальный","Корыстолюбивый",
+    ],
+  },
+
+  // ── POLISH ────────────────────────────────────────────────────────────────
+  pl: {
+    easy: [
+      "Agrest","Akacja","Bocian","Borsuk","Brzoza","Buk","Chabry","Chrząszcz","Chrust","Cierń",
+      "Czajka","Czapla","Czarna","Czeremcha","Czereśnia","Czmychaj","Ćma","Dąb","Delfin","Deszcz",
+      "Drewno","Drozd","Dzik","Dzięcioł","Fasola","Fiolek","Gąsienica","Głóg","Gniazdko","Gołąb",
+      "Grzyb","Gwiazda","Jaskółka","Jeleń","Jodła","Jaskier","Jeż","Kaczka","Kamień","Kapuśniak",
+      "Klon","Kos","Korzeń","Kruk","Kukułka","Kwiat","Las","Leszczyna","Liść","Lipa",
+      "Lis","Lotos","Łabędź","Łąka","Łoś","Malina","Mech","Miód","Miodunka","Modrzew",
+      "Motyl","Mrówka","Muchomor","Mysz","Narcyz","Niedźwiedź","Niezapominajka","Nocnik","Norka","Ogród",
+      "Orzeł","Osika","Paproć","Piasek","Pies","Piorun","Pluskwa","Płoć","Pszenica","Ptak",
+      "Rzeka","Ropucha","Rosa","Rumianek","Ryba","Sarna","Serce","Skowronek","Sowa","Sosna",
+      "Staw","Śnieg","Tuje","Wiewiórka","Wierzba","Woda","Wilk","Wróbel","Wróbel","Wydrą",
+      "Zając","Zboże","Zima","Żaba","Żubr","Żuraw","Jezioro","Jabłko","Jarzębina","Javor",
+      "Żywotnik","Bielik","Błotniak","Bławatek","Bobrownik","Borowik","Brodawkowiec","Brodziec","Brzeg","Cietrzew",
+      "Czajka","Czarny","Czubatka","Czyżyk","Dereszowata","Drób","Dzierzba","Dziki","Dzwoneczek","Ekologia",
+      "Fakt","Floks","Foki","Fundament","Gacek","Gawron","Gdula","Ginąca","Góral","Grabówka",
+      "Graba","Granat","Grążel","Grzywa","Guziec","Haczyk","Hełmiasty","Jabłoń","Jałowiec","Jaskier",
+      "Jeżówka","Jodłowy","Juniperus","Kaczan","Kajak","Kania","Kapturnik","Karaś","Karczoch","Karpień",
+      "Karze","Kasza","Kasztan","Kiełż","Kijanka","Kiszka","Kleśnik","Kłokoczka","Kmiotek","Kobuz",
+      "Kocanki","Kokornak","Kokoszka","Kolczurka","Kolejka","Komosa","Konietlica","Konwalia","Kopytnik","Kormorans",
+      "Koronecznik","Kostrzewa","Kozłek","Kruszyna","Krwaśnik","Krzekot","Kszyk","Kukułka","Kukurydza","Kundel",
+      "Kuna","Kupkówka","Kurczak","Kurek","Kuropatwa","Lesnica","Limonka","Linochód","Lnianka","Lnianecznik",
+      "Lobelia","Łatka","Łąkotka","Łąkowiec","Łęg","Łoboda","Łopiany","Łosoś","Łubin","Łukasik",
+      "Macierzanka","Makowiec","Makówka","Mała","Malawski","Marzanka","Marzec","Marzyciel","Maskonur","Maślak",
+      "Mazepa","Mącznica","Mezereon","Miętus","Miotła","Misecznik","Modliszka","Mohera","Morzyczko","Motylica",
+      "Mrukwa","Muflón","Mustelida","Mysikrólik","Naczepa","Nasturcja","Nawłoć","Nawrot","Niebieska","Nieorek",
+      "Nocnica","Nornik","Okoń","Oleander","Oset","Ostróżka","Owsica","Perkozek","Piguła","Pikachu",
+      "Pliszka","Pluszcz","Pójdźka","Poziomka","Przylaszczka","Ptaszysko","Puchacz","Pufin","Rzepik","Samotnik",
+      "Sasanka","Sępnik","Sierpowiec","Słonecznica","Słowik","Smardz","Smużka","Sokół","Sowa","Sóweczka",
+    ],
+    hard: [
+      "Absurd","Acrimonia","Alchemia","Alienacja","Alegoria","Niejednoznaczność","Anachronizm","Anarchia","Anomalia","Antyteza",
+      "Apatia","Apostazja","Arkanum","Żar","Sztuczność","Ascetyzm","Oszczerstwo","Atrofia","Przepowiednia","Chciwość",
+      "Aksjomat","Balast","Chaos","Uwieść","Obalić","Wojowniczość","Zaraza","Kakofonia","Kadencja","Nieszczęście",
+      "Kalumnia","Kaprys","Katalizator","Żrący","Zastrzeżenie","Szyfr","Wrzawa","Przekonujący","Zmowa","Wyrzuty sumienia",
+      "Pobłażliwość","Skrucha","Winowajca","Cynizm","Debakl","Dekadencja","Szacunek","Potop","Zepsucie","Spustoszenie",
+      "Despotyzm","Dialektyka","Niepewność","Upadek","Elegia","Zagadka","Entropia","Ulotny","Dwuznaczny","Ersatz",
+      "Evanescencja","Pilność","Pokuta","Absurd","Tępiec","Żarliwość","Cuchnący","Szczelina","Wada","Wrzawa",
+      "Kruchość","Fuga","Gambit","Posępny","Mrok","Chaos","Arogancja","Hipokryzja","Ikonoklasta","Bałwochwalstwo",
+      "Ślepy zaułek","Splamić","Hańba","Niesprawiedliwość","Mdły","Bezczelność","Bunt","Ironia","Los","Dzwon",
+      "Luka","Żal","Letarg","Liminalne","Gadatliwy","Złe samopoczucie","Złośliwość","Złośliwy","Udawacz","Kłamliwość",
+      "Chwiejny","Posępny","Nadir","Nemezis","Nihilizm","Ukośny","Zapomnienie","Omen","Skostnieć","Ostracyzm",
+      "Paradoks","Parias","Patetyzm","Krzywoprzysięstwo","Petulancja","Pobożność","Banał","Polemiczny","Wróżba","Pozorność",
+      "Prawość","Rozrzutność","Kworum","Uraza","Recydywizm","Relikwia","Wstręt","Pęknięcie","Dewocja","Schizma",
+      "Sedycja","Sofistyka","Widmo","Stoicki","Zniewolić","Podstęp","Milczący","Zuchwałość","Więzy","Tchórzliwy",
+      "Moment siły","Zamieszanie","Cień","Niesamowity","Uzurpować","Mdły","Vendetta","Jadowity","Dokuczać","Oczerniać",
+      "Wir","Zanikać","Gniew","Ksenofobia","Tęsknota","Fanatyk","Uległość","Napomnienie","Zdystansowany","Poprawić",
+      "Anachronizm","Antyteza","Aprobata","Arkanum","Surowość","Żart","Barok","Wojowniczy","Rozwidlenie","Schlebiać",
+      "Trupioblady","Kawaler","Nagana","Wstyd","Szachrajstwo","Grubiański","Rozmyślać","Wyrzuty sumienia","Pożar","Zawiły",
+      "Niedostatek","Szkodliwy","Demagog","Powściągliwy","Oczerniać","Denuncjować","Zniechęcony","Dydaktyczny","Dezafektacja","Rozeznanie",
+      "Pogarda","Pomniejszać","Ukrywać","Dogmatyczny","Dwulicowy","Bezczelność","Oburzający","Nieuchwytny","Rozgoryczać","Wikłać",
+      "Uciążliwy","Osłabiać","Ulotny","Równowaga ducha","Błędny","Uchylanie","Przeklinać","Piętnować","Wygodny","Improwizowany",
+      "Ugór","Drobiazgowy","Pochlebiać","Udawać","Fermentować","Frywolny","Kwitnący","Podjudzać","Znosić","Obciążony",
+      "Gorączkowy","Frywolny","Skryty","Zaprzeczać","Napuszony","Nieudacznik","Harangue","Wyniosły","Hegemonia","Obrzydliwy",
+      "Herezja","Porywczy","Lenistwo","Nieudolny","Nieubłagany","Niewdzięczny","Insynuacja","Mdły","Izolowany","Nieumiarkowany",
+      "Nieugiętość","Inwektywa","Porywczy","Niepoważny","Znudzony","Łzawy","Odrętwiałość","Posępny","Machinacja","Przekleństwo",
+    ],
+  },
+};
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SEEDED RNG + BOARD GENERATION
+// ══════════════════════════════════════════════════════════════════════════════
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  return h >>> 0;
+}
+function makeRng(seed) {
+  let s = hashCode(String(seed));
+  return () => {
+    s += 0x6D2B79F5;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function seededShuffle(arr, rng) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const ADJS  = ["AMBER","BRASS","COBALT","DUSK","EMBER","FROST","GRIM","HOLLOW","IRON","JADE",
+               "KEEN","LUNAR","MOSS","NOIR","ONYX","PALE","QUIET","RUST","STEEL","THORN",
+               "ULTRA","VELVET","WILD","XENON","YELLOW","ZINC","ARCTIC","BOLD","CRISP","DARK"];
+const NOUNS = ["ARROW","BADGE","CRANE","DAGGER","ECHO","FORGE","GHOST","HAVEN","IRIS","JUNIPER",
+               "KNELL","LANCE","MARSH","NEXUS","ORBIT","PRISM","QUILL","RAVEN","SPHINX","TORCH",
+               "UMBRA","VAPOR","WRAITH","XRAY","YONDER","ZENITH","ANCHOR","BASIN","CIPHER","DELTA"];
+
+function generateCode() {
+  const rng = makeRng(Date.now() + Math.random() * 1e9);
+  return `${ADJS[Math.floor(rng()*ADJS.length)]}-${NOUNS[Math.floor(rng()*NOUNS.length)]}-${Math.floor(rng()*900)+100}`;
+}
+
+const TEAM = { RED:"red", BLUE:"blue", NEUTRAL:"neutral", ASSASSIN:"assassin" };
+
+function generateBoard(code, difficulty, lang) {
+  const rng  = makeRng(`${code}::${difficulty}::${lang}`);
+  const pool = WORDS[lang][difficulty];
+  const words = seededShuffle(pool, rng).slice(0, 25);
+  const assignments = seededShuffle([
+    ...Array(9).fill(TEAM.RED), ...Array(8).fill(TEAM.BLUE),
+    ...Array(7).fill(TEAM.NEUTRAL), TEAM.ASSASSIN,
+  ], rng);
+  return words.map((word, i) => ({ word, team: assignments[i], revealed: false }));
+}
+
+function initGame(code, difficulty, lang) {
+  return {
+    board: generateBoard(code, difficulty, lang),
+    currentTeam: TEAM.RED, spymasterMode: false,
+    clue: "", clueCount: "", activeClue: null, guessesLeft: 0,
+    winner: null, log: [],
+  };
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STYLES
+// ══════════════════════════════════════════════════════════════════════════════
+const COLORS = {
+  red:      { bg:"#b83232", text:"#fff",    border:"#7a1f1f" },
+  blue:     { bg:"#1f5fa6", text:"#fff",    border:"#133d6e" },
+  neutral:  { bg:"#7a6a2a", text:"#f5ead0", border:"#574b1d" },
+  assassin: { bg:"#111827", text:"#e0e0e0", border:"#000"    },
+};
+const CARD_IDLE    = { bg:"#f5ead0", text:"#1a0f07", border:"#c9a86b" };
+const CARD_PENDING = { bg:"#e8d090", text:"#1a0f07", border:"#b8902a" };
+
+function ghostBtn(color, fontSize="11px", pad="6px 14px") {
+  return {
+    background:"transparent", border:`1px solid ${color}`, borderRadius:"5px",
+    color, padding:pad, fontSize, letterSpacing:"2px", cursor:"pointer",
+    fontFamily:"Georgia, serif", textTransform:"uppercase", transition:"all 0.15s",
+  };
+}
+const inputSt = {
+  background:"#130c05", border:"1px solid #6b5214", borderRadius:"4px",
+  color:"#f5ead0", padding:"6px 10px", fontSize:"13px", outline:"none",
+  fontFamily:"Georgia, serif", letterSpacing:"1px",
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════════════════════════════════════
+function Modal({ children }) {
+  return (
+    <div style={{
+      position:"fixed", inset:0, zIndex:100, background:"rgba(0,0,0,0.75)",
+      display:"flex", alignItems:"center", justifyContent:"center", padding:"20px",
+    }}>
+      <div style={{
+        background:"#1e1108", border:"2px solid #8b6914", borderRadius:"12px",
+        padding:"32px 36px", maxWidth:"400px", width:"100%",
+        boxShadow:"0 20px 60px rgba(0,0,0,0.8)", textAlign:"center",
+        fontFamily:"Georgia, serif",
+      }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// LOBBY
+// ══════════════════════════════════════════════════════════════════════════════
+function Lobby({ onStart }) {
+  const [inputCode, setInputCode]   = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
+  const [lang, setLang]             = useState("en");
+  const [lastGen, setLastGen]       = useState("");
+  const T = UI[lang];
+
+  const handleGenerate = () => { const c = generateCode(); setLastGen(c); setInputCode(c); };
+  const handleStart = () => { const code = inputCode.trim().toUpperCase() || generateCode(); onStart(code, difficulty, lang); };
+
+  return (
+    <div style={{
+      minHeight:"100vh", background:"#130c05", fontFamily:"Georgia, serif", color:"#f5ead0",
+      display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 20px",
+    }}>
+      <div style={{ textAlign:"center", marginBottom:"40px" }}>
+        <div style={{ fontSize:"52px", letterSpacing:"12px", color:"#c9a86b", fontStyle:"italic", fontWeight:"bold" }}>{T.title}</div>
+        <div style={{ fontSize:"11px", letterSpacing:"5px", color:"#5a4830", marginTop:"6px" }}>{T.subtitle}</div>
+      </div>
+
+      <div style={{
+        background:"#1e1108", border:"1px solid #3a2610", borderRadius:"12px",
+        padding:"32px 36px", width:"100%", maxWidth:"520px",
+        boxShadow:"0 12px 40px rgba(0,0,0,0.6)", display:"flex", flexDirection:"column", gap:"24px",
+      }}>
+        {/* Language */}
+        <div>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"10px" }}>{T.language}</div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(5, 1fr)", gap:"6px" }}>
+            {LANGUAGES.map(l => (
+              <button key={l.code} onClick={() => setLang(l.code)} style={{
+                padding:"7px 4px", fontSize:"10px", border:"1px solid",
+                borderColor: lang===l.code ? "#c9a86b" : "#3a2610",
+                borderRadius:"6px", cursor:"pointer", fontFamily:"Georgia, serif",
+                background: lang===l.code ? "#2a1e08" : "#130c05",
+                color: lang===l.code ? "#c9a86b" : "#5a4830",
+                fontWeight: lang===l.code ? "bold" : "normal",
+                transition:"all 0.15s", textAlign:"center",
+              }}>{l.label}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* Difficulty */}
+        <div>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"10px" }}>{T.difficulty}</div>
+          <div style={{ display:"flex", border:"1px solid #3a2610", borderRadius:"6px", overflow:"hidden" }}>
+            {["easy","hard"].map(d => (
+              <button key={d} onClick={() => setDifficulty(d)} style={{
+                flex:1, padding:"10px", fontSize:"12px", letterSpacing:"2px",
+                textTransform:"uppercase", border:"none", cursor:"pointer", fontFamily:"Georgia, serif",
+                background: difficulty===d ? (d==="easy" ? "#2e6b3e" : "#7a1f1f") : "#130c05",
+                color: difficulty===d ? "#fff" : "#5a4830",
+                fontWeight: difficulty===d ? "bold" : "normal", transition:"all 0.2s",
+              }}>{d==="easy" ? T.easy : T.hard}</button>
+            ))}
+          </div>
+          <div style={{ fontSize:"10px", color:"#3a2a18", marginTop:"6px" }}>{difficulty==="easy" ? T.easyDesc : T.hardDesc}</div>
+        </div>
+
+        {/* Code */}
+        <div>
+          <div style={{ fontSize:"10px", letterSpacing:"3px", color:"#5a4830", marginBottom:"4px" }}>{T.gameCode}</div>
+          <div style={{ fontSize:"10px", color:"#3a2a18", marginBottom:"10px", fontStyle:"italic" }}>{T.gameCodeDesc}</div>
+          <div style={{ display:"flex", gap:"8px" }}>
+            <input value={inputCode} onChange={e=>setInputCode(e.target.value.toUpperCase())}
+              onKeyDown={e=>e.key==="Enter"&&handleStart()} placeholder="e.g.  AMBER-RAVEN-247"
+              style={{ ...inputSt, flex:1, fontSize:"14px", letterSpacing:"2px", padding:"10px 12px" }} />
+            <button onClick={handleGenerate} style={{ ...ghostBtn("#5a4830","18px","8px 12px"), letterSpacing:0 }}>🎲</button>
+          </div>
+          {lastGen && <div style={{ fontSize:"10px", color:"#5a4830", marginTop:"6px", fontStyle:"italic" }}>
+            {T.generated} <strong style={{ color:"#c9a86b", letterSpacing:"2px" }}>{lastGen}</strong></div>}
+          <div style={{ fontSize:"10px", color:"#2a1a0a", marginTop:"6px" }}>{T.leaveBlank}</div>
+        </div>
+
+        <button onClick={handleStart} style={{
+          background:"#c9a86b", border:"none", borderRadius:"6px", color:"#130c05",
+          padding:"14px", fontSize:"13px", letterSpacing:"4px", cursor:"pointer",
+          fontFamily:"Georgia, serif", textTransform:"uppercase", fontWeight:"bold",
+        }}>{T.deploy}</button>
+      </div>
+      <div style={{ marginTop:"16px", fontSize:"10px", color:"#2a1a0a", letterSpacing:"1px", textAlign:"center" }}>{T.sameBoard}</div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MAIN GAME
+// ══════════════════════════════════════════════════════════════════════════════
+export default function AgentX() {
+  const [screen, setScreen]         = useState("lobby");
+  const [gameCode, setGameCode]     = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
+  const [lang, setLang]             = useState("en");
+  const [game, setGame]             = useState(null);
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [confirm, setConfirm]       = useState(null);
+
+  const startGame = (code, diff, l) => {
+    setGameCode(code); setDifficulty(diff); setLang(l);
+    setGame(initGame(code, diff, l));
+    setScreen("game"); setHoveredIdx(null); setConfirm(null);
+  };
+  const newGame     = () => { setGame(initGame(gameCode, difficulty, lang)); setHoveredIdx(null); setConfirm(null); };
+  const backToLobby = () => { setScreen("lobby"); setConfirm(null); };
+
+  if (screen==="lobby") return <Lobby onStart={startGame} />;
+
+  const G=game, T=UI[lang];
+  const update = p => setGame(g=>({...g,...p}));
+  const addLog = m => setGame(g=>({...g,log:[m,...g.log].slice(0,22)}));
+  const redLeft  = G.board.filter(c=>c.team===TEAM.RED  &&!c.revealed).length;
+  const blueLeft = G.board.filter(c=>c.team===TEAM.BLUE &&!c.revealed).length;
+  const currentLabel = G.currentTeam===TEAM.RED ? T.redTeam : T.blueTeam;
+
+  const submitClue = () => {
+    if (!G.clue.trim()||!G.clueCount) return;
+    const n=parseInt(G.clueCount), word=G.clue.trim().toUpperCase();
+    addLog(`${currentLabel} ${T.spymasterLog} "${word}" — ${n}`);
+    setGame(g=>({...g,activeClue:{word,count:n},guessesLeft:n+1,clue:"",clueCount:"",spymasterMode:false}));
+  };
+
+  const endTurn = () => {
+    if (G.winner||!G.activeClue) return;
+    const next=G.currentTeam===TEAM.RED?TEAM.BLUE:TEAM.RED;
+    addLog(`${currentLabel} ${T.endedTurn}`);
+    setGame(g=>({...g,currentTeam:next,activeClue:null,guessesLeft:0}));
+  };
+
+  const handleCardClick = idx => {
+    if (G.winner||G.spymasterMode||!G.activeClue||G.guessesLeft===0) return;
+    if (G.board[idx].revealed) return;
+    setConfirm({type:"card",idx});
+  };
+
+  const confirmReveal = () => {
+    const idx=confirm.idx, card=G.board[idx];
+    setConfirm(null);
+    const newBoard=G.board.map((c,i)=>i===idx?{...c,revealed:true}:c);
+    const newRed=newBoard.filter(c=>c.team===TEAM.RED&&!c.revealed).length;
+    const newBlue=newBoard.filter(c=>c.team===TEAM.BLUE&&!c.revealed).length;
+    const logMsg=`${currentLabel}: "${card.word}" → ${card.team.toUpperCase()}`;
+
+    if (card.team===TEAM.ASSASSIN) {
+      const w=G.currentTeam===TEAM.RED?TEAM.BLUE:TEAM.RED;
+      setGame(g=>({...g,board:newBoard,winner:w,log:[`${T.assassinLog} ${w===TEAM.RED?T.redTeam:T.blueTeam} ${T.wins}`,logMsg,...g.log].slice(0,22)})); return;
+    }
+    if (newRed===0)  { setGame(g=>({...g,board:newBoard,winner:TEAM.RED, log:[T.redWins, logMsg,...g.log].slice(0,22)})); return; }
+    if (newBlue===0) { setGame(g=>({...g,board:newBoard,winner:TEAM.BLUE,log:[T.blueWins,logMsg,...g.log].slice(0,22)})); return; }
+
+    if (card.team!==G.currentTeam) {
+      const next=G.currentTeam===TEAM.RED?TEAM.BLUE:TEAM.RED;
+      const nextLabel=next===TEAM.RED?T.redTeam:T.blueTeam;
+      setGame(g=>({...g,board:newBoard,currentTeam:next,activeClue:null,guessesLeft:0,
+        log:[`${T.wrongTurn} ${nextLabel}`,logMsg,...g.log].slice(0,22)}))}
+    else {
+      const rem=G.guessesLeft-1;
+      if (rem===0) {
+        const next=G.currentTeam===TEAM.RED?TEAM.BLUE:TEAM.RED;
+        const nextLabel=next===TEAM.RED?T.redTeam:T.blueTeam;
+        setGame(g=>({...g,board:newBoard,currentTeam:next,activeClue:null,guessesLeft:0,
+          log:[`${T.outOfGuesses} ${nextLabel}`,logMsg,...g.log].slice(0,22)}))
+      } else { setGame(g=>({...g,board:newBoard,guessesLeft:rem,log:[logMsg,...g.log].slice(0,22)})); }
+    }
+  };
+
+  const handleSpymasterToggle=()=>{ if(G.spymasterMode){update({spymasterMode:false})}else{setConfirm({type:"spymaster"})} };
+  const confirmSpymaster=()=>{ setConfirm(null); update({spymasterMode:true}); };
+  const pendingIdx=confirm?.type==="card"?confirm.idx:null;
+
+  return (
+    <div style={{minHeight:"100vh",background:"#130c05",fontFamily:"Georgia, serif",color:"#f5ead0",display:"flex",flexDirection:"column"}}>
+
+      {/* CONFIRM: CARD */}
+      {confirm?.type==="card"&&(
+        <Modal>
+          <div style={{fontSize:"11px",letterSpacing:"3px",color:"#5a4830",marginBottom:"16px"}}>{T.confirmGuess}</div>
+          <div style={{fontSize:"28px",fontWeight:"bold",letterSpacing:"3px",color:"#f5ead0",marginBottom:"8px"}}>{G.board[confirm.idx].word.toUpperCase()}</div>
+          <div style={{fontSize:"12px",color:"#6a5840",marginBottom:"28px"}}>{T.revealQ}</div>
+          <div style={{display:"flex",gap:"12px",justifyContent:"center"}}>
+            <button onClick={()=>setConfirm(null)} style={ghostBtn("#5a4830","12px","10px 24px")}>{T.cancel}</button>
+            <button onClick={confirmReveal} style={{background:G.currentTeam===TEAM.RED?"#b83232":"#1f5fa6",border:"none",borderRadius:"5px",color:"#fff",padding:"10px 24px",fontSize:"12px",letterSpacing:"3px",cursor:"pointer",fontFamily:"Georgia, serif",textTransform:"uppercase",fontWeight:"bold"}}>{T.revealIt}</button>
+          </div>
+        </Modal>
+      )}
+
+      {/* CONFIRM: SPYMASTER */}
+      {confirm?.type==="spymaster"&&(
+        <Modal>
+          <div style={{fontSize:"32px",marginBottom:"12px"}}>🕵️</div>
+          <div style={{fontSize:"11px",letterSpacing:"3px",color:"#5a4830",marginBottom:"12px"}}>{T.spymasterMode}</div>
+          <div style={{fontSize:"14px",color:"#f5ead0",marginBottom:"8px",lineHeight:"1.6"}}>{T.spymasterWarn}</div>
+          <div style={{fontSize:"12px",color:"#8a6840",marginBottom:"28px",lineHeight:"1.6"}}>{T.spymasterWarn2}</div>
+          <div style={{display:"flex",gap:"12px",justifyContent:"center"}}>
+            <button onClick={()=>setConfirm(null)} style={ghostBtn("#5a4830","12px","10px 24px")}>{T.cancel}</button>
+            <button onClick={confirmSpymaster} style={{background:"#7a5a10",border:"1px solid #c9a86b",borderRadius:"5px",color:"#f5ead0",padding:"10px 24px",fontSize:"12px",letterSpacing:"2px",cursor:"pointer",fontFamily:"Georgia, serif",textTransform:"uppercase",fontWeight:"bold"}}>{T.iAmSpy}</button>
+          </div>
+        </Modal>
+      )}
+
+      {/* HEADER */}
+      <header style={{background:"linear-gradient(135deg,#2a1508 0%,#130c05 100%)",borderBottom:"2px solid #8b6914",padding:"12px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:"12px",flexWrap:"wrap"}}>
+        <div style={{display:"flex",alignItems:"center",gap:"16px"}}>
+          <button onClick={backToLobby} style={ghostBtn("#3a2610","10px","5px 10px")}>{T.lobby}</button>
+          <div>
+            <h1 style={{margin:0,fontSize:"22px",letterSpacing:"8px",color:"#c9a86b",fontStyle:"italic"}}>{T.title}</h1>
+            <div style={{fontSize:"9px",color:"#5a4830",letterSpacing:"2px"}}>{LANGUAGES.find(l=>l.code===lang)?.flag} {difficulty==="easy"?T.easy:T.hard}</div>
+          </div>
+        </div>
+        <div style={{background:"#1e1108",border:"1px solid #3a2610",borderRadius:"6px",padding:"6px 16px",textAlign:"center"}}>
+          <div style={{fontSize:"9px",letterSpacing:"3px",color:"#5a4830"}}>{T.gameCode}</div>
+          <div style={{fontSize:"15px",letterSpacing:"3px",color:"#c9a86b",fontWeight:"bold",marginTop:"2px"}}>{gameCode}</div>
+          <div style={{fontSize:"9px",color:"#3a2a18",marginTop:"2px"}}>{T.shareCode}</div>
+        </div>
+        <div style={{display:"flex",gap:"20px",alignItems:"center"}}>
+          <ScoreBox team="RED"  left={redLeft}  active={G.currentTeam===TEAM.RED &&!G.winner} />
+          <ScoreBox team="BLUE" left={blueLeft} active={G.currentTeam===TEAM.BLUE&&!G.winner} />
+        </div>
+        <button onClick={newGame} style={ghostBtn("#c9a86b")}>{T.newGame}</button>
+      </header>
+
+      {/* WINNER */}
+      {G.winner&&(
+        <div style={{background:G.winner===TEAM.RED?"#8b1a1a":"#1a3d6e",padding:"14px",textAlign:"center",fontSize:"20px",fontWeight:"bold",letterSpacing:"4px",borderBottom:`2px solid ${G.winner===TEAM.RED?"#c0392b":"#2471a3"}`}}>
+          🎉 {G.winner===TEAM.RED?T.redTeam:T.blueTeam} {T.wins} 🎉
+          <button onClick={newGame}     style={{...ghostBtn("#fff"),marginLeft:"20px",fontSize:"11px"}}>{T.sameCode}</button>
+          <button onClick={backToLobby} style={{...ghostBtn("#aaa"),marginLeft:"10px",fontSize:"11px"}}>{T.newCode}</button>
+        </div>
+      )}
+
+      <div style={{display:"flex",flex:1}}>
+        <div style={{flex:1,padding:"18px 18px 14px"}}>
+
+          {/* CLUE BAR */}
+          {!G.winner&&(
+            <div style={{background:"#1e1108",border:`2px solid ${G.currentTeam===TEAM.RED?"#7a1f1f":"#133d6e"}`,borderRadius:"8px",padding:"10px 16px",marginBottom:"14px",display:"flex",alignItems:"center",gap:"12px",flexWrap:"wrap"}}>
+              <div style={{fontSize:"11px",letterSpacing:"2px",fontWeight:"bold",minWidth:"100px",color:G.currentTeam===TEAM.RED?"#e05050":"#4a9edd"}}>{currentLabel}</div>
+              {!G.activeClue?(
+                <>
+                  <input placeholder={T.cluePlaceholder} value={G.clue} onChange={e=>update({clue:e.target.value})} onKeyDown={e=>e.key==="Enter"&&submitClue()} style={{...inputSt,flex:1,maxWidth:"190px"}} />
+                  <input placeholder={T.countPlaceholder} value={G.clueCount} onChange={e=>update({clueCount:e.target.value.replace(/\D/,"")})} onKeyDown={e=>e.key==="Enter"&&submitClue()} style={{...inputSt,width:"44px",textAlign:"center"}} />
+                  <button onClick={submitClue} style={ghostBtn("#c9a86b")}>{T.giveClue}</button>
+                  <label style={{display:"flex",alignItems:"center",gap:"7px",fontSize:"11px",color:G.spymasterMode?"#c9a86b":"#6a5840",cursor:"pointer",letterSpacing:"2px"}}>
+                    <input type="checkbox" checked={G.spymasterMode} onChange={handleSpymasterToggle} style={{cursor:"pointer"}} />
+                    {T.spymaster}
+                  </label>
+                </>
+              ):(
+                <>
+                  <div style={{fontSize:"15px"}}>{T.clueLabel} <strong style={{color:"#c9a86b",letterSpacing:"2px"}}>{G.activeClue.word}</strong> &ensp;—&ensp;<strong style={{color:"#c9a86b"}}>{G.activeClue.count}</strong></div>
+                  <div style={{fontSize:"12px",color:"#6a5840"}}>{T.guessesLeft} <strong style={{color:"#f5ead0"}}>{G.guessesLeft}</strong></div>
+                  <button onClick={endTurn} style={ghostBtn("#6a5840","11px")}>{T.endTurn}</button>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* GRID */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:"9px"}}>
+            {G.board.map((card,idx)=>{
+              const isRevealed=card.revealed, isPending=pendingIdx===idx;
+              const showColor=isRevealed||G.spymasterMode;
+              const col=isPending?CARD_PENDING:showColor?COLORS[card.team]:CARD_IDLE;
+              const canClick=!isRevealed&&G.activeClue&&!G.winner&&!G.spymasterMode;
+              const isHovered=hoveredIdx===idx&&canClick&&!confirm;
+              return (
+                <div key={idx} onClick={()=>handleCardClick(idx)} onMouseEnter={()=>setHoveredIdx(idx)} onMouseLeave={()=>setHoveredIdx(null)}
+                  style={{background:isHovered?"#ede0c0":col.bg,border:`2px solid ${isPending?"#d4a820":col.border}`,borderRadius:"6px",padding:"12px 6px",textAlign:"center",cursor:canClick?"pointer":"default",transition:"all 0.13s ease",transform:isHovered||isPending?"scale(1.05)":"scale(1)",boxShadow:isPending?"0 0 0 3px rgba(212,168,32,0.4),0 6px 18px rgba(0,0,0,0.55)":isHovered?"0 6px 18px rgba(0,0,0,0.55)":isRevealed?"inset 0 2px 6px rgba(0,0,0,0.3)":"0 2px 6px rgba(0,0,0,0.3)",opacity:isRevealed&&!G.spymasterMode?0.6:1,position:"relative",minHeight:"58px",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  {isRevealed&&<div style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.18)",borderRadius:"4px"}}/>}
+                  <span style={{fontSize:"11px",fontWeight:"bold",letterSpacing:"1px",textTransform:"uppercase",color:col.text,position:"relative",zIndex:1,textShadow:showColor?"0 1px 3px rgba(0,0,0,0.5)":"none"}}>{card.word}</span>
+                  {G.spymasterMode&&!isRevealed&&<div style={{position:"absolute",top:"4px",right:"5px",width:"7px",height:"7px",borderRadius:"50%",background:COLORS[card.team].bg,border:"1px solid rgba(255,255,255,0.4)"}}/>}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* LEGEND */}
+          <div style={{display:"flex",gap:"18px",marginTop:"12px",justifyContent:"center",flexWrap:"wrap"}}>
+            {Object.entries(COLORS).map(([t,c])=>(
+              <div key={t} style={{display:"flex",alignItems:"center",gap:"5px",fontSize:"10px",letterSpacing:"2px",color:"#5a4a30"}}>
+                <div style={{width:"11px",height:"11px",borderRadius:"2px",background:c.bg,border:`1px solid ${c.border}`}}/>
+                {t==="assassin"?T.assassin.toUpperCase():t.toUpperCase()}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* LOG */}
+        <div style={{width:"200px",background:"#180e06",borderLeft:"1px solid #3a2610",padding:"14px",display:"flex",flexDirection:"column",gap:"6px",overflowY:"auto"}}>
+          <div style={{fontSize:"10px",letterSpacing:"3px",color:"#5a4a30",marginBottom:"6px"}}>{T.gameLog}</div>
+          {G.log.length===0&&<div style={{fontSize:"11px",color:"#3a2a18",fontStyle:"italic"}}>{T.noMoves}</div>}
+          {G.log.map((entry,i)=>(
+            <div key={i} style={{fontSize:"10px",lineHeight:"1.5",color:i===0?"#f5ead0":"#5a4a50",padding:"5px 8px",background:i===0?"#2a1508":"transparent",borderRadius:"4px",borderLeft:i===0?"2px solid #c9a86b":"2px solid transparent"}}>{entry}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <div style={{borderTop:"1px solid #3a2610",padding:"8px 20px",fontSize:"10px",color:"#3a2a18",letterSpacing:"1px",display:"flex",gap:"16px",flexWrap:"wrap"}}>
+        <span>{T.footerSpy}</span><span>{T.footerOp}</span><span>{T.footerAvoid}</span><span>{T.footerWin}</span>
+      </div>
+    </div>
+  );
+}
+
+function ScoreBox({ team, left, active }) {
+  return (
+    <div style={{textAlign:"center",padding:"7px 14px",borderRadius:"6px",background:active?(team==="RED"?"rgba(176,34,34,0.2)":"rgba(30,90,160,0.2)"):"transparent",border:`1px solid ${active?(team==="RED"?"#b03030":"#1e5aa0"):"#3a2610"}`,transition:"all 0.3s"}}>
+      <div style={{fontSize:"22px",fontWeight:"bold",color:team==="RED"?"#e05050":"#4a9edd"}}>{left}</div>
+      <div style={{fontSize:"9px",letterSpacing:"2px",color:"#5a4a30"}}>{team}</div>
+    </div>
+  );
+}
