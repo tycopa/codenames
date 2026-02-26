@@ -1710,8 +1710,8 @@ export default function AgentX() {
 
   // ── RENDER ──
   return (
-    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"var(--c-bg)", ...BASE,
-      color:"var(--c-text)", display:"flex", flexDirection:"column", overflowX:"hidden" }}>
+    <div style={{ height:"100vh", height:"100dvh", background:"var(--c-bg)", ...BASE,
+      color:"var(--c-text)", display:"flex", flexDirection:"column", overflow:"hidden" }}>
 
       {/* ── MODALS ── */}
       {confirm?.type==="card" && (
