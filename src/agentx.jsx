@@ -1272,7 +1272,7 @@ function Modal({ children }) {
   return (
     <div style={{ position:"fixed", inset:0, zIndex:200, background:"rgba(0,0,0,0.8)",
       display:"flex", alignItems:"center", justifyContent:"center", padding:"20px" }}>
-      <div style={{ ...BASE, background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)", borderRadius:"16px",
+      <div style={{ ...BASE, background:"var(--c-modal-bg)", border:"2px solid var(--c-border-accent)", borderRadius:"16px",
         padding:"32px 28px", maxWidth:"380px", width:"100%",
         boxShadow:"0 20px 60px rgba(0,0,0,0.8)", textAlign:"center" }}>
         {children}
@@ -1534,9 +1534,12 @@ export default function AgentX() {
   // ── Dark / light mode toggle ──
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("agentx_theme");
-    if (saved === "dark")  return true;
-    if (saved === "light") return false;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = saved === "dark" ? true
+                 : saved === "light" ? false
+                 : !window.matchMedia("(prefers-color-scheme: light)").matches;
+    // Set synchronously so CSS sees it before first paint
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    return isDark;
   });
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");

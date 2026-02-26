@@ -45,47 +45,9 @@
   --c-input-bg:        #0d0d0d;
 }
 
-/* ── Light mode variables (shared by auto-detect and manual toggle) ── */
-@mixin light-theme {
-  color-scheme: light;
-  --c-bg:              #ffffff;
-  --c-bg-panel:        #f0f0f0;
-  --c-bg-log:          #f8f8f8;
-  --c-bg-entry:        #e4e4e4;
-  --c-bg-entry-alt:    #eeeeee;
-  --c-modal-bg:        #ffffff;
-  --c-border:          #c0c0c0;
-  --c-border-input:    #aaaaaa;
-  --c-border-accent:   #888888;
-  --c-border-dim:      #d8d8d8;
-  --c-accent:          #444444;
-  --c-accent-strong:   #111111;
-  --c-header-gradient: linear-gradient(135deg, #e8e8e8 0%, #f8f8f8 100%);
-  --c-text:            #111111;
-  --c-text-muted:      #555555;
-  --c-text-dim:        #777777;
-  --c-text-very-dim:   #999999;
-  --c-text-amber:      #666666;
-  --c-neutral-bg:      #888888;
-  --c-neutral-text:    #111111;
-  --c-neutral-border:  #606060;
-  --c-card-idle-bg:    #2a2a2a;
-  --c-card-idle-text:  #f0f0f0;
-  --c-card-idle-border:#555555;
-  --c-card-pending-bg: #444444;
-  --c-card-pending-text:#f0f0f0;
-  --c-card-pending-border:#777777;
-  --c-spy-btn-bg:      #e0e0e0;
-  --c-deploy-loading:  #aaaaaa;
-  --c-deploy-btn:      #222222;
-  --c-deploy-btn-text: #ffffff;
-  --c-lang-active-bg:  #e0e0e0;
-  --c-input-bg:        #ffffff;
-}
-
-/* Auto light from OS (only when no manual data-theme override) */
+/* ── Auto light mode from OS (applies when no manual override is set) ── */
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
+  :root {
     color-scheme: light;
     --c-bg:              #ffffff;
     --c-bg-panel:        #f0f0f0;
@@ -123,46 +85,8 @@
   }
 }
 
-/* Manual light override */
-:root[data-theme="light"] {
-  color-scheme: light;
-  --c-bg:              #ffffff;
-  --c-bg-panel:        #f0f0f0;
-  --c-bg-log:          #f8f8f8;
-  --c-bg-entry:        #e4e4e4;
-  --c-bg-entry-alt:    #eeeeee;
-  --c-modal-bg:        #ffffff;
-  --c-border:          #c0c0c0;
-  --c-border-input:    #aaaaaa;
-  --c-border-accent:   #888888;
-  --c-border-dim:      #d8d8d8;
-  --c-accent:          #444444;
-  --c-accent-strong:   #111111;
-  --c-header-gradient: linear-gradient(135deg, #e8e8e8 0%, #f8f8f8 100%);
-  --c-text:            #111111;
-  --c-text-muted:      #555555;
-  --c-text-dim:        #777777;
-  --c-text-very-dim:   #999999;
-  --c-text-amber:      #666666;
-  --c-neutral-bg:      #888888;
-  --c-neutral-text:    #111111;
-  --c-neutral-border:  #606060;
-  --c-card-idle-bg:    #2a2a2a;
-  --c-card-idle-text:  #f0f0f0;
-  --c-card-idle-border:#555555;
-  --c-card-pending-bg: #444444;
-  --c-card-pending-text:#f0f0f0;
-  --c-card-pending-border:#777777;
-  --c-spy-btn-bg:      #e0e0e0;
-  --c-deploy-loading:  #aaaaaa;
-  --c-deploy-btn:      #222222;
-  --c-deploy-btn-text: #ffffff;
-  --c-lang-active-bg:  #e0e0e0;
-  --c-input-bg:        #ffffff;
-}
-
-/* Manual dark override (restores defaults for light-OS users) */
-:root[data-theme="dark"] {
+/* ── Manual dark override — [data-theme] specificity (0,1,0) beats :root (0,0,1) ── */
+[data-theme="dark"] {
   color-scheme: dark;
   --c-bg:              #0d0d0d;
   --c-bg-panel:        #1a1a1a;
@@ -197,6 +121,44 @@
   --c-deploy-btn-text: #0d0d0d;
   --c-lang-active-bg:  #252525;
   --c-input-bg:        #0d0d0d;
+}
+
+/* ── Manual light override ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --c-bg:              #ffffff;
+  --c-bg-panel:        #f0f0f0;
+  --c-bg-log:          #f8f8f8;
+  --c-bg-entry:        #e4e4e4;
+  --c-bg-entry-alt:    #eeeeee;
+  --c-modal-bg:        #ffffff;
+  --c-border:          #c0c0c0;
+  --c-border-input:    #aaaaaa;
+  --c-border-accent:   #888888;
+  --c-border-dim:      #d8d8d8;
+  --c-accent:          #444444;
+  --c-accent-strong:   #111111;
+  --c-header-gradient: linear-gradient(135deg, #e8e8e8 0%, #f8f8f8 100%);
+  --c-text:            #111111;
+  --c-text-muted:      #555555;
+  --c-text-dim:        #777777;
+  --c-text-very-dim:   #999999;
+  --c-text-amber:      #666666;
+  --c-neutral-bg:      #888888;
+  --c-neutral-text:    #111111;
+  --c-neutral-border:  #606060;
+  --c-card-idle-bg:    #2a2a2a;
+  --c-card-idle-text:  #f0f0f0;
+  --c-card-idle-border:#555555;
+  --c-card-pending-bg: #444444;
+  --c-card-pending-text:#f0f0f0;
+  --c-card-pending-border:#777777;
+  --c-spy-btn-bg:      #e0e0e0;
+  --c-deploy-loading:  #aaaaaa;
+  --c-deploy-btn:      #222222;
+  --c-deploy-btn-text: #ffffff;
+  --c-lang-active-bg:  #e0e0e0;
+  --c-input-bg:        #ffffff;
 }
 
 a {
