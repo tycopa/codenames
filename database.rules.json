@@ -1,0 +1,81 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "games": {
+      ".read": false,
+      ".write": false,
+
+      "$code": {
+        ".read": true,
+        ".write": true,
+
+        ".validate": "newData.hasChildren(['board', 'currentTeam', 'code', 'lang', 'difficulty'])",
+
+        "code": {
+          ".validate": "newData.isString() && newData.val().length <= 40"
+        },
+        "lang": {
+          ".validate": "newData.isString() && newData.val().length <= 5"
+        },
+        "difficulty": {
+          ".validate": "newData.isString() && (newData.val() === 'easy' || newData.val() === 'hard')"
+        },
+        "currentTeam": {
+          ".validate": "newData.isString() && (newData.val() === 'red' || newData.val() === 'blue')"
+        },
+        "winner": {
+          ".validate": "newData.isString() && (newData.val() === 'red' || newData.val() === 'blue')"
+        },
+        "redSpymaster": {
+          ".validate": "newData.isString() && newData.val().length <= 20"
+        },
+        "blueSpymaster": {
+          ".validate": "newData.isString() && newData.val().length <= 20"
+        },
+        "guessesLeft": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 11"
+        },
+        "clue": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "clueCount": {
+          ".validate": "newData.isString() && newData.val().length <= 10"
+        },
+        "activeClue": {
+          ".validate": "newData.hasChildren(['word', 'count'])",
+          "word": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "count": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10"
+          },
+          "$other": { ".validate": false }
+        },
+        "board": {
+          "$index": {
+            ".validate": "newData.hasChildren(['word', 'team', 'revealed'])",
+            "word": {
+              ".validate": "newData.isString() && newData.val().length <= 60"
+            },
+            "team": {
+              ".validate": "newData.isString() && (newData.val() === 'red' || newData.val() === 'blue' || newData.val() === 'neutral' || newData.val() === 'assassin')"
+            },
+            "revealed": {
+              ".validate": "newData.isBoolean()"
+            },
+            "$other": { ".validate": false }
+          }
+        },
+        "log": {
+          "$index": {
+            ".validate": "newData.isString() && newData.val().length <= 300"
+          }
+        },
+
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}
