@@ -443,13 +443,21 @@ function generateCode() {
 }
 const TEAM = { RED:"red", BLUE:"blue", NEUTRAL:"neutral", ASSASSIN:"assassin" };
 function generateBoard(code, difficulty, lang, round = 0) {
-  const rng  = makeRng(`${code}::${difficulty}::${lang}::${round}`);
   const pool = WORDS[lang][difficulty];
-  const words = seededShuffle(pool, rng).slice(0, 25);
+  // How many non-overlapping 25-word games fit in the pool before recycling
+  const gamesPerCycle = Math.floor(pool.length / 25);
+  const cycle = Math.floor(round / gamesPerCycle);
+  const posInCycle = round % gamesPerCycle;
+  // Shuffle the full pool once per cycle so every game in a cycle uses unique words
+  const poolRng = makeRng(`${code}::${difficulty}::${lang}::cycle${cycle}`);
+  const shuffledPool = seededShuffle(pool, poolRng);
+  const words = shuffledPool.slice(posInCycle * 25, (posInCycle + 1) * 25);
+  // Randomise card colour assignments independently each round
+  const assignRng = makeRng(`${code}::${difficulty}::${lang}::assign${round}`);
   const assignments = seededShuffle([
     ...Array(9).fill(TEAM.RED), ...Array(8).fill(TEAM.BLUE),
     ...Array(7).fill(TEAM.NEUTRAL), TEAM.ASSASSIN,
-  ], rng);
+  ], assignRng);
   return words.map((word, i) => ({ word, team: assignments[i], revealed: false }));
 }
 function buildInitialState(code, difficulty, lang, round = 0) {
