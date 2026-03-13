@@ -442,8 +442,8 @@ function generateCode() {
   return `${ADJS[Math.floor(rng()*ADJS.length)]}-${NOUNS[Math.floor(rng()*NOUNS.length)]}-${Math.floor(rng()*900)+100}`;
 }
 const TEAM = { RED:"red", BLUE:"blue", NEUTRAL:"neutral", ASSASSIN:"assassin" };
-function generateBoard(code, difficulty, lang) {
-  const rng  = makeRng(`${code}::${difficulty}::${lang}`);
+function generateBoard(code, difficulty, lang, round = 0) {
+  const rng  = makeRng(`${code}::${difficulty}::${lang}::${round}`);
   const pool = WORDS[lang][difficulty];
   const words = seededShuffle(pool, rng).slice(0, 25);
   const assignments = seededShuffle([
@@ -452,16 +452,16 @@ function generateBoard(code, difficulty, lang) {
   ], rng);
   return words.map((word, i) => ({ word, team: assignments[i], revealed: false }));
 }
-function buildInitialState(code, difficulty, lang) {
+function buildInitialState(code, difficulty, lang, round = 0) {
   return {
-    board: generateBoard(code, difficulty, lang),
+    board: generateBoard(code, difficulty, lang, round),
     currentTeam: TEAM.RED,
     clue: "", clueCount: "",
     activeClue: null, guessesLeft: 0,
     winner: null, log: [],
     redSpymaster: null,   // player id
     blueSpymaster: null,  // player id
-    code, difficulty, lang,
+    code, difficulty, lang, round,
   };
 }
 
@@ -834,7 +834,8 @@ export default function AgentX() {
 
   const newGame = async () => {
     if (!game) return;
-    const state = buildInitialState(gameCode, game.difficulty, game.lang);
+    const nextRound = (game.round ?? 0) + 1;
+    const state = buildInitialState(gameCode, game.difficulty, game.lang, nextRound);
     await set(ref(db, `games/${gameCode}`), state);
     setClueInput(""); setCountInput(""); setConfirm(null);
   };
