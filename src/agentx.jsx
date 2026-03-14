@@ -600,19 +600,24 @@ function Lobby({ onStart, initialCode, darkMode, onToggleDark }) {
   const handleStart = async () => {
     const code = (inputCode.trim().toUpperCase() || generateCode());
     setLoading(true);
-    const gameRef = ref(db, `games/${code}`);
-    const snap = await get(gameRef);
-    if (snap.exists()) {
-      // join existing game, use its settings
-      const existing = snap.val();
-      onStart(code, existing.difficulty, existing.lang, false);
-    } else {
-      // create new game
-      const state = buildInitialState(code, difficulty, lang);
-      await set(gameRef, state);
-      onStart(code, difficulty, lang, true);
+    try {
+      const gameRef = ref(db, `games/${code}`);
+      const snap = await get(gameRef);
+      if (snap.exists()) {
+        // join existing game, use its settings
+        const existing = snap.val();
+        onStart(code, existing.difficulty, existing.lang, false);
+      } else {
+        // create new game
+        const state = buildInitialState(code, difficulty, lang);
+        await set(gameRef, state);
+        onStart(code, difficulty, lang, true);
+      }
+    } catch (err) {
+      console.error("Failed to start game:", err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -806,13 +811,18 @@ export default function AgentX() {
   }, []);
 
   const joinGame = async (code) => {
-    const gameRef = ref(db, `games/${code}`);
-    const snap = await get(gameRef);
-    if (snap.exists()) {
-      setGameCode(code);
-      setScreen("game");
-      subscribeToGame(code);
-    } else {
+    try {
+      const gameRef = ref(db, `games/${code}`);
+      const snap = await get(gameRef);
+      if (snap.exists()) {
+        setGameCode(code);
+        setScreen("game");
+        subscribeToGame(code);
+      } else {
+        setScreen("lobby");
+      }
+    } catch (err) {
+      console.error("Failed to join game:", err);
       setScreen("lobby");
     }
   };
