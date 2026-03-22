@@ -24,7 +24,7 @@ const UI = {
     gameCode:"GAME CODE",gameCodeDesc:"Everyone must enter the same code to see the same board",
     leaveBlank:"Leave blank to auto-generate a fresh code.",generated:"Generated:",
     deploy:"DEPLOY AGENTS",sameBoard:"Same code + difficulty + language = identical board",
-    lobby:"← LOBBY",newGame:"NEW GAME",sameCode:"SAME CODE",newCode:"NEW CODE",
+    lobby:"← LOBBY",newGame:"NEW GAME",sameCode:"SAME CODE",newCode:"NEW CODE",playAgain:"PLAY AGAIN",
     shareCode:"share with all players",redTeam:"RED TEAM",blueTeam:"BLUE TEAM",
     cluePlaceholder:"Clue word...",countPlaceholder:"#",giveClue:"GIVE CLUE",
     spymaster:"SPYMASTER",endTurn:"END TURN",clueLabel:"Clue:",guessesLeft:"Guesses left:",
@@ -46,7 +46,7 @@ const UI = {
     gameCode:"CÓDIGO DE JUEGO",gameCodeDesc:"Todos deben introducir el mismo código",
     leaveBlank:"Déjalo en blanco para generar un código nuevo.",generated:"Generado:",
     deploy:"DESPLEGAR AGENTES",sameBoard:"Mismo código + dificultad + idioma = tablero idéntico",
-    lobby:"← SALÓN",newGame:"NUEVA PARTIDA",sameCode:"MISMO CÓDIGO",newCode:"NUEVO CÓDIGO",
+    lobby:"← SALÓN",newGame:"NUEVA PARTIDA",sameCode:"MISMO CÓDIGO",newCode:"NUEVO CÓDIGO",playAgain:"JUGAR DE NUEVO",
     shareCode:"comparte con todos los jugadores",redTeam:"EQUIPO ROJO",blueTeam:"EQUIPO AZUL",
     cluePlaceholder:"Palabra clave...",countPlaceholder:"#",giveClue:"DAR PISTA",
     spymaster:"ESPÍA JEFE",endTurn:"PASAR TURNO",clueLabel:"Pista:",guessesLeft:"Intentos restantes:",
@@ -68,7 +68,7 @@ const UI = {
     gameCode:"CODE DE PARTIE",gameCodeDesc:"Tout le monde doit entrer le même code",
     leaveBlank:"Laissez vide pour générer un code automatiquement.",generated:"Généré :",
     deploy:"DÉPLOYER LES AGENTS",sameBoard:"Même code + difficulté + langue = plateau identique",
-    lobby:"← ACCUEIL",newGame:"NOUVELLE PARTIE",sameCode:"MÊME CODE",newCode:"NOUVEAU CODE",
+    lobby:"← ACCUEIL",newGame:"NOUVELLE PARTIE",sameCode:"MÊME CODE",newCode:"NOUVEAU CODE",playAgain:"REJOUER",
     shareCode:"partagez avec tous les joueurs",redTeam:"ÉQUIPE ROUGE",blueTeam:"ÉQUIPE BLEUE",
     cluePlaceholder:"Mot indice...",countPlaceholder:"#",giveClue:"DONNER L'INDICE",
     spymaster:"ESPION CHEF",endTurn:"FIN DE TOUR",clueLabel:"Indice :",guessesLeft:"Tentatives :",
@@ -90,7 +90,7 @@ const UI = {
     gameCode:"SPIELCODE",gameCodeDesc:"Alle müssen denselben Code eingeben",
     leaveBlank:"Leer lassen für automatisch generierten Code.",generated:"Generiert:",
     deploy:"AGENTEN EINSETZEN",sameBoard:"Gleicher Code + Schwierigkeit + Sprache = identisches Spielfeld",
-    lobby:"← LOBBY",newGame:"NEUES SPIEL",sameCode:"GLEICHER CODE",newCode:"NEUER CODE",
+    lobby:"← LOBBY",newGame:"NEUES SPIEL",sameCode:"GLEICHER CODE",newCode:"NEUER CODE",playAgain:"NOCHMAL SPIELEN",
     shareCode:"mit allen Spielern teilen",redTeam:"ROTES TEAM",blueTeam:"BLAUES TEAM",
     cluePlaceholder:"Hinweiswort...",countPlaceholder:"#",giveClue:"HINWEIS GEBEN",
     spymaster:"SPYMASTER",endTurn:"ZUG BEENDEN",clueLabel:"Hinweis:",guessesLeft:"Versuche:",
@@ -112,7 +112,7 @@ const UI = {
     gameCode:"CÓDIGO DO JOGO",gameCodeDesc:"Todos devem inserir o mesmo código",
     leaveBlank:"Deixe em branco para gerar um código.",generated:"Gerado:",
     deploy:"ENVIAR AGENTES",sameBoard:"Mesmo código + dificuldade + idioma = tabuleiro idêntico",
-    lobby:"← SAGUÃO",newGame:"NOVO JOGO",sameCode:"MESMO CÓDIGO",newCode:"NOVO CÓDIGO",
+    lobby:"← SAGUÃO",newGame:"NOVO JOGO",sameCode:"MESMO CÓDIGO",newCode:"NOVO CÓDIGO",playAgain:"JOGAR NOVAMENTE",
     shareCode:"compartilhe com todos os jogadores",redTeam:"EQUIPA VERMELHA",blueTeam:"EQUIPA AZUL",
     cluePlaceholder:"Palavra-pista...",countPlaceholder:"#",giveClue:"DAR PISTA",
     spymaster:"ESPIÃO CHEFE",endTurn:"PASSAR VEZ",clueLabel:"Pista:",guessesLeft:"Tentativas:",
@@ -134,7 +134,7 @@ const UI = {
     gameCode:"CODICE PARTITA",gameCodeDesc:"Tutti devono inserire lo stesso codice",
     leaveBlank:"Lascia vuoto per generare un codice.",generated:"Generato:",
     deploy:"INVIA AGENTI",sameBoard:"Stesso codice + difficoltà + lingua = tabellone identico",
-    lobby:"← SALA",newGame:"NUOVA PARTITA",sameCode:"STESSO CODICE",newCode:"NUOVO CODICE",
+    lobby:"← SALA",newGame:"NUOVA PARTITA",sameCode:"STESSO CODICE",newCode:"NUOVO CODICE",playAgain:"GIOCA DI NUOVO",
     shareCode:"condividi con tutti i giocatori",redTeam:"SQUADRA ROSSA",blueTeam:"SQUADRA BLU",
     cluePlaceholder:"Parola indizio...",countPlaceholder:"#",giveClue:"DAI L'INDIZIO",
     spymaster:"CAPO SPIA",endTurn:"FINE TURNO",clueLabel:"Indizio:",guessesLeft:"Tentativi:",
@@ -156,7 +156,7 @@ const UI = {
     gameCode:"KOD IGRE",gameCodeDesc:"Svi moraju unijeti isti kod da bi vidjeli istu tablu",
     leaveBlank:"Ostavi prazno za automatsko generisanje koda.",generated:"Generisano:",
     deploy:"RASPOREDI AGENTE",sameBoard:"Isti kod + težina + jezik = identična tabla",
-    lobby:"← SALA",newGame:"NOVA IGRA",sameCode:"ISTI KOD",newCode:"NOVI KOD",
+    lobby:"← SALA",newGame:"NOVA IGRA",sameCode:"ISTI KOD",newCode:"NOVI KOD",playAgain:"IGRAJ PONOVO",
     shareCode:"podijeli sa svim igračima",redTeam:"CRVENI TIM",blueTeam:"PLAVI TIM",
     cluePlaceholder:"Ključna riječ...",countPlaceholder:"#",giveClue:"DAJ NAGOVJJEŠTAJ",
     spymaster:"ŠEF ŠPIJUN",endTurn:"ZAVRŠI POTEZ",clueLabel:"Nagovjještaj:",guessesLeft:"Pokušaji:",
@@ -178,7 +178,7 @@ const UI = {
     gameCode:"КОД ГРИ",gameCodeDesc:"Всі мають ввести однаковий код для однакового поля",
     leaveBlank:"Залиш порожнім для автоматичного генерування.",generated:"Згенеровано:",
     deploy:"РОЗГОРНУТИ АГЕНТІВ",sameBoard:"Однаковий код + складність + мова = однакове поле",
-    lobby:"← ЛОБІ",newGame:"НОВА ГРА",sameCode:"ТОЙ САМИЙ КОД",newCode:"НОВИЙ КОД",
+    lobby:"← ЛОБІ",newGame:"НОВА ГРА",sameCode:"ТОЙ САМИЙ КОД",newCode:"НОВИЙ КОД",playAgain:"ГРАТИ ЗНОВУ",
     shareCode:"поділіться з усіма гравцями",redTeam:"ЧЕРВОНА КОМАНДА",blueTeam:"СИНЯ КОМАНДА",
     cluePlaceholder:"Ключове слово...",countPlaceholder:"#",giveClue:"ДАТИ ПІДКАЗКУ",
     spymaster:"ШПИГУН-МАЙСТЕР",endTurn:"ЗАВЕРШИТИ ХІД",clueLabel:"Підказка:",guessesLeft:"Спроби:",
@@ -200,7 +200,7 @@ const UI = {
     gameCode:"КОД ИГРЫ",gameCodeDesc:"Все должны ввести одинаковый код для одинакового поля",
     leaveBlank:"Оставь пустым для автогенерации.",generated:"Сгенерировано:",
     deploy:"РАЗВЕРНУТЬ АГЕНТОВ",sameBoard:"Одинаковый код + сложность + язык = одинаковое поле",
-    lobby:"← ЛОББИ",newGame:"НОВАЯ ИГРА",sameCode:"ТОТ ЖЕ КОД",newCode:"НОВЫЙ КОД",
+    lobby:"← ЛОББИ",newGame:"НОВАЯ ИГРА",sameCode:"ТОТ ЖЕ КОД",newCode:"НОВЫЙ КОД",playAgain:"ИГРАТЬ СНОВА",
     shareCode:"поделитесь со всеми игроками",redTeam:"КРАСНАЯ КОМАНДА",blueTeam:"СИНЯЯ КОМАНДА",
     cluePlaceholder:"Ключевое слово...",countPlaceholder:"#",giveClue:"ДАТЬ ПОДСКАЗКУ",
     spymaster:"ШПИОН-МАСТЕР",endTurn:"ЗАВЕРШИТЬ ХОД",clueLabel:"Подсказка:",guessesLeft:"Попытки:",
@@ -222,7 +222,7 @@ const UI = {
     gameCode:"KOD GRY",gameCodeDesc:"Wszyscy muszą wpisać ten sam kod",
     leaveBlank:"Pozostaw puste dla automatycznego kodu.",generated:"Wygenerowano:",
     deploy:"ROZMIEŚĆ AGENTÓW",sameBoard:"Ten sam kod + poziom + język = identyczna plansza",
-    lobby:"← LOBBY",newGame:"NOWA GRA",sameCode:"TEN SAM KOD",newCode:"NOWY KOD",
+    lobby:"← LOBBY",newGame:"NOWA GRA",sameCode:"TEN SAM KOD",newCode:"NOWY KOD",playAgain:"ZAGRAJ PONOWNIE",
     shareCode:"udostępnij wszystkim graczom",redTeam:"CZERWONA DRUŻYNA",blueTeam:"NIEBIESKA DRUŻYNA",
     cluePlaceholder:"Słowo wskazówka...",countPlaceholder:"#",giveClue:"DAJ WSKAZÓWKĘ",
     spymaster:"SZPIEG-MISTRZ",endTurn:"ZAKOŃCZ TURĘ",clueLabel:"Wskazówka:",guessesLeft:"Próby:",
@@ -443,13 +443,21 @@ function generateCode() {
 }
 const TEAM = { RED:"red", BLUE:"blue", NEUTRAL:"neutral", ASSASSIN:"assassin" };
 function generateBoard(code, difficulty, lang, round = 0) {
-  const rng  = makeRng(`${code}::${difficulty}::${lang}::${round}`);
   const pool = WORDS[lang][difficulty];
-  const words = seededShuffle(pool, rng).slice(0, 25);
+  // How many non-overlapping 25-word games fit in the pool before recycling
+  const gamesPerCycle = Math.floor(pool.length / 25);
+  const cycle = Math.floor(round / gamesPerCycle);
+  const posInCycle = round % gamesPerCycle;
+  // Shuffle the full pool once per cycle so every game in a cycle uses unique words
+  const poolRng = makeRng(`${code}::${difficulty}::${lang}::cycle${cycle}`);
+  const shuffledPool = seededShuffle(pool, poolRng);
+  const words = shuffledPool.slice(posInCycle * 25, (posInCycle + 1) * 25);
+  // Randomise card colour assignments independently each round
+  const assignRng = makeRng(`${code}::${difficulty}::${lang}::assign${round}`);
   const assignments = seededShuffle([
     ...Array(9).fill(TEAM.RED), ...Array(8).fill(TEAM.BLUE),
     ...Array(7).fill(TEAM.NEUTRAL), TEAM.ASSASSIN,
-  ], rng);
+  ], assignRng);
   return words.map((word, i) => ({ word, team: assignments[i], revealed: false }));
 }
 function buildInitialState(code, difficulty, lang, round = 0) {
@@ -846,7 +854,14 @@ export default function AgentX() {
 
   const newGame = async () => {
     if (!game) return;
-    const nextRound = (game.round ?? 0) + 1;
+    const state = buildInitialState(gameCode, game.difficulty, game.lang, game.round || 0);
+    await set(ref(db, `games/${gameCode}`), state);
+    setClueInput(""); setCountInput(""); setConfirm(null);
+  };
+
+  const playAgain = async () => {
+    if (!game) return;
+    const nextRound = (game.round || 0) + 1;
     const state = buildInitialState(gameCode, game.difficulty, game.lang, nextRound);
     await set(ref(db, `games/${gameCode}`), state);
     setClueInput(""); setCountInput(""); setConfirm(null);
@@ -1057,7 +1072,7 @@ export default function AgentX() {
           borderBottom:`2px solid ${game.winner===TEAM.RED?"#c0392b":"#2471a3"}` }}>
           🎉 {game.winner===TEAM.RED?T.redTeam:T.blueTeam} {T.wins} 🎉
           <div style={{ marginTop:"10px", display:"flex", gap:"8px", justifyContent:"center", flexWrap:"wrap" }}>
-            <button onClick={newGame}     style={ghostBtn("#fff","11px","8px 16px")}>{T.sameCode}</button>
+            <button onClick={playAgain}   style={ghostBtn("#fff","11px","8px 16px")}>{T.playAgain}</button>
             <button onClick={backToLobby} style={ghostBtn("#aaa","11px","8px 16px")}>{T.newCode}</button>
           </div>
         </div>
