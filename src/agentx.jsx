@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // LANGUAGES & UI TRANSLATIONS
@@ -608,19 +608,24 @@ function Lobby({ onStart, initialCode, darkMode, onToggleDark }) {
   const handleStart = async () => {
     const code = (inputCode.trim().toUpperCase() || generateCode());
     setLoading(true);
-    const gameRef = ref(db, `games/${code}`);
-    const snap = await get(gameRef);
-    if (snap.exists()) {
-      // join existing game, use its settings
-      const existing = snap.val();
-      onStart(code, existing.difficulty, existing.lang, false);
-    } else {
-      // create new game
-      const state = buildInitialState(code, difficulty, lang);
-      await set(gameRef, state);
-      onStart(code, difficulty, lang, true);
+    try {
+      const gameRef = ref(db, `games/${code}`);
+      const snap = await get(gameRef);
+      if (snap.exists()) {
+        // join existing game, use its settings
+        const existing = snap.val();
+        onStart(code, existing.difficulty, existing.lang, false);
+      } else {
+        // create new game
+        const state = buildInitialState(code, difficulty, lang);
+        await set(gameRef, state);
+        onStart(code, difficulty, lang, true);
+      }
+    } catch (err) {
+      console.error("Failed to start game:", err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -784,6 +789,8 @@ export default function AgentX() {
   const [game, setGame]           = useState(null);
   const [confirm, setConfirm]     = useState(null);
   const [showLog, setShowLog]     = useState(false);
+  const [logBtnPos, setLogBtnPos] = useState(null); // null = default bottom-right
+  const logBtnDragRef             = useRef({});
   const [clueInput, setClueInput] = useState("");
   const [countInput, setCountInput] = useState("");
   const playerId = getPlayerId();
@@ -812,13 +819,18 @@ export default function AgentX() {
   }, []);
 
   const joinGame = async (code) => {
-    const gameRef = ref(db, `games/${code}`);
-    const snap = await get(gameRef);
-    if (snap.exists()) {
-      setGameCode(code);
-      setScreen("game");
-      subscribeToGame(code);
-    } else {
+    try {
+      const gameRef = ref(db, `games/${code}`);
+      const snap = await get(gameRef);
+      if (snap.exists()) {
+        setGameCode(code);
+        setScreen("game");
+        subscribeToGame(code);
+      } else {
+        setScreen("lobby");
+      }
+    } catch (err) {
+      console.error("Failed to join game:", err);
       setScreen("lobby");
     }
   };
@@ -1263,14 +1275,35 @@ export default function AgentX() {
         </div>
       </div>
 
-      {/* ── FLOATING LOG BUTTON (mobile) ── */}
-      <button onClick={()=>setShowLog(true)}
-        style={{ position:"fixed", bottom:"20px", right:"16px", zIndex:100,
-          background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)", borderRadius:"50%",
-          width:"52px", height:"52px", fontSize:"22px", cursor:"pointer",
+      {/* ── FLOATING LOG BUTTON (mobile, draggable) ── */}
+      <button
+        onPointerDown={e => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          const rect = e.currentTarget.getBoundingClientRect();
+          logBtnDragRef.current = { startX: e.clientX, startY: e.clientY, initLeft: rect.left, initTop: rect.top, moved: false };
+        }}
+        onPointerMove={e => {
+          const d = logBtnDragRef.current;
+          if (!d.startX && d.startX !== 0) return;
+          const dx = e.clientX - d.startX;
+          const dy = e.clientY - d.startY;
+          if (!d.moved && Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          d.moved = true;
+          const left = Math.max(0, Math.min(window.innerWidth  - 52, d.initLeft + dx));
+          const top  = Math.max(0, Math.min(window.innerHeight - 52, d.initTop  + dy));
+          setLogBtnPos({ left, top });
+        }}
+        onPointerUp={() => {
+          if (!logBtnDragRef.current.moved) setShowLog(true);
+          logBtnDragRef.current = {};
+        }}
+        style={{ position:"fixed",
+          ...(logBtnPos ? { left: logBtnPos.left, top: logBtnPos.top } : { bottom:"20px", right:"16px" }),
+          zIndex:100, background:"var(--c-bg-panel)", border:"2px solid var(--c-border-accent)", borderRadius:"50%",
+          width:"52px", height:"52px", fontSize:"22px", cursor:"grab",
           boxShadow:"0 4px 20px rgba(0,0,0,0.6)", display:"flex",
           alignItems:"center", justifyContent:"center",
-          WebkitTapHighlightColor:"transparent" }}
+          WebkitTapHighlightColor:"transparent", touchAction:"none" }}
         title={T.gameLog}>
         📜
         {log.length>0 && (
