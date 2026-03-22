@@ -68,6 +68,9 @@
             "$other": { ".validate": false }
           }
         },
+        "round": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
         "log": {
           "$index": {
             ".validate": "newData.isString() && newData.val().length <= 300"
