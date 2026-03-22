@@ -37,7 +37,7 @@ const UI = {
     footerAvoid:"☠️ Avoid the assassin",footerWin:"🏆 Reveal all your team's cards to win",
     gameLog:"GAME LOG",noMoves:"No moves yet...",spymasterLog:"Spymaster:",
     wrongTurn:"Wrong! Turn →",outOfGuesses:"Out of guesses. Turn →",endedTurn:"ended their turn.",
-    waiting:"Waiting for spymaster…",redWins:"🔴 RED wins!",blueWins:"🔵 BLUE wins!",assassinLog:"💀 ASSASSIN!",spymasterOnce:"This role is permanent for the entire game.",youAreSpy:"You are the spymaster",spyTaken:"Spymaster taken",becomeSpy:"Become spymaster",share:"SHARE",waiting:"Waiting…",howToPlay:"HOW TO PLAY",
+    waiting:"Waiting…",redWins:"🔴 RED wins!",blueWins:"🔵 BLUE wins!",assassinLog:"💀 ASSASSIN!",spymasterOnce:"This role is permanent for the entire game.",youAreSpy:"You are the spymaster",spyTaken:"Spymaster taken",becomeSpy:"Become spymaster",share:"SHARE",howToPlay:"HOW TO PLAY",
   },
   es: {
     title:"AGENTE X",subtitle:"JUEGO DE PALABRAS OPERATIVO",difficulty:"DIFICULTAD",
@@ -59,7 +59,7 @@ const UI = {
     footerAvoid:"☠️ Evita al asesino",footerWin:"🏆 Revela todas tus cartas para ganar",
     gameLog:"REGISTRO",noMoves:"Sin movimientos aún...",spymasterLog:"Espía:",
     wrongTurn:"¡Incorrecto! Turno →",outOfGuesses:"Sin intentos. Turno →",endedTurn:"terminó su turno.",
-    waiting:"Esperando al espía jefe…",redWins:"🔴 ¡ROJO gana!",blueWins:"🔵 ¡AZUL gana!",assassinLog:"💀 ¡ASESINO!",spymasterOnce:"Este rol es permanente para toda la partida.",youAreSpy:"Eres el espía jefe",spyTaken:"Espía jefe asignado",becomeSpy:"Ser espía jefe",share:"COMPARTIR",waiting:"Esperando…",howToPlay:"CÓMO JUGAR",
+    waiting:"Esperando…",redWins:"🔴 ¡ROJO gana!",blueWins:"🔵 ¡AZUL gana!",assassinLog:"💀 ¡ASESINO!",spymasterOnce:"Este rol es permanente para toda la partida.",youAreSpy:"Eres el espía jefe",spyTaken:"Espía jefe asignado",becomeSpy:"Ser espía jefe",share:"COMPARTIR",howToPlay:"CÓMO JUGAR",
   },
   fr: {
     title:"AGENT X",subtitle:"JEU DE MOTS OPÉRATIF",difficulty:"DIFFICULTÉ",
@@ -81,7 +81,7 @@ const UI = {
     footerAvoid:"☠️ Évitez l'assassin",footerWin:"🏆 Révélez toutes vos cartes pour gagner",
     gameLog:"JOURNAL",noMoves:"Aucun mouvement encore...",spymasterLog:"Espion :",
     wrongTurn:"Faux ! Tour →",outOfGuesses:"Plus de tentatives. Tour →",endedTurn:"a terminé son tour.",
-    waiting:"En attente de l'espion chef…",redWins:"🔴 ROUGE gagne !",blueWins:"🔵 BLEU gagne !",assassinLog:"💀 ASSASSIN !",spymasterOnce:"Ce rôle est permanent pour toute la partie.",youAreSpy:"Vous êtes l'espion chef",spyTaken:"Espion chef pris",becomeSpy:"Devenir espion chef",share:"PARTAGER",waiting:"En attente…",howToPlay:"COMMENT JOUER",
+    waiting:"En attente…",redWins:"🔴 ROUGE gagne !",blueWins:"🔵 BLEU gagne !",assassinLog:"💀 ASSASSIN !",spymasterOnce:"Ce rôle est permanent pour toute la partie.",youAreSpy:"Vous êtes l'espion chef",spyTaken:"Espion chef pris",becomeSpy:"Devenir espion chef",share:"PARTAGER",howToPlay:"COMMENT JOUER",
   },
   de: {
     title:"AGENT X",subtitle:"FELDOPERATIVES WORTSPIEL",difficulty:"SCHWIERIGKEIT",
@@ -103,7 +103,7 @@ const UI = {
     footerAvoid:"☠️ Den Attentäter vermeiden",footerWin:"🏆 Alle eigenen Karten aufdecken",
     gameLog:"SPIELPROTOKOLL",noMoves:"Noch keine Züge...",spymasterLog:"Spymaster:",
     wrongTurn:"Falsch! Zug →",outOfGuesses:"Keine Versuche mehr. Zug →",endedTurn:"beendete seinen Zug.",
-    waiting:"Warten auf Spymaster…",redWins:"🔴 ROT gewinnt!",blueWins:"🔵 BLAU gewinnt!",assassinLog:"💀 ATTENTÄTER!",spymasterOnce:"Diese Rolle ist für das gesamte Spiel dauerhaft.",youAreSpy:"Du bist der Spymaster",spyTaken:"Spymaster vergeben",becomeSpy:"Spymaster werden",share:"TEILEN",waiting:"Warten…",howToPlay:"ANLEITUNG",
+    waiting:"Warten…",redWins:"🔴 ROT gewinnt!",blueWins:"🔵 BLAU gewinnt!",assassinLog:"💀 ATTENTÄTER!",spymasterOnce:"Diese Rolle ist für das gesamte Spiel dauerhaft.",youAreSpy:"Du bist der Spymaster",spyTaken:"Spymaster vergeben",becomeSpy:"Spymaster werden",share:"TEILEN",howToPlay:"ANLEITUNG",
   },
   pt: {
     title:"AGENTE X",subtitle:"JOGO DE PALAVRAS OPERATIVO",difficulty:"DIFICULDADE",
@@ -125,7 +125,7 @@ const UI = {
     footerAvoid:"☠️ Evite o assassino",footerWin:"🏆 Revele todas as suas cartas para ganhar",
     gameLog:"REGISTO",noMoves:"Sem movimentos ainda...",spymasterLog:"Espião:",
     wrongTurn:"Errado! Vez →",outOfGuesses:"Sem tentativas. Vez →",endedTurn:"terminou a sua vez.",
-    waiting:"Aguardando espião chefe…",redWins:"🔴 VERMELHO ganha!",blueWins:"🔵 AZUL ganha!",assassinLog:"💀 ASSASSINO!",spymasterOnce:"Este papel é permanente para todo o jogo.",youAreSpy:"Você é o espião chefe",spyTaken:"Espião chefe ocupado",becomeSpy:"Tornar-se espião chefe",share:"PARTILHAR",waiting:"A aguardar…",howToPlay:"COMO JOGAR",
+    waiting:"A aguardar…",redWins:"🔴 VERMELHO ganha!",blueWins:"🔵 AZUL ganha!",assassinLog:"💀 ASSASSINO!",spymasterOnce:"Este papel é permanente para todo o jogo.",youAreSpy:"Você é o espião chefe",spyTaken:"Espião chefe ocupado",becomeSpy:"Tornar-se espião chefe",share:"PARTILHAR",howToPlay:"COMO JOGAR",
   },
   it: {
     title:"AGENTE X",subtitle:"GIOCO DI PAROLE OPERATIVO",difficulty:"DIFFICOLTÀ",
@@ -147,7 +147,7 @@ const UI = {
     footerAvoid:"☠️ Evita l'assassino",footerWin:"🏆 Rivela tutte le tue carte per vincere",
     gameLog:"REGISTRO",noMoves:"Nessuna mossa ancora...",spymasterLog:"Spia:",
     wrongTurn:"Sbagliato! Turno →",outOfGuesses:"Nessun tentativo. Turno →",endedTurn:"ha terminato il turno.",
-    waiting:"In attesa del capo spia…",redWins:"🔴 ROSSO vince!",blueWins:"🔵 BLU vince!",assassinLog:"💀 ASSASSINO!",spymasterOnce:"Questo ruolo è permanente per tutta la partita.",youAreSpy:"Sei il capo spia",spyTaken:"Capo spia occupato",becomeSpy:"Diventa capo spia",share:"CONDIVIDI",waiting:"In attesa…",howToPlay:"COME GIOCARE",
+    waiting:"In attesa…",redWins:"🔴 ROSSO vince!",blueWins:"🔵 BLU vince!",assassinLog:"💀 ASSASSINO!",spymasterOnce:"Questo ruolo è permanente per tutta la partita.",youAreSpy:"Sei il capo spia",spyTaken:"Capo spia occupato",becomeSpy:"Diventa capo spia",share:"CONDIVIDI",howToPlay:"COME GIOCARE",
   },
   me: {
     title:"AGENT X",subtitle:"OPERATIVNA IGRA RIJEČIMA",difficulty:"TEŽINA",
@@ -169,7 +169,7 @@ const UI = {
     footerAvoid:"☠️ Izbjegni ubicu",footerWin:"🏆 Otkrij sve svoje karte da pobijediš",
     gameLog:"DNEVNIK IGRE",noMoves:"Još nema poteza...",spymasterLog:"Šef:",
     wrongTurn:"Pogrešno! Potez →",outOfGuesses:"Nema pokušaja. Potez →",endedTurn:"završio je potez.",
-    waiting:"Čeka se šef špijun…",redWins:"🔴 CRVENI pobjeđuju!",blueWins:"🔵 PLAVI pobjeđuju!",assassinLog:"💀 UBICA!",spymasterOnce:"Ova uloga je trajna za cijelu igru.",youAreSpy:"Ti si šef špijun",spyTaken:"Šef špijun zauzet",becomeSpy:"Postani šef špijun",share:"PODIJELI",waiting:"Čekanje…",howToPlay:"KAKO SE IGRA",
+    waiting:"Čekanje…",redWins:"🔴 CRVENI pobjeđuju!",blueWins:"🔵 PLAVI pobjeđuju!",assassinLog:"💀 UBICA!",spymasterOnce:"Ova uloga je trajna za cijelu igru.",youAreSpy:"Ti si šef špijun",spyTaken:"Šef špijun zauzet",becomeSpy:"Postani šef špijun",share:"PODIJELI",howToPlay:"KAKO SE IGRA",
   },
   uk: {
     title:"АГЕНТ X",subtitle:"ОПЕРАТИВНА ГРА СЛІВ",difficulty:"СКЛАДНІСТЬ",
@@ -191,7 +191,7 @@ const UI = {
     footerAvoid:"☠️ Уникайте вбивці",footerWin:"🏆 Відкрийте всі свої карти щоб виграти",
     gameLog:"ЖУРНАЛ ГРИ",noMoves:"Ще немає ходів...",spymasterLog:"Шпигун:",
     wrongTurn:"Неправильно! Хід →",outOfGuesses:"Немає спроб. Хід →",endedTurn:"завершив хід.",
-    waiting:"Чекаємо шпигуна-майстра…",redWins:"🔴 ЧЕРВОНІ виграють!",blueWins:"🔵 СИНІ виграють!",assassinLog:"💀 ВБИВЦЯ!",spymasterOnce:"Ця роль є постійною на всю гру.",youAreSpy:"Ви шпигун-майстер",spyTaken:"Шпигун-майстер зайнятий",becomeSpy:"Стати шпигуном-майстром",share:"ПОДІЛИТИСЬ",waiting:"Очікування…",howToPlay:"ЯК ГРАТИ",
+    waiting:"Очікування…",redWins:"🔴 ЧЕРВОНІ виграють!",blueWins:"🔵 СИНІ виграють!",assassinLog:"💀 ВБИВЦЯ!",spymasterOnce:"Ця роль є постійною на всю гру.",youAreSpy:"Ви шпигун-майстер",spyTaken:"Шпигун-майстер зайнятий",becomeSpy:"Стати шпигуном-майстром",share:"ПОДІЛИТИСЬ",howToPlay:"ЯК ГРАТИ",
   },
   ru: {
     title:"АГЕНТ X",subtitle:"ОПЕРАТИВНАЯ ИГРА СЛОВ",difficulty:"СЛОЖНОСТЬ",
@@ -213,7 +213,7 @@ const UI = {
     footerAvoid:"☠️ Избегайте убийцы",footerWin:"🏆 Откройте все свои карты чтобы выиграть",
     gameLog:"ЖУРНАЛ ИГРЫ",noMoves:"Ходов ещё нет...",spymasterLog:"Шпион:",
     wrongTurn:"Неверно! Ход →",outOfGuesses:"Нет попыток. Ход →",endedTurn:"завершил ход.",
-    waiting:"Ждём шпиона-мастера…",redWins:"🔴 КРАСНЫЕ выигрывают!",blueWins:"🔵 СИНИЕ выигрывают!",assassinLog:"💀 УБИЙЦА!",spymasterOnce:"Эта роль постоянна на всю игру.",youAreSpy:"Вы шпион-мастер",spyTaken:"Шпион-мастер занят",becomeSpy:"Стать шпионом-мастером",share:"ПОДЕЛИТЬСЯ",waiting:"Ожидание…",howToPlay:"КАК ИГРАТЬ",
+    waiting:"Ожидание…",redWins:"🔴 КРАСНЫЕ выигрывают!",blueWins:"🔵 СИНИЕ выигрывают!",assassinLog:"💀 УБИЙЦА!",spymasterOnce:"Эта роль постоянна на всю игру.",youAreSpy:"Вы шпион-мастер",spyTaken:"Шпион-мастер занят",becomeSpy:"Стать шпионом-мастером",share:"ПОДЕЛИТЬСЯ",howToPlay:"КАК ИГРАТЬ",
   },
   pl: {
     title:"AGENT X",subtitle:"OPERATYWNA GRA SŁOWNA",difficulty:"POZIOM",
@@ -235,7 +235,7 @@ const UI = {
     footerAvoid:"☠️ Unikaj zabójcy",footerWin:"🏆 Odkryj wszystkie swoje karty by wygrać",
     gameLog:"DZIENNIK GRY",noMoves:"Jeszcze żadnych ruchów...",spymasterLog:"Szpieg:",
     wrongTurn:"Błąd! Tura →",outOfGuesses:"Brak prób. Tura →",endedTurn:"zakończył turę.",
-    waiting:"Czekamy na szpiega-mistrza…",redWins:"🔴 CZERWONI wygrywają!",blueWins:"🔵 NIEBIESCY wygrywają!",assassinLog:"💀 ZABÓJCA!",spymasterOnce:"Ta rola jest stała przez całą grę.",youAreSpy:"Jesteś szpiegiem-mistrzem",spyTaken:"Szpieg-mistrz zajęty",becomeSpy:"Zostań szpiegiem-mistrzem",share:"UDOSTĘPNIJ",waiting:"Oczekiwanie…",howToPlay:"JAK GRAĆ",
+    waiting:"Oczekiwanie…",redWins:"🔴 CZERWONI wygrywają!",blueWins:"🔵 NIEBIESCY wygrywają!",assassinLog:"💀 ZABÓJCA!",spymasterOnce:"Ta rola jest stała przez całą grę.",youAreSpy:"Jesteś szpiegiem-mistrzem",spyTaken:"Szpieg-mistrz zajęty",becomeSpy:"Zostań szpiegiem-mistrzem",share:"UDOSTĘPNIJ",howToPlay:"JAK GRAĆ",
   },
 };
 
@@ -629,7 +629,7 @@ function Lobby({ onStart, initialCode, darkMode, onToggleDark }) {
   };
 
   return (
-    <div style={{ minHeight:"100vh", minHeight:"100dvh", background:"var(--c-bg)", ...BASE,
+    <div style={{ minHeight:"100dvh", background:"var(--c-bg)", ...BASE,
       color:"var(--c-text)", display:"flex", flexDirection:"column", alignItems:"center",
       justifyContent:"center", padding:"32px 16px", boxSizing:"border-box" }}>
 
@@ -811,13 +811,6 @@ export default function AgentX() {
   }, [darkMode]);
   const toggleDark = () => setDarkMode(v => !v);
 
-  // If URL had a code, jump straight into game
-  useEffect(() => {
-    if (screen === "joining" && urlCode) {
-      joinGame(urlCode);
-    }
-  }, []);
-
   const joinGame = async (code) => {
     try {
       const gameRef = ref(db, `games/${code}`);
@@ -835,6 +828,14 @@ export default function AgentX() {
     }
   };
 
+  // If URL had a code, jump straight into game
+  useEffect(() => {
+    if (screen === "joining" && urlCode) {
+      joinGame(urlCode);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const subscribeToGame = (code) => {
     const gameRef = ref(db, `games/${code}`);
     onValue(gameRef, snap => {
@@ -842,7 +843,7 @@ export default function AgentX() {
     });
   };
 
-  const startGame = (code, diff, lang, isNew) => {
+  const startGame = (code) => {
     setGameCode(code);
     setScreen("game");
     subscribeToGame(code);
@@ -935,7 +936,6 @@ export default function AgentX() {
   const endTurn = async () => {
     if (game.winner || !game.activeClue) return;
     const next = game.currentTeam===TEAM.RED ? TEAM.BLUE : TEAM.RED;
-    const nextLabel = next===TEAM.RED ? T.redTeam : T.blueTeam;
     const newLog = [`${currentLabel} ${T.endedTurn}`, ...log].slice(0,30);
     await dbUpdate({ currentTeam:next, activeClue:null, guessesLeft:0, log:newLog });
   };
@@ -987,7 +987,7 @@ export default function AgentX() {
 
   // ── RENDER ──
   return (
-    <div style={{ height:"100vh", height:"100dvh", background:"var(--c-bg)", ...BASE,
+    <div style={{ height:"100dvh", background:"var(--c-bg)", ...BASE,
       color:"var(--c-text)", display:"flex", flexDirection:"column", overflow:"hidden" }}>
 
       {/* ── MODALS ── */}
